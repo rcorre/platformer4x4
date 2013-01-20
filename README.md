@@ -3,6 +3,8 @@
 This is a test of github for team 4x4s platformer game for CEN3031
 
 # Steps to set up git
+1. Install git for Windows
+	(go to github.com and follow the instructions)
 
 Follow step 1 on the front page of github.com to set up git.
 Then follow step 3 to fork the project, create a clone, set up a remote, and pull in changes.

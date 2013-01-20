@@ -15,7 +15,10 @@ You may want to look at Pro Git, a free online book that should explain how to d
 Especially read chapter 2:
 http://git-scm.com/book/en/Git-Basics
 
-#Reverting Changes
+
+
+#Some Tips
+Reverting Changes:
 Suppose you make a change and realize you screwed something up.
 You can revert a file back to its status in the last commit.
 First make sure the file isn't staged:
@@ -24,7 +27,7 @@ git reset HEAD <filename>
 Now revert the file to its previous state:
 git checkout -- <filename>
 
-Note: All work on that file since the last commit will be lost
+All work on that file since the last commit will be lost
 =======
 platformer4x4
 =============

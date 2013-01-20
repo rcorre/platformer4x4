@@ -58,6 +58,12 @@ namespace Platformer
             _spriteState = SpriteState.FacingLeft;
         }
 
+        public void SetLocation(int x, int y)
+        {
+            _hitRect.X = x;
+            _hitRect.Y = y;
+        }
+
         public void Update(GameTime gameTime)
         {
             if (_moving)

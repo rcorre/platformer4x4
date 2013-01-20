@@ -3,6 +3,8 @@
 This is a test of github for team 4x4s platformer game for CEN3031
 
 # Steps to set up git
+1. Install git for Windows
+	(go to github.com and follow the instructions)
 
 #Add the repository as a remote
 git remote add origin git@github.com:murphyslaw480/platformer4x4.git

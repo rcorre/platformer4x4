@@ -28,6 +28,7 @@ Now revert the file to its previous state:
 git checkout -- 'filename'
 
 All work on that file since the last commit will be lost
+
 =======
 platformer4x4
 =============

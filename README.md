@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # README for test platformer
 This is a test of github for team 4x4s platformer game for CEN3031
 
@@ -21,3 +22,9 @@ Now revert the file to its previous state:
 git checkout -- <filename>
 
 Note: All work on that file since the last commit will be lost
+=======
+platformer4x4
+=============
+
+Test Repository for CEN3031 Project
+>>>>>>> d75c83ea999b9e6aa7e47cf441f73aff1f1dedb5

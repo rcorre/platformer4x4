@@ -22,10 +22,10 @@ Reverting Changes:
 Suppose you make a change and realize you screwed something up.
 You can revert a file back to its status in the last commit.
 First make sure the file isn't staged:
-git reset HEAD <filename>
+git reset HEAD 'filename'
 
 Now revert the file to its previous state:
-git checkout -- <filename>
+git checkout -- 'filename'
 
 All work on that file since the last commit will be lost
 =======

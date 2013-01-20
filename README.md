@@ -31,6 +31,14 @@ git checkout -- 'filename'
 
 All work on that file since the last commit will be lost
 
+Adding changes to the master branch:
+Fetch the latest version from the remote
+Checkout a new branch for your changes
+Make your changes
+Stage and commit
+Push to the remote
+Make a pull request
+
 =======
 platformer4x4
 =============

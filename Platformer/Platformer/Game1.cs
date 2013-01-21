@@ -8,6 +8,7 @@ using Microsoft.Xna.Framework.GamerServices;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
+using System.Diagnostics;
 
 namespace Platformer
 {
@@ -66,7 +67,7 @@ namespace Platformer
                 new Rectangle(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT));
 
             _sprite = new Sprite(Content.Load<Texture2D>("character"), 48, 48, 2, 2, TimeSpan.FromSeconds(0.2), 4);
-            _sprite.SetLocation(20, SCREEN_HEIGHT - 2 * Tile.TILE_WIDTH);
+            _sprite.SetLocation(60, SCREEN_HEIGHT - 2 * Tile.TILE_WIDTH);
 
         }
 
@@ -105,51 +106,148 @@ namespace Platformer
                 _tileMap.OffsetY -= 1;
 
             if (_currentKeyboardState.IsKeyDown(Keys.Right))
-                moveSprite(_sprite, _sprite.MoveSpeed, 0);
+                _sprite.Velocity.X = 3;
             else if (_currentKeyboardState.IsKeyDown(Keys.Left))
-                moveSprite(_sprite, -_sprite.MoveSpeed, 0);
+                _sprite.Velocity.X = -3;
+            else
+                _sprite.Velocity.X = 0;
 
+            //jump
+            if (_currentKeyboardState.IsKeyDown(Keys.Up))
+                _sprite.Velocity.Y = -6;
+
+            //apply gravity
+            _sprite.Velocity.Y += 9 * (float)gameTime.ElapsedGameTime.TotalSeconds;
+            moveSprite(_sprite, _sprite.Velocity);
             _sprite.Update(gameTime);
 
             base.Update(gameTime);
         }
 
         //Decompose movement into X and Y axes, step one at a time.
-        private void moveSprite(Sprite sprite, int pixelsRight, int pixelsDown)
+        private void moveSprite(Sprite sprite, Vector2 velocity)
         {
-            /*Get the coordinate of the forward-facing edge, 
-              e.g.  If walking left, the x coordinate of left of bounding box. 
-              If walking right, x coordinate of right side. If up, y coordinate of top, etc.*/
+            int pixelsRight = (int)velocity.X;
+            int pixelsDown = (int)velocity.Y;
 
-            int forwardEdge = (pixelsRight > 0) ?
-                sprite.HitRect.Right : sprite.HitRect.Left;
-            /*Figure which lines of tiles the bounding box intersects with – 
-             * this will give you a minimum and maximum tile value on the OPPOSITE axis. 
-             * For example, if we’re walking left, 
-             * perhaps the player intersects with horizontal rows 32, 33 and 34*/
-
-            /*Scan along those lines of tiles and towards the direction of movement until 
-             * you find the closest static obstacle. Then loop through every moving obstacle, 
-             * and determine which is the closest obstacle that is actually on your path.*/
-
-            //At most, the player will come to a stop at the maximum movement distance
-            //(assuming no obstacles hit)
-            int closestObstacleX = forwardEdge + pixelsRight;
-            
-            for (int row = sprite.HitRect.Top / Tile.TILE_HEIGHT;
-                     row <= (sprite.HitRect.Bottom  - 1)/ Tile.TILE_HEIGHT;
-                     row++)
+            #region horizontal collision detection
+            if (pixelsRight != 0)   //perform horizontal collision detection
             {
-                for (int col = forwardEdge / Tile.TILE_WIDTH;
-                      col <= (forwardEdge + pixelsRight) / Tile.TILE_WIDTH;
-                      col++)
-                {
-                    if (!_tileMap.TilePassable(row, col))
-                        closestObstacleX = Math.Min(closestObstacleX, col * Tile.TILE_WIDTH);
-                }
-            }
+                /*Get the coordinate of the forward-facing edge, 
+                  e.g.  If walking left, the x coordinate of left of bounding box. 
+                  If walking right, x coordinate of right side. If up, y coordinate of top, etc.*/
+                int forwardEdge = (pixelsRight > 0) ?
+                    sprite.HitRect.Right : sprite.HitRect.Left;
 
-            pixelsRight -= (forwardEdge + pixelsRight) - closestObstacleX;
+                //At most, the player will come to a stop at the maximum movement distance
+                //(assuming no obstacles hit)
+                int closestObstacleX = forwardEdge + pixelsRight;
+
+                //get which direction to scan (Left or Right)
+                int xDirection = pixelsRight / Math.Abs(pixelsRight);
+
+                int startCol = forwardEdge / Tile.TILE_WIDTH;
+                int colsToScan = (pixelsRight + 1)/ Tile.TILE_WIDTH;
+
+                /*Figure which lines of tiles the bounding box intersects with – 
+                 * this will give you a minimum and maximum tile value on the OPPOSITE axis. 
+                 * For example, if we’re walking left, 
+                 * perhaps the player intersects with horizontal rows 32, 33 and 34*/
+                for (int row = sprite.HitRect.Top / Tile.TILE_HEIGHT;
+                         row <= (sprite.HitRect.Bottom - 1) / Tile.TILE_HEIGHT;
+                         row++)
+                {
+                    for (int col = startCol;
+                          Math.Abs(col - startCol) <= colsToScan;
+                          col = col + xDirection)
+                    {
+                        /*Scan along those lines of tiles and towards the direction of movement until 
+                         * you find the closest static obstacle. Then loop through every moving obstacle, 
+                         * and determine which is the closest obstacle that is actually on your path.*/
+
+                        if (!_tileMap.TilePassable(row, col))
+                        {
+                            //if moving right, use the left edge of the obstacle. Else, use the right edge
+                            int obstacleBound = (pixelsRight > 0) ? col * Tile.TILE_WIDTH : (col + 1) * Tile.TILE_WIDTH;
+                            //if this obstacle is closer than any obstacles found so far, set its bound as the new movement limit
+                            //use min if moving left, max if moving right
+                            closestObstacleX = (pixelsRight > 0) ?
+                                Math.Min(closestObstacleX, obstacleBound) :
+                                Math.Max(closestObstacleX, obstacleBound);
+                        }
+                    }
+                }
+
+
+                /*adjust the total movement amount based on an detected obstacles in path
+                  if no obstacles were detected, pixelsRight is not changed
+                  otherwise, this will adjust the sprite's movement so it comes to a stop at the obstacle*/
+                pixelsRight = closestObstacleX - forwardEdge;
+            }
+            #endregion
+
+            #region vertical collision detection
+            if (pixelsDown != 0)   //perform vertical collision detection
+            {
+                /*Get the coordinate of the forward-facing edge, 
+                  e.g.  If falling down, the y coordinate of bottom of bounding box. 
+                  If rising up, y coordinate of top side.*/
+                int forwardEdge = (pixelsDown > 0) ?
+                    sprite.HitRect.Bottom : sprite.HitRect.Top;
+
+                //At most, the player will come to a stop at the maximum movement distance
+                //(assuming no obstacles hit)
+                int closestObstacleY = forwardEdge + pixelsDown;
+
+                //get which direction to scan (Down or Up)
+                int yDirection = pixelsDown / Math.Abs(pixelsDown);
+
+                int startRow = forwardEdge / Tile.TILE_HEIGHT;
+                int rowsToScan = (pixelsDown + 1)/ Tile.TILE_HEIGHT;
+
+                /*Figure which lines of tiles the bounding box intersects with – 
+                 * this will give you a minimum and maximum tile value on the OPPOSITE axis. 
+                 * For example, if we’re walking left, 
+                 * perhaps the player intersects with horizontal rows 32, 33 and 34*/
+                for (int col = sprite.HitRect.Left / Tile.TILE_WIDTH;
+                         col <= (sprite.HitRect.Right - 1) / Tile.TILE_WIDTH;
+                         col++)
+                {
+                    for (int row = startRow;
+                          Math.Abs(row - startRow) <= rowsToScan;
+                          row = row + yDirection)
+                    {
+                        /*Scan along those lines of tiles and towards the direction of movement until 
+                         * you find the closest static obstacle. Then loop through every moving obstacle, 
+                         * and determine which is the closest obstacle that is actually on your path.*/
+
+                        if (!_tileMap.TilePassable(row, col))
+                        {
+                            //if moving down, use the top edge of the obstacle. Else, use the bottom edge
+                            int obstacleBound = (pixelsDown > 0) ? row * Tile.TILE_HEIGHT : (col + 1) * Tile.TILE_HEIGHT;
+                            //if this obstacle is closer than any obstacles found so far, set its bound as the new movement limit
+                            //use min if moving down, max if moving up
+                            closestObstacleY = (pixelsDown > 0) ?
+                                Math.Min(closestObstacleY, obstacleBound) :
+                                Math.Max(closestObstacleY, obstacleBound);
+
+                            //stop falling if standing on a block
+                            if (pixelsDown > 0)
+                            {
+                                if (closestObstacleY == _sprite.HitRect.Bottom)
+                                    _sprite.Velocity.Y = 0;
+                            }
+                        }
+                    }
+                }
+
+
+                /*adjust the total movement amount based on any detected obstacles in path
+                  if no obstacles were detected, pixelsDown is not changed
+                  otherwise, this will adjust the sprite's movement so it comes to a stop at the obstacle*/
+                pixelsDown = closestObstacleY - forwardEdge;
+            }
+            #endregion
 
 
             sprite.Move(pixelsRight, pixelsDown);

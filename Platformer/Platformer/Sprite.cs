@@ -15,7 +15,7 @@ namespace Platformer
         Rectangle _hitRect;
         TimeSpan _animationInterval, _tillNextFrame;
         int _currentFrame, _numFrames;
-        int _moveSpeed;
+        public Vector2 Velocity;
 
         bool _moving;
 
@@ -32,15 +32,11 @@ namespace Platformer
             get { return _hitRect; }
         }
 
-        public int MoveSpeed
-        {
-            get { return _moveSpeed; }
-        }
-
         public Sprite(Texture2D spriteSheet, int spriteWidth, int spriteHeight, int numFrames, int numStates, TimeSpan animationTime, int moveSpeed)
         {
             _spriteSheet = spriteSheet;
             _hitRect = new Rectangle(0, 0, spriteWidth, spriteHeight);
+            Velocity = Vector2.Zero;
             _textureRects = new Rectangle[numStates,numFrames];
             for (int i = 0; i < numStates; i++)
             {
@@ -53,8 +49,6 @@ namespace Platformer
             _tillNextFrame = _animationInterval;
             _currentFrame = 0;
             _numFrames = numFrames;
-            _moveSpeed = moveSpeed;
-
             _spriteState = SpriteState.FacingLeft;
         }
 
@@ -66,6 +60,11 @@ namespace Platformer
 
         public void Update(GameTime gameTime)
         {
+            if (Velocity.X > 0)
+                _spriteState = SpriteState.FacingRight;
+            if (Velocity.X < 0)
+                _spriteState = SpriteState.FacingLeft;
+
             if (_moving)
             {
                 _tillNextFrame -= gameTime.ElapsedGameTime;
@@ -75,20 +74,19 @@ namespace Platformer
                     _tillNextFrame = _animationInterval;
                 }
             }
+            else
+            {
+                _currentFrame = 0;
+            }
             _moving = false;
         }
 
         public void Move(int pixelsRight, int pixelsDown)
         {
-            if (pixelsRight > 0)
-                _spriteState = SpriteState.FacingRight;
-            if (pixelsRight < 0)
-                _spriteState = SpriteState.FacingLeft;
-
             _hitRect.X += pixelsRight;
             _hitRect.Y += pixelsDown;
 
-            _moving = true;
+            _moving = Math.Abs(pixelsRight) > 0 || Math.Abs(pixelsDown) > 0;
         }
 
         public void Draw(SpriteBatch sb)

@@ -75,6 +75,15 @@ namespace Platformer
 
         }
 
+        public bool TilePassable(int row, int col)
+        {
+            //if tile out of range, it is not passable
+            if (row < 0 || row >= _numRows || col < 0 || col >= _numCols)
+                return false;
+            //for this simple demo, I define tileID 0 as passable, all others as impassable
+            return (_tileMap[row][col].TileID == 0);
+        }
+
         public void Draw(SpriteBatch sb)
         {
             int startCol = _offsetX / Tile.TILE_WIDTH;

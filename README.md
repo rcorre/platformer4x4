@@ -3,13 +3,17 @@
 This is a test of github for team 4x4s platformer game for CEN3031
 
 # Steps to set up git
+1. Install git for Windows
+	(go to github.com and follow the instructions)
 
-#Add the repository as a remote
-git remote add origin git@github.com:murphyslaw480/platformer4x4.git
+Follow step 1 on the front page of github.com to set up git.
+Then follow step 3 to fork the project, create a clone, set up a remote, and pull in changes.
 
-# Clone the Repository
-git clone git://github.com/murphyslaw480/Platformer.git
+Try running the project in visual studio to make sure it works for you.
+If it does, try making some changes and then pushing back to the remote - 
+I will try to merge the changes with the master branch.
 
+<<<<<<< HEAD
 #Create a Fork
 Follow the directions on github.com's front page (Part 3 - Forking a Repository.)
 
@@ -39,17 +43,34 @@ git push origin <branch_name>
 Where <branch_name> is the name of the branch you are working on (e.g. git push origin map_editor)
 Once that is done, you can go to github.com, find your branch, and click on the pull request button to request that I pull your new feature into the master branch.
 Once you have added a feature and want to begin work on a new one, remember to make a new branch!
+=======
+You may want to look at Pro Git, a free online book that should explain how to do everything we will need with git.
+Especially read chapter 2:
+http://git-scm.com/book/en/Git-Basics
+>>>>>>> 20ab244362ced87b021b48c5a7ffda1d82f21b31
 
-#Reverting Changes
+
+
+#Some Tips
+Reverting Changes:
 Suppose you make a change and realize you screwed something up.
 You can revert a file back to its status in the last commit.
 First make sure the file isn't staged:
-git reset HEAD <filename>
+git reset HEAD 'filename'
 
 Now revert the file to its previous state:
-git checkout -- <filename>
+git checkout -- 'filename'
 
-Note: All work on that file since the last commit will be lost
+All work on that file since the last commit will be lost
+
+Adding changes to the master branch:
+Fetch the latest version from the remote
+Checkout a new branch for your changes
+Make your changes
+Stage and commit
+Push to the remote
+Make a pull request
+
 =======
 platformer4x4
 =============

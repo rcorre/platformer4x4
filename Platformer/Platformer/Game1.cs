@@ -8,6 +8,7 @@ using Microsoft.Xna.Framework.GamerServices;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
+using System.Diagnostics;
 
 namespace Platformer
 {
@@ -16,17 +17,15 @@ namespace Platformer
     /// </summary>
     public class Game1 : Microsoft.Xna.Framework.Game
     {
-        const int SCREEN_WIDTH = 1280;
-        const int SCREEN_HEIGHT = 720;
+        public const int SCREEN_WIDTH = 1280;
+        public const int SCREEN_HEIGHT = 720;
 
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
 
-        TileMap _tileMap;
+        InputManager _input;
 
-        Sprite _sprite;
-
-        KeyboardState _previousKeyboardState, _currentKeyboardState;
+        List<GameState> _gameStateStack;
 
         public Game1()
         {
@@ -34,6 +33,8 @@ namespace Platformer
             Content.RootDirectory = "Content";
             graphics.PreferredBackBufferWidth = SCREEN_WIDTH;
             graphics.PreferredBackBufferHeight = SCREEN_HEIGHT;
+            _gameStateStack = new List<GameState>();
+            _input = new InputManager();
         }
 
         /// <summary>
@@ -44,8 +45,6 @@ namespace Platformer
         /// </summary>
         protected override void Initialize()
         {
-            // TODO: Add your initialization logic here
-
             base.Initialize();
         }
 
@@ -60,11 +59,7 @@ namespace Platformer
 
             Tile.LoadTileTextures(Content.Load<Texture2D>("tiles"), 2, 2);
 
-            _tileMap = new TileMap(Content, 
-                new Rectangle(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT));
-
-            _sprite = new Sprite(Content.Load<Texture2D>("character"), 48, 48, 2, 2, TimeSpan.FromSeconds(0.2), 4);
-
+            _gameStateStack.Add(new InLevel(0, Content));
         }
 
 
@@ -84,37 +79,21 @@ namespace Platformer
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime)
         {
-            _previousKeyboardState = _currentKeyboardState;
-            _currentKeyboardState = Keyboard.GetState();
+            //make sure to update inputmanager, otherwise player input will not be detected
+            _input.Update();
 
             // Allows the game to exit
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
                 this.Exit();
 
-            if (_currentKeyboardState.IsKeyDown(Keys.D))
-                _tileMap.OffsetX += 1;
-            else if (_currentKeyboardState.IsKeyDown(Keys.A))
-                _tileMap.OffsetX -= 1;
+            if (_gameStateStack.Last().RequestExit)
+                this.Exit();
 
-            if (_currentKeyboardState.IsKeyDown(Keys.S))
-                _tileMap.OffsetY += 1;
-            else if (_currentKeyboardState.IsKeyDown(Keys.W))
-                _tileMap.OffsetY -= 1;
-
-            if (_currentKeyboardState.IsKeyDown(Keys.Right))
-                moveSprite(_sprite, _sprite.MoveSpeed, 0);
-            else if (_currentKeyboardState.IsKeyDown(Keys.Left))
-                moveSprite(_sprite, -_sprite.MoveSpeed, 0);
-
-            _sprite.Update(gameTime);
+            _gameStateStack.Last().Update(gameTime, _input);
 
             base.Update(gameTime);
         }
 
-        private void moveSprite(Sprite sprite, int pixelsRight, int pixelsDown)
-        {
-            sprite.Move(pixelsRight, pixelsDown);
-        }
 
         /// <summary>
         /// This is called when the game should draw itself.
@@ -125,8 +104,7 @@ namespace Platformer
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
             spriteBatch.Begin();
-            _tileMap.Draw(spriteBatch);
-            _sprite.Draw(spriteBatch);
+            _gameStateStack.Last().Draw(spriteBatch);
             spriteBatch.End();
 
 

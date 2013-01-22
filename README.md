@@ -43,7 +43,7 @@ git add .
 
 git add . will add all new and modified files. You can also specify individual files if you don't want to stage them all by saying:
 
-git add <filename>
+git add filename
 
 now that your files are staged, commit your staged files using
 
@@ -58,9 +58,9 @@ To add the message inline (without going to an editor)
 I would recommend commiting every time you test a new part of your feature successfully. For example, if I were making an editor, I might commit once I have some working buttons, commit again when I get tile placement to work, and so on.
 Once your feature is complete, you can push your changes to the remote:
 
-git push origin <branchname>
+git push origin branchname
 
-Where <branchname> is the name of the branch you are working on (e.g. git push origin map_editor)
+Where branchname is the name of the branch you are working on (e.g. git push origin map_editor)
 Once that is done, you can go to github.com, find your branch, and click on the pull request button to request that I pull your new feature into the master branch.
 Once you have added a feature and want to begin work on a new one, remember to make a new branch!
 =======

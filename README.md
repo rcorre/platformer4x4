@@ -18,8 +18,10 @@ I will try to merge the changes with the master branch.
 Follow the directions on github.com's front page (Part 3 - Forking a Repository.)
 
 #Working on the project
+--note: I'm not sure whether you should be pushing/pulling to origin (the main repository under my account) or to upstream (a clone under your own account). Check the github documentation.
 When adding a new feature, the first step is to get the most recent version of the project.
 git fetch
+git pull origin master
 git checkout master
 Now that you have the most recent master version, you should run it to make sure it functions and has the most up-to-date features.
 If everything works fine, create a new branch to work on your new feature.

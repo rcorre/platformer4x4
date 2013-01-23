@@ -1,99 +1,74 @@
-<<<<<<< HEAD
-# README for test platformer
-This is a test of github for team 4x4s platformer game for CEN3031
+## How to work on code for the game
 
-# Steps to set up git
-1. Install git for Windows
-	(go to github.com and follow the instructions)
+1.  Fork this repository (click the Fork button on Github).
 
-Follow step 1 on the front page of github.com to set up git.
-Then follow step 3 to fork the project, create a clone, set up a remote, and pull in changes.
+2.  Clone your forked repository to your computer.
 
-Try running the project in visual studio to make sure it works for you.
-If it does, try making some changes and then pushing back to the remote - 
-I will try to merge the changes with the master branch.
+	$ git clone git://github.com/your_username/platformer4x4.git
 
-<<<<<<< HEAD
-#Create a Fork
-Follow the directions on github.com's front page (Part 3 - Forking a Repository.)
+3.  Set up a remote for this repository 
 
-#Working on the project
---note: I'm not sure whether you should be pushing/pulling to origin (the main repository under my account) or to upstream (a clone under your own account). Check the github documentation.
-When adding a new feature, the first step is to get the most recent version of the project.
+        $ git remote add upstream git://github.com/murphyslaw480/platformer4x4.git
+	upstream refers to the main repository you originally forked from. You have another default remote called "origin" that points to your copy of the repo.
 
-git fetch
+4.  Download any changes from your remotes
 
-git pull origin master
+        $ git fetch --all
+	This just retrieves information about commits, it doesn't modify your code.
 
-git checkout master
+5.  Pull in any changes from the main master branch
+	$ git merge upstream/master
 
-Now that you have the most recent master version, you should run it to make sure it functions and has the most up-to-date features.
-If everything works fine, create a new branch to work on your new feature.
+6.  Start a new branch based on the upstream master branch.
 
-git checkout -b my_feature_name
+        $ git checkout -b newbranchname upstream/master
 
-Use a short but descriptive name for my_feature_name. For example, if I were adding a map editor, I might input:
+7.  Commit changes regularly during work
 
-git checkout -b map_editor
+	$git status		#check what files have changed
+	$ git add <filename>	#stage a particular file
+	$ git add .		#stage all new and modified files
+	$ git commit		#commit staged files
 
-Now that you are on a new branch, you are free to work on your new feature without fear of messing up the main copy. You should commit regularly during your work to save changes you make to your branch.
-First, stage any files you've added/modified
+8.  Push your commits to your Github repository so others can look at them.
 
-git add .
+        $ git push origin branchname
 
-git add . will add all new and modified files. You can also specify individual files if you don't want to stage them all by saying:
+9.  Make a pull request on github.com so I can see that you want me to pull your new feature into the master repository.
 
-git add filename
+10. Start working on a new feature (repeat steps 4-10)
 
-now that your files are staged, commit your staged files using
+### Other useful Git commands
 
-git commit
+    # View changed or newly added files. Good to get an idea of what you should stage before a commit
+    $ git status
 
-It will ask you to enter a short message to describe your commit.
-You can also use
+    # Stage changed files
+    $ git add <file>
 
-git commit -m "My message here"
+    # Commit staged changes
+    $ git commit -m "<commit message>"
 
-To add the message inline (without going to an editor)
-I would recommend commiting every time you test a new part of your feature successfully. For example, if I were making an editor, I might commit once I have some working buttons, commit again when I get tile placement to work, and so on.
-Once your feature is complete, you can push your changes to the remote:
+    # List all branches on your computer
+    $ git branch -a
 
-git push origin branchname
+    # Check out a branch
+    $ git checkout
 
-Where branchname is the name of the branch you are working on (e.g. git push origin map_editor)
-Once that is done, you can go to github.com, find your branch, and click on the pull request button to request that I pull your new feature into the master branch.
-Once you have added a feature and want to begin work on a new one, remember to make a new branch!
-=======
-You may want to look at Pro Git, a free online book that should explain how to do everything we will need with git.
-Especially read chapter 2:
-http://git-scm.com/book/en/Git-Basics
->>>>>>> 20ab244362ced87b021b48c5a7ffda1d82f21b31
+    # Make a new branch based on the currently-checked-out branch
+    $ git checkout -b <new branch name>
 
+    # Display the commit log
+    $ git log
 
+    # Add a named remote repository
+    $ git remote add <remote name> <remote url>
 
-#Some Tips
-Reverting Changes:
-Suppose you make a change and realize you screwed something up.
-You can revert a file back to its status in the last commit.
-First make sure the file isn't staged:
-git reset HEAD 'filename'
+    # Download updates from a remote repository
+    $ git fetch <remote name>
 
-Now revert the file to its previous state:
-git checkout -- 'filename'
-
-All work on that file since the last commit will be lost
-
-Adding changes to the master branch:
-Fetch the latest version from the remote
-Checkout a new branch for your changes
-Make your changes
-Stage and commit
-Push to the remote
-Make a pull request
-
-=======
-platformer4x4
-=============
-
-Test Repository for CEN3031 Project
->>>>>>> d75c83ea999b9e6aa7e47cf441f73aff1f1dedb5
+    # Rebase your current branch on top of another branch
+    # This is most likely what you should do if you have made some commits
+    # but there are new commits in the master repository that you want to
+    # include.
+    $ git rebase <branch name>

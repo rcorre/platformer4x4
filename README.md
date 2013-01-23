@@ -4,7 +4,7 @@
 
 2.  Clone your forked repository to your computer.
 
-	$ git clone git://github.com/your_username/platformer4x4.git
+        $ git clone git://github.com/your_username/platformer4x4.git
 
 3.  Set up a remote for this repository 
 
@@ -18,7 +18,7 @@
 
 5.  Pull in any changes from the main master branch
 
-	$ git merge upstream/master
+        $ git merge upstream/master
 
 6.  Start a new branch based on the upstream master branch.
 
@@ -26,10 +26,10 @@
 
 7.  Commit changes regularly during work
 
-	$git status		#check what files have changed
-	$ git add <filename>	#stage a particular file
-	$ git add .		#stage all new and modified files
-	$ git commit		#commit staged files
+        $git status		#check what files have changed
+        $ git add <filename>	#stage a particular file
+        $ git add .		#stage all new and modified files
+        $ git commit		#commit staged files
 
 8.  Push your commits to your Github repository so others can look at them.
 

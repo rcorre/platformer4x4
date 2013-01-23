@@ -17,6 +17,7 @@
 	This just retrieves information about commits, it doesn't modify your code.
 
 5.  Pull in any changes from the main master branch
+
 	$ git merge upstream/master
 
 6.  Start a new branch based on the upstream master branch.

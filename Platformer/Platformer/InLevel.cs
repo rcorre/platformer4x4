@@ -8,14 +8,24 @@ using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 
+using xTile;
+using xTile.Display;
+using xTile.Layers;
+using xTile.Tiles;
+
 namespace Platformer
 {
     class InLevel : GameState
     {
-        TileMap _tileMap;
+        public static XnaDisplayDevice MapDisplayDevice;
 
+        Map _tileMap;
+        xTile.Dimensions.Rectangle _viewport;
         Sprite _sprite;
         Rectangle _hitRect;
+        Layer _collisionLayer;
+        Tile _hitDetectTile;
+        xTile.Dimensions.Location _tileLocation;
 
         KeyboardState _previousKeyboardState, _currentKeyboardState;
 
@@ -27,8 +37,15 @@ namespace Platformer
             _sprite = new Sprite(content.Load<Texture2D>("character"), 48, 48, 2, 2, TimeSpan.FromSeconds(0.2), 4);
             _sprite.SetLocation(60, Game1.SCREEN_HEIGHT - 2 * Tile.TILE_WIDTH);
 
-            _tileMap = new TileMap(content, 
-                new Rectangle(0, 0, Game1.SCREEN_WIDTH, Game1.SCREEN_HEIGHT));
+            _tileMap = content.Load<Map>("Maps/level1");
+            _tileMap.LoadTileSheets(MapDisplayDevice);
+            _viewport = new xTile.Dimensions.Rectangle(
+                new xTile.Dimensions.Size(
+                    Game1.SCREEN_WIDTH, Game1.SCREEN_HEIGHT));
+
+            _collisionLayer = _tileMap.Layers[0];
+
+
         }
 
         /// <summary>
@@ -39,19 +56,21 @@ namespace Platformer
         public override void Update(GameTime gameTime, InputManager input)
         {
 
+            _tileMap.Update(gameTime.ElapsedGameTime.Milliseconds);
+
             // Allows the game to exit
             if (input.KeyDown(Keys.Escape))
                 RequestExit = true;
 
             if (input.KeyDown(Keys.D))
-                _tileMap.OffsetX += 1;
+                _viewport.X += 1;
             else if (input.KeyDown(Keys.A))
-                _tileMap.OffsetX -= 1;
+                _viewport.X -= 1;
 
             if (input.KeyDown(Keys.S))
-                _tileMap.OffsetY += 1;
+                _viewport.Y += 1;
             else if (input.KeyDown(Keys.W))
-                _tileMap.OffsetY -= 1;
+                _viewport.Y -= 1;
 
             if (input.KeyDown(Keys.Right))
                 _sprite.Velocity.X = 3;
@@ -111,7 +130,7 @@ namespace Platformer
                          * you find the closest static obstacle. Then loop through every moving obstacle, 
                          * and determine which is the closest obstacle that is actually on your path.*/
 
-                        if (!_tileMap.TilePassable(row, col))
+                        if (_collisionLayer.Tiles[col,row] != null)
                         {
                             //if moving right, use the left edge of the obstacle. Else, use the right edge
                             int obstacleBound = (pixelsRight > 0) ? col * Tile.TILE_WIDTH : (col + 1) * Tile.TILE_WIDTH;
@@ -167,7 +186,7 @@ namespace Platformer
                          * you find the closest static obstacle. Then loop through every moving obstacle, 
                          * and determine which is the closest obstacle that is actually on your path.*/
 
-                        if (!_tileMap.TilePassable(row, col))
+                        if (_collisionLayer.Tiles[col,row] != null)
                         {
                             //if moving down, use the top edge of the obstacle. Else, use the bottom edge
                             int obstacleBound = (pixelsDown > 0) ? row * Tile.TILE_HEIGHT : (col + 1) * Tile.TILE_HEIGHT;
@@ -205,8 +224,8 @@ namespace Platformer
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         public override void Draw(SpriteBatch sb)
         {
-            _tileMap.Draw(sb);
-            _sprite.Draw(sb);
+            _tileMap.Draw(MapDisplayDevice, _viewport);
+            _sprite.Draw(sb, _viewport.X, _viewport.Y);
         }
     }
 }

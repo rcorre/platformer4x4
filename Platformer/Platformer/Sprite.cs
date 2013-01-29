@@ -12,7 +12,7 @@ namespace Platformer
     {
         Texture2D _spriteSheet;
         Rectangle[,] _textureRects;
-        Rectangle _hitRect;
+        Rectangle _hitRect, _drawRect;
         TimeSpan _animationInterval, _tillNextFrame;
         int _currentFrame, _numFrames;
         public Vector2 Velocity;
@@ -36,6 +36,7 @@ namespace Platformer
         {
             _spriteSheet = spriteSheet;
             _hitRect = new Rectangle(0, 0, spriteWidth, spriteHeight);
+            _drawRect = new Rectangle(0, 0, spriteWidth, spriteHeight);
             Velocity = Vector2.Zero;
             _textureRects = new Rectangle[numStates,numFrames];
             for (int i = 0; i < numStates; i++)
@@ -89,9 +90,11 @@ namespace Platformer
             _moving = Math.Abs(pixelsRight) > 0 || Math.Abs(pixelsDown) > 0;
         }
 
-        public void Draw(SpriteBatch sb)
-        { 
-            sb.Draw(_spriteSheet, _hitRect, _textureRects[(int)_spriteState, _currentFrame], Color.White);
+        public void Draw(SpriteBatch sb, int offsetX, int offsetY)
+        {
+            _drawRect.X = _hitRect.X - offsetX;
+            _drawRect.Y = _hitRect.Y - offsetY;
+            sb.Draw(_spriteSheet, _drawRect, _textureRects[(int)_spriteState, _currentFrame], Color.White);
         }
     }
 }

@@ -105,6 +105,9 @@
     <Reference Include="System.Net">
       <Private>False</Private>
     </Reference>
+    <Reference Include="xTile">
+      <HintPath>..\xTile\xTile.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="GameState.cs" />
@@ -120,6 +123,7 @@
   <ItemGroup>
     <Content Include="Game.ico" />
     <Content Include="GameThumbnail.png" />
+    <None Include="ClassDiagram1.cd" />
     <None Include="MapData.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <SubType>Designer</SubType>
@@ -127,8 +131,9 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\PlatformerContent\PlatformerContent.contentproj">
-      <Name>PlatformerContent</Name>
+      <Name>PlatformerContent %28Content%29</Name>
       <XnaReferenceType>Content</XnaReferenceType>
+      <Project>{BCE72008-2151-42B9-8EA4-06157807B164}</Project>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

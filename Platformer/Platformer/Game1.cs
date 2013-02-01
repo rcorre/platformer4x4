@@ -57,7 +57,8 @@ namespace Platformer
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
-            Tile.LoadTileTextures(Content.Load<Texture2D>("tiles"), 2, 2);
+            InLevel.MapDisplayDevice = new xTile.Display.XnaDisplayDevice(
+                this.Content, this.GraphicsDevice);
 
             _gameStateStack.Add(new InLevel(0, Content));
         }

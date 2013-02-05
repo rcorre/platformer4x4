@@ -6,10 +6,6 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PlatformerContent", "Platformer\PlatformerContent\PlatformerContent.contentproj", "{BCE72008-2151-42B9-8EA4-06157807B164}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "xTile", "xTile", "{8EE0C06F-B9A7-40E7-86FE-ECBD6DCB9212}"
-	ProjectSection(SolutionItems) = preProject
-		Platformer\xTile\xTile.dll = Platformer\xTile\xTile.dll
-		Platformer\xTile\xTile.Pipeline.dll = Platformer\xTile\xTile.Pipeline.dll
-	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

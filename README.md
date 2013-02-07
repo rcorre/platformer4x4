@@ -1,3 +1,33 @@
+##New: Empty classes, namespaces, and regions
+I added four namespaces to the main branch: Model, View, Control, and Data. Read the SDD if you are not sure what
+these are for.
+In addition, I added some empty classes to each namespace, so the basic classes we will need for the game are already
+located in the appropriate namespace. When you want to work on a class, first look if I have already added a definition
+for it, if so, just add your code to that definition. If not, create a new class in the appropriate namespace.
+(Note: folders in the solution (project) correspond to namespaces. If you add a class to the View folder, Visual Studio
+will automatically add it to the View namespace.)
+
+I added region declarations to the empty classes in Model, View, and
+Control. The region statements are as follows:
+
+	static	- static variables and methods
+	fields	- private/protected instance variables
+	properties  -  public instance variables and accessors to private fields
+	constructor - constructor(s) for the class
+	methods - instance methods (static methods should be in the static region)
+
+These statements don't actually affect the compiled code, but they improve
+clarity and organization and allow easy code folding, so you can focus on
+just the parts of the code that you need to. Please put your code inside
+of the appropriate region.
+
+Note: Many classes may not have any static members or methods- in this
+case, you can leave this region blank.
+Also, note that the fields region is reserved for private/protected
+attributes whereas the properties region should be used for public
+attributes or properties that expose private fields (Properties are C#'s
+version of Java's get/set accessors)
+
 ## How to work on code for the game
 
 1.  Fork this repository (click the Fork button on Github).

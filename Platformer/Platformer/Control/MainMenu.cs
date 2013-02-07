@@ -8,7 +8,7 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace Platformer.Control
 {
-    class MainMenu
+    class MainMenu : GameState
     {
         #region static
         #endregion

@@ -8,7 +8,7 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace Platformer.View
 {
-    class LevelView
+    class LevelView 
     {
         #region static
         #endregion

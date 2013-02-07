@@ -8,7 +8,7 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace Platformer.Control
 {
-    class Overworld
+    class Overworld : GameState
     {
         #region static
         #endregion

@@ -52,14 +52,19 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="TileSheets\tiles.png">
-      <Name>tiles</Name>
+    <Compile Include="TileSheets\test_tiles.png">
+      <Name>test_tiles</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
   </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
-    <Folder Include="Maps\" />
+    <None Include="Maps\test_level.tide">
+      <Name>test_level</Name>
+      <Importer>TideImporter</Importer>
+      <Processor>TideProcessor</Processor>
+    </None>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\XNA Game Studio\$(XnaFrameworkVersion)\Microsoft.Xna.GameStudio.ContentPipeline.targets" />
   <!--  To modify your build process, add your task inside one of the targets below and uncomment it. 

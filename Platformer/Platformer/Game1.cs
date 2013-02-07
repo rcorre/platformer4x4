@@ -8,7 +8,10 @@ using Microsoft.Xna.Framework.GamerServices;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
+
 using System.Diagnostics;
+
+using Platformer.Control;
 
 namespace Platformer
 {
@@ -22,6 +25,11 @@ namespace Platformer
 
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
+
+        //current game state. call Update() and Draw() on it every frame
+        GameState _currentState;
+        //update and pass to current State every Update()
+        InputManager _input;
 
         public Game1()
         {
@@ -71,11 +79,16 @@ namespace Platformer
         protected override void Update(GameTime gameTime)
         {
             //make sure to update inputmanager, otherwise player input will not be detected
-            //_input.Update();
+            _input.Update();
 
             // Allows the game to exit
-            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
+            if (_currentState.RequestExit)
                 this.Exit();
+
+            if (_currentState.NewState != null)     //new state requested
+                _currentState = _currentState.NewState;
+
+            _currentState.Update(gameTime, _input);
 
             base.Update(gameTime);
         }
@@ -90,8 +103,8 @@ namespace Platformer
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
             spriteBatch.Begin();
+            _currentState.Draw(spriteBatch);
             spriteBatch.End();
-
 
             base.Draw(gameTime);
         }

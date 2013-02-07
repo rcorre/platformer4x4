@@ -23,11 +23,19 @@ namespace Platformer.Control
         /// It will set this to an initialized instance of the new state.
         /// Game1.cs will read this and set the new gamestate
         /// </summary>
+<<<<<<< HEAD
         public GameState NewState;
         /// <summary>
         /// Whether the user has requested to exit the game (close everything)
         /// </summary>
         public bool RequestExit;
+=======
+        GameState NewState;
+        /// <summary>
+        /// Whether the user has requested to exit the game (close everything)
+        /// </summary>
+        bool RequestExit;
+>>>>>>> 7a81e6891a1fdcbea58ff76f831bc2631f08dfe9
         #endregion
 
         #region constructor

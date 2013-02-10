@@ -12,6 +12,8 @@ using Microsoft.Xna.Framework.Media;
 using System.Diagnostics;
 
 using Platformer.Control;
+using Platformer.View;
+using Platformer.Model;
 
 namespace Platformer
 {
@@ -59,7 +61,10 @@ namespace Platformer
         {
             spriteBatch = new SpriteBatch(GraphicsDevice);
             Level.MapDisplayDevice = new xTile.Display.XnaDisplayDevice(this.Content, this.GraphicsDevice);
+            //give Level and Sprite ref to Content so they can load data
             Level.Content = this.Content;
+            Sprite.SpriteDataDict = DataLoader.LoadSpriteData();
+            SpriteView.LoadTextures(Sprite.SpriteDataDict.Keys.ToArray<string>(), Content);
 
             _currentState = new Level(0);
         }

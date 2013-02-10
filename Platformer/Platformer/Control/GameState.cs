@@ -28,11 +28,6 @@ namespace Platformer.Control
         /// Whether the user has requested to exit the game (close everything)
         /// </summary>
         public bool RequestExit;
-        GameState NewState;
-        /// <summary>
-        /// Whether the user has requested to exit the game (close everything)
-        /// </summary>
-        bool RequestExit;
         #endregion
 
         #region constructor

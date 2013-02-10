@@ -47,6 +47,7 @@ namespace Platformer
         /// </summary>
         protected override void Initialize()
         {
+            _input = new InputManager();
             base.Initialize();
         }
 
@@ -57,8 +58,10 @@ namespace Platformer
         protected override void LoadContent()
         {
             spriteBatch = new SpriteBatch(GraphicsDevice);
-            //InLevel.MapDisplayDevice = new xTile.Display.XnaDisplayDevice(
-                //this.Content, this.GraphicsDevice);
+            Level.MapDisplayDevice = new xTile.Display.XnaDisplayDevice(this.Content, this.GraphicsDevice);
+            Level.Content = this.Content;
+
+            _currentState = new Level(0);
         }
 
 

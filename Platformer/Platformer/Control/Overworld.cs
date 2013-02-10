@@ -23,6 +23,15 @@ namespace Platformer.Control
         #endregion
 
         #region methods
+        public override void Update(GameTime gameTime, InputManager input)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override void Draw(SpriteBatch sb)
+        {
+            throw new NotImplementedException();
+        }
         #endregion
     }
 }

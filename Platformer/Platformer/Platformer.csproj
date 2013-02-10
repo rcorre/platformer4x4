@@ -133,7 +133,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Game1.cs" />
     <Compile Include="View\LevelView.cs" />
+    <Compile Include="View\MusicPlayer.cs" />
     <Compile Include="View\OverworldView.cs" />
+    <Compile Include="View\SoundPlayer.cs" />
     <Compile Include="View\SpriteView.cs" />
   </ItemGroup>
   <ItemGroup>

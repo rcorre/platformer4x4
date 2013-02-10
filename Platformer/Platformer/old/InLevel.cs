@@ -17,7 +17,7 @@ namespace old
 {
     class InLevel : GameState
     {
-        public static XnaDisplayDevice MapDisplayDevice;
+        public static IDisplayDevice MapDisplayDevice;
 
         Map _tileMap;
         xTile.Dimensions.Rectangle _viewport;

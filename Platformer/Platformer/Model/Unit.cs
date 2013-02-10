@@ -9,6 +9,12 @@ namespace Platformer.Model
 {
     class Unit
     {
+        #region classes
+        public class UnitData
+        {
+        }
+        #endregion
+
         #region static
         #endregion
 

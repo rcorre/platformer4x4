@@ -115,9 +115,7 @@
     <Compile Include="Control\Level.cs" />
     <Compile Include="Control\MainMenu.cs" />
     <Compile Include="Control\Overworld.cs" />
-    <Compile Include="Data\ProgressData.cs" />
-    <Compile Include="Data\SpriteData.cs" />
-    <Compile Include="Data\UnitData.cs" />
+    <Compile Include="Control\ProgressData.cs" />
     <Compile Include="Model\Enemy.cs" />
     <Compile Include="Model\Gino.cs" />
     <Compile Include="Model\Sprite.cs" />
@@ -139,15 +137,6 @@
     <Compile Include="View\SpriteView.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Data\ProgressData.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Data\SpriteData.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Data\UnitData.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
     <Content Include="Game.ico" />
     <Content Include="GameThumbnail.png" />
   </ItemGroup>

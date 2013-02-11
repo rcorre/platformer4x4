@@ -14,6 +14,11 @@ namespace Platformer.View
         #region static
         const string SPRITESHEET_PATH = "spritesheets/";
         static Dictionary<string, Texture2D> TextureDict;
+        /// <summary>
+        /// Call during game1.LoadContent to load all needed textures
+        /// </summary>
+        /// <param name="textureNames">string array containing the names of all textures to load</param>
+        /// <param name="content">ContentManager to load textures with</param>
         public static void LoadTextures(string[] textureNames, ContentManager content)
         {
             TextureDict = new Dictionary<string, Texture2D>();

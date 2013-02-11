@@ -22,7 +22,6 @@ namespace Platformer.Model
         #endregion
         #region static
         public static Dictionary<string, SpriteData> SpriteDataDict;
-        public static ContentManager Content;   //ref to Game1.Content for loading sprites
         #endregion
 
         #region fields

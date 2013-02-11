@@ -20,23 +20,33 @@ namespace Platformer.Model
             public int HitRectWidth;
             public int HitRectHeight;
             public float HorizontalDeceleration;
-            public float VerticalDeceleration;
+            public float Gravity;
         }
         #endregion
 
         #region static
         public Dictionary<string, UnitData> UnitDataDict;
+
+        public enum UnitState
+        {
+            Standing,
+            Running,
+            InAir,
+        }
+
         #endregion
 
         #region fields
         Vector2 _position;  //center of hitrect and draw point of sprite
-        Vector2 _velocity;  //speed and direction
-        float _walkAcceleration;    //how much unit can accelerate when moving
-        float _maxSpeed;    //max speed a unit can reach while moving
-        float _jumpSpeed;    //initial vertical velocity while jumping
+        Vector2 _velocity;  //speed and direction   (px/s)
+        float _walkAcceleration;    //how much unit can accelerate when moving (px/sec^2)
+        float _maxSpeed;    //max speed a unit can reach while moving (px/sec)
+        float _jumpSpeed;    //initial vertical velocity while jumping (px/sec)
+        float _horizontalDeceleration;  //how much to slow down each second while not running (px/sec^2)
+        float _gravity;    //how much to increase vertical velocity while inAir (px/sec^2)
         Rectangle _hitRect; //for hit detection. Likely smaller than sprite
         Sprite _sprite;     //contains drawing information to be passed to SpriteView in Level.cs
-        bool _facingRight;  //true if facing right, else facing left
+        UnitState _state;   //current state of unit
         #endregion
 
         #region properties
@@ -84,25 +94,53 @@ namespace Platformer.Model
                 (int)(position.X - data.HitRectWidth / 2.0f),
                 (int)(position.Y - data.HitRectHeight / 2.0f),
                 data.HitRectWidth, data.HitRectHeight);
-            _sprite = new Sprite(key);  //sprite key should match unit key
-            _facingRight = true;
+            _sprite = new Sprite(key, facingRight);  //sprite key should match unit key
         }
         #endregion
 
         #region methods
         public void WalkRight()
         {
-            _facingRight = true;
-            _velocity.X += _walkAcceleration;
+            if (_state != UnitState.InAir)
+            {
+                _state = UnitState.Running;
+                _sprite.FacingRight = true;
+                _velocity.X += _walkAcceleration;
+            }
         }
+
         public void WalkLeft()
         {
-            _facingRight = false;
-            _velocity.X -= _walkAcceleration;
+            if (_state != UnitState.InAir)
+            {
+                _state = UnitState.Running;
+                _sprite.FacingRight = false;
+                _velocity.X -= _walkAcceleration;
+            }
         }
+
         public void Jump()
         {
-            _velocity.Y = _jumpSpeed;
+            if (_state != UnitState.InAir)
+            {
+                _velocity.Y = -_jumpSpeed;
+                _state = UnitState.InAir;
+            }
+        }
+
+        public void Update(GameTime gameTime)
+        {
+            if (_state != UnitState.Running)    //not running, slow down
+                _velocity.X += _horizontalDeceleration * (float)gameTime.ElapsedGameTime.TotalSeconds 
+                    * ((_velocity.X > 0) ? -1 : 1);     //make sure slowdown is opposite to direction of velocity
+
+            if (_state == UnitState.InAir)
+                _velocity.Y += _gravity * (float)gameTime.ElapsedGameTime.TotalSeconds;
+
+            float speedFactor = _velocity.Length() / _maxSpeed;
+            if (speedFactor > 1.0f)
+                _velocity *= speedFactor;
+            _sprite.Animate(0, gameTime, _velocity.X / _maxSpeed);
         }
         #endregion
     }

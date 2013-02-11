@@ -31,14 +31,14 @@ namespace Platformer.Model
         int _numStates;
         //time between each animation frame, and countdown to next frame
         TimeSpan _animationInterval, _timeTillNext;
-        int _currentFrame;
-        int _currentState;
-        float _scale;
-        float _angle;
-        //organized by state, frame
-        Rectangle[,] _spriteSelectRects;
-        Color _shade;
-        Vector2 _origin;
+        int _currentFrame;  //animation frame (row of spritesheet
+        int _currentState;  //animation state (column of spritesheet)
+        float _scale;       //magnification, 1.0f is normal sprite size
+        float _angle;       //rotation about origin (radians, 0 is straight up)
+        Rectangle[,] _spriteSelectRects;    //texutre source selection rects [state, frame]
+        Color _shade;        // color with which to draw sprite
+        Vector2 _origin;     //center of texture
+        bool _facingRight;  //true if facing right, else facing left
         #endregion
 
         #region properties
@@ -50,10 +50,15 @@ namespace Platformer.Model
         public float Angle { get { return _angle; } }
         public Vector2 Origin { get { return _origin; } }
         public Color Shade { get { return _shade; } }
+        public bool FacingRight 
+        { 
+            get { return _facingRight; }
+            set { _facingRight = value; }
+        }
         #endregion
 
         #region constructor
-        public Sprite(string name)
+        public Sprite(string name, bool facingRight)
         {
             SpriteData data = SpriteDataDict[name];
             _origin = new Vector2(data.SpriteWidth / 2.0f, data.SpriteHeight / 2.0f);
@@ -78,6 +83,7 @@ namespace Platformer.Model
             //set animation timers
             _animationInterval = TimeSpan.FromSeconds(data.SecondsPerFrame);
             _timeTillNext = _animationInterval;
+            _facingRight = facingRight;
         }
         #endregion
 

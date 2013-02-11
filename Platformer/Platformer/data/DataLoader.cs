@@ -34,5 +34,21 @@ namespace Platformer.Data
                     }).ToDictionary(t => t.Key);
         }
 
+        public static Dictionary<string, Unit.UnitData> LoadUnitData()
+        {
+            return (from ud in XElement.Load(SPRITEDATA_PATH).Descendants("UnitData")
+                    select new Unit.UnitData
+                    {
+                        Key = (string)ud.Attribute("Key"),
+                        HitRectHeight = (int)ud.Attribute("HitRectHeight"),
+                        HitRectWidth = (int)ud.Attribute("HitRectWidth"),
+                        WalkAcceleration = (float)ud.Attribute("WalkAcceleration"),
+                        MaxSpeed = (float)ud.Attribute("MaxSpeed"),
+                        JumpSpeed = (float)ud.Attribute("JumpSpeed"),
+                        HorizontalDeceleration = (float)ud.Attribute("HorizontalDeceleration"),
+                        Gravity = (float)ud.Attribute("Gravity")
+                    }).ToDictionary(t => t.Key);
+        }
+
     }
 }

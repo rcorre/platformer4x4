@@ -116,7 +116,7 @@
     <Compile Include="Control\MainMenu.cs" />
     <Compile Include="Control\Overworld.cs" />
     <Compile Include="Control\ProgressData.cs" />
-    <Compile Include="DataLoader.cs" />
+    <Compile Include="Data\DataLoader.cs" />
     <Compile Include="Model\Enemy.cs" />
     <Compile Include="Model\Gino.cs" />
     <Compile Include="Model\Sprite.cs" />
@@ -139,14 +139,15 @@
     <Compile Include="XnaHelper.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="data\SpriteData.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="data\UnitData.xml">
+    <None Include="Data\SpriteData.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <SubType>Designer</SubType>
     </None>
-    <None Include="data\ProgressData.xml">
+    <None Include="Data\UnitData.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Data\ProgressData.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <Content Include="Game.ico" />

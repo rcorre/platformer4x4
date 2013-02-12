@@ -25,7 +25,7 @@ namespace Platformer.Model
         #endregion
 
         #region static
-        public Dictionary<string, UnitData> UnitDataDict;
+        public static Dictionary<string, UnitData> UnitDataDict;
 
         public enum UnitState
         {
@@ -73,12 +73,16 @@ namespace Platformer.Model
                 _hitRect.Y = value;
             }
         }
-        public int Right 
+        public int Bottom 
         { 
             get { return _hitRect.Bottom; }
             set { Top = value - _hitRect.Height; }
         }
         public Vector2 Center { get { return _position; } }
+
+        public Rectangle HitRect { get { return _hitRect; } }
+
+        public Sprite Sprite { get { return _sprite; } }
         #endregion
 
         #region constructor

@@ -17,6 +17,7 @@ namespace Platformer.Data
     {
         //datafile locations
         const string SPRITEDATA_PATH = "Data/SpriteData.xml";
+        const string UNITDATA_PATH = "Data/UnitData.xml";
         //ref to Game1.Content for loading resources
         public static ContentManager Content;
 
@@ -36,7 +37,7 @@ namespace Platformer.Data
 
         public static Dictionary<string, Unit.UnitData> LoadUnitData()
         {
-            return (from ud in XElement.Load(SPRITEDATA_PATH).Descendants("UnitData")
+            return (from ud in XElement.Load(UNITDATA_PATH).Descendants("UnitData")
                     select new Unit.UnitData
                     {
                         Key = (string)ud.Attribute("Key"),

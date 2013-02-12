@@ -70,6 +70,10 @@ namespace Platformer
             Level.MapDisplayDevice = new xTile.Display.XnaDisplayDevice(this.Content, this.GraphicsDevice);
             //give Level ref to Content so they can load data
             Level.Content = this.Content;
+
+            //initialize unit data
+            Unit.UnitDataDict = DataLoader.LoadUnitData();
+            //initialize sprite data
             Sprite.SpriteDataDict = DataLoader.LoadSpriteData();
             SpriteView.LoadTextures(Sprite.SpriteDataDict.Keys.ToArray<string>(), Content);
 

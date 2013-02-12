@@ -19,6 +19,10 @@ namespace Platformer.Model
         #endregion
 
         #region constructor
+        public Enemy(string key, Vector2 position, bool facingRight)
+            :base(key, position, facingRight)
+        {
+        }
         #endregion
 
         #region methods

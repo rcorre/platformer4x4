@@ -48,8 +48,6 @@ namespace Platformer.Control
                 new xTile.Dimensions.Size(
                     Game1.SCREEN_WIDTH, Game1.SCREEN_HEIGHT));
 
-
-
             //load the map for the specified level
             _tileMap = Content.Load<Map>("Maps\\" + levelNumber);
 
@@ -57,6 +55,7 @@ namespace Platformer.Control
             _tileMap.LoadTileSheets(MapDisplayDevice);
 
             _collisionLayer = _tileMap.Layers[0];
+
         }
         #endregion
 

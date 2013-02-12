@@ -7,6 +7,8 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 
+using Platformer.Model;
+
 namespace Platformer.View
 {
     static class SpriteView
@@ -48,13 +50,20 @@ namespace Platformer.View
         /// <param name="origin">Point about which to center texture</param>
         /// <param name="angle">Rotation of sprite, where 0 is north(radians)</param>
         /// <param name="scale">Sizing. 1.0f is normal size</param>
-        /// <param name="mirror">Whether to flip horizontally</param>
+        /// <param name="facingRight">Whether Sprite is facing to right (if not, will be mirrored horizontally)</param>
         public static void DrawSprite(SpriteBatch sb, string key, Vector2 position, 
             Rectangle source, Color color, Vector2 origin, float angle, float scale,
-            bool mirror)
+            bool facingRight)
         {
             sb.Draw(TextureDict[key], position, source, color, angle, origin, scale,
-                mirror ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0.0f);
+                facingRight ? SpriteEffects.None : SpriteEffects.FlipHorizontally , 0.0f);
+        }
+
+        public static void DrawSprite(SpriteBatch sb, Unit unit)
+        {
+            Sprite s = unit.Sprite;
+            DrawSprite(sb, s.TextureKey, unit.Center, s.TextureSelectRect,
+                 s.Shade, s.Origin, s.Angle, s.Scale, s.FacingRight);
         }
 
         #endregion

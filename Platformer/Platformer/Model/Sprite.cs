@@ -39,6 +39,7 @@ namespace Platformer.Model
         Color _shade;        // color with which to draw sprite
         Vector2 _origin;     //center of texture
         bool _facingRight;  //true if facing right, else facing left
+        string _textureKey; //key to access drawing texture
         #endregion
 
         #region properties
@@ -55,11 +56,13 @@ namespace Platformer.Model
             get { return _facingRight; }
             set { _facingRight = value; }
         }
+        public string TextureKey { get { return _textureKey; } }
         #endregion
 
         #region constructor
         public Sprite(string name, bool facingRight)
         {
+            _textureKey = name;
             SpriteData data = SpriteDataDict[name];
             _origin = new Vector2(data.SpriteWidth / 2.0f, data.SpriteHeight / 2.0f);
             _shade = Color.White;

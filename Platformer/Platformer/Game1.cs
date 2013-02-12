@@ -60,8 +60,14 @@ namespace Platformer
         protected override void LoadContent()
         {
             spriteBatch = new SpriteBatch(GraphicsDevice);
+
+            //initialize helper pixel texture for debugging
+            XnaHelper.PixelTexture = new Texture2D(GraphicsDevice, 1, 1);
+            XnaHelper.PixelTexture.SetData<Color>(new Color[] {Color.White});
+
+            //needed for level to load and draw maps
             Level.MapDisplayDevice = new xTile.Display.XnaDisplayDevice(this.Content, this.GraphicsDevice);
-            //give Level and Sprite ref to Content so they can load data
+            //give Level ref to Content so they can load data
             Level.Content = this.Content;
             Sprite.SpriteDataDict = DataLoader.LoadSpriteData();
             SpriteView.LoadTextures(Sprite.SpriteDataDict.Keys.ToArray<string>(), Content);

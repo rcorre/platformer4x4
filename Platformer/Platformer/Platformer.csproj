@@ -136,6 +136,7 @@
     <Compile Include="View\OverworldView.cs" />
     <Compile Include="View\SoundPlayer.cs" />
     <Compile Include="View\SpriteView.cs" />
+    <Compile Include="XnaHelper.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="data\SpriteData.xml">

@@ -31,6 +31,20 @@ namespace Platformer.Control
         /// </summary>
         public bool MoveRight { get { return _currentKeyState.IsKeyDown(Keys.Right); } }
         /// <summary>
+        /// Whether the player is holding the up key
+        /// </summary>
+        public bool MoveUp
+        {
+            get { return _currentKeyState.IsKeyDown(Keys.Up); }
+        }
+        /// <summary>
+        /// Whether the player is holding the down key
+        /// </summary>
+        public bool MoveDown
+        {
+            get { return _currentKeyState.IsKeyDown(Keys.Down); }
+        }
+        /// <summary>
         /// Whether the player has tapped the left movement key
         /// </summary>
         public bool SelectLeft
@@ -47,7 +61,7 @@ namespace Platformer.Control
         /// <summary>
         /// Whether the player has tapped the jump button
         /// </summary>
-        public bool MoveUp
+        public bool Jump
         {
             get { return _currentKeyState.IsKeyDown(Keys.Up) && _pastKeyState.IsKeyUp(Keys.Up); }
         }

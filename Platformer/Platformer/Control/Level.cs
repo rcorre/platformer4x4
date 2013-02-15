@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Diagnostics;
 
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
@@ -36,6 +37,7 @@ namespace Platformer.Control
         Tile _hitDetectTile;
         xTile.Dimensions.Location _tileLocation;
         Vector2 centerPos = Vector2.Zero;
+        Unit unit = new Unit("Test", Vector2.Zero, false);
         #endregion
 
         #region properties
@@ -63,35 +65,41 @@ namespace Platformer.Control
         #region methods
         public override void Update(GameTime gameTime, InputManager input)
         {
+            handleInput(input);
             centerCamera(centerPos);
+            unit.Right = (int)centerPos.X;
+            unit.Bottom = (int)centerPos.Y;
         }
 
         private void handleInput(InputManager input)
         {
             if (input.MoveLeft)
-                centerPos.X -= 1;
+                centerPos.X -= 10;
             else if (input.MoveRight)
-                centerPos.X += 1;
+            {
+                centerPos.X += 10;
+            }
             if (input.MoveUp)
-                centerPos.Y -= 1;
+                centerPos.Y -= 10;
             if (input.MoveDown)
-                centerPos.Y += 1;
+                centerPos.Y += 10;
         }
 
         private void centerCamera(Vector2 centerPosition)
         {
             _viewport.X = (int)MathHelper.Clamp(
                 (centerPosition.X - Game1.SCREEN_WIDTH / 2.0f),
-                0, 1000);
+                0, _tileMap.DisplayWidth - _viewport.Width);
             _viewport.Y = (int)MathHelper.Clamp(
                 (centerPosition.Y - Game1.SCREEN_HEIGHT / 2.0f),
-                0, 1000);
+                0, _tileMap.DisplayHeight - _viewport.Height);
         }
 
 
         public override void Draw(SpriteBatch sb)
         {
             _tileMap.Draw(MapDisplayDevice, _viewport);
+            SpriteView.DrawSprite(sb, unit, _viewport.X, _viewport.Y);
         }
         #endregion
     }

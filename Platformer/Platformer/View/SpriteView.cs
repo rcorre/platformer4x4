@@ -27,6 +27,10 @@ namespace Platformer.View
             foreach (string s in textureNames)
                 TextureDict[s] = content.Load<Texture2D>(SPRITESHEET_PATH + s);
         }
+        //reusable vector for calculating unit draw locations
+        static Vector2 locationVector;
+        //reusable sprite for assigning sprites during draw calls
+        static Sprite sprite;
         #endregion
 
         #region fields
@@ -51,7 +55,7 @@ namespace Platformer.View
         /// <param name="angle">Rotation of sprite, where 0 is north(radians)</param>
         /// <param name="scale">Sizing. 1.0f is normal size</param>
         /// <param name="facingRight">Whether Sprite is facing to right (if not, will be mirrored horizontally)</param>
-        public static void DrawSprite(SpriteBatch sb, string key, Vector2 position, 
+        private static void drawSprite(SpriteBatch sb, string key, Vector2 position, 
             Rectangle source, Color color, Vector2 origin, float angle, float scale,
             bool facingRight)
         {
@@ -59,11 +63,13 @@ namespace Platformer.View
                 facingRight ? SpriteEffects.None : SpriteEffects.FlipHorizontally , 0.0f);
         }
 
-        public static void DrawSprite(SpriteBatch sb, Unit unit)
+        public static void DrawSprite(SpriteBatch sb, Unit unit, int xCameraOffset, int yCameraOffset)
         {
-            Sprite s = unit.Sprite;
-            DrawSprite(sb, s.TextureKey, unit.Center, s.TextureSelectRect,
-                 s.Shade, s.Origin, s.Angle, s.Scale, s.FacingRight);
+            sprite = unit.Sprite;
+            locationVector.X = unit.Center.X - xCameraOffset;
+            locationVector.Y = unit.Center.Y - yCameraOffset;
+            drawSprite(sb, sprite.TextureKey, locationVector, sprite.TextureSelectRect,
+                 sprite.Shade, sprite.Origin, sprite.Angle, sprite.Scale, sprite.FacingRight);
         }
 
         #endregion

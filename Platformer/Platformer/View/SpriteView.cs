@@ -63,6 +63,13 @@ namespace Platformer.View
                 facingRight ? SpriteEffects.None : SpriteEffects.FlipHorizontally , 0.0f);
         }
 
+        /// <summary>
+        /// Draw a unit's sprite to the screen
+        /// </summary>
+        /// <param name="sb">SpriteBatch with which to draw</param>
+        /// <param name="unit">Unit to draw</param>
+        /// <param name="xCameraOffset">x coordinate of left side of viewport</param>
+        /// <param name="yCameraOffset">y coordinate of left side of viewport</param>
         public static void DrawSprite(SpriteBatch sb, Unit unit, int xCameraOffset, int yCameraOffset)
         {
             sprite = unit.Sprite;

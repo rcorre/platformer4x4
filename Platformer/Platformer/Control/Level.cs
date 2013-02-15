@@ -85,6 +85,11 @@ namespace Platformer.Control
                 centerPos.Y += 10;
         }
 
+        /// <summary>
+        /// Center viewport on specified condition.
+        /// Should be called with player unit center every update
+        /// </summary>
+        /// <param name="centerPosition">Location to center view on</param>
         private void centerCamera(Vector2 centerPosition)
         {
             _viewport.X = (int)MathHelper.Clamp(
@@ -94,7 +99,6 @@ namespace Platformer.Control
                 (centerPosition.Y - Game1.SCREEN_HEIGHT / 2.0f),
                 0, _tileMap.DisplayHeight - _viewport.Height);
         }
-
 
         public override void Draw(SpriteBatch sb)
         {

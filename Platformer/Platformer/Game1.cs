@@ -22,7 +22,6 @@ namespace Platformer
 
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
-
         InputManager _input;
 
         List<GameState> _gameStateStack;
@@ -102,11 +101,9 @@ namespace Platformer
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
-
             spriteBatch.Begin();
             _gameStateStack.Last().Draw(spriteBatch);
             spriteBatch.End();
-
 
             base.Draw(gameTime);
         }

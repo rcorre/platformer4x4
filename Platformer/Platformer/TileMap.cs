@@ -9,7 +9,7 @@ using System.Diagnostics;
 
 using System.Xml.Linq;
 
-using Microsoft.Xna.Framework;
+
 
 namespace Platformer
 {
@@ -96,7 +96,7 @@ namespace Platformer
             {
                 while (_tileDrawRect.Left <= _drawRect.Right)
                 {
-                    _tileMap[row][col].Draw(sb, _tileDrawRect);
+                    _tileMap[row][col].Draw(sb, _tileDrawRect);//array index out of bounds exception unhandled
                     _tileDrawRect.X += Tile.TILE_WIDTH;
                     col++;
                 }

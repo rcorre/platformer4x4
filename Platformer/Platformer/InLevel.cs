@@ -7,13 +7,16 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Audio;
+
 
 namespace Platformer
 {
     class InLevel : GameState
     {
         TileMap _tileMap;
-
+        SoundEffect _sound;
+        bool playOnce = false;
         Sprite _sprite;
         Rectangle _hitRect;
 
@@ -23,7 +26,7 @@ namespace Platformer
         {
             //general purpose hit detection rectangle
             _hitRect = new Rectangle(0, 0, 0, 0);
-
+            _sound = content.Load<SoundEffect>("jump");//loads jump sound
             _sprite = new Sprite(content.Load<Texture2D>("character"), 48, 48, 2, 2, TimeSpan.FromSeconds(0.2), 4);
             _sprite.SetLocation(60, Game1.SCREEN_HEIGHT - 2 * Tile.TILE_WIDTH);
 
@@ -62,7 +65,20 @@ namespace Platformer
 
             //jump
             if (input.KeyDown(Keys.Up))
+            {
                 _sprite.Velocity.Y = -6;
+                #region jumpSoundStart
+                if (!playOnce)          /*This avoids having the sound repeat if the player 
+                                           * holds up. I haven't taken care of the case 
+                                             * if the sprite hits a tile from below */
+                {
+                    _sound.Play();    
+                }
+                playOnce = true;
+                #endregion
+
+            }
+            
 
             //apply gravity
             _sprite.Velocity.Y += 9 * (float)gameTime.ElapsedGameTime.TotalSeconds;
@@ -169,6 +185,9 @@ namespace Platformer
 
                         if (!_tileMap.TilePassable(row, col))
                         {
+                            #region jumpSoundReset
+                            playOnce = false;//allows the jump sound to be played again once the sprite lands
+                            #endregion
                             //if moving down, use the top edge of the obstacle. Else, use the bottom edge
                             int obstacleBound = (pixelsDown > 0) ? row * Tile.TILE_HEIGHT : (col + 1) * Tile.TILE_HEIGHT;
                             //if this obstacle is closer than any obstacles found so far, set its bound as the new movement limit

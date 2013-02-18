@@ -86,6 +86,16 @@ namespace Platformer.Control
         }
 
         /// <summary>
+        /// Move a unit based on its velocity and the surrounding tiles
+        /// </summary>
+        /// <param name="unit">the unit to move</param>
+        private void moveUnit(Unit unit)
+        {
+            //enter unit moving logic here
+            //I suggest breaking down unit.Velocity into individual x and y components, cast into integers
+        }
+
+        /// <summary>
         /// Center viewport on specified condition.
         /// Should be called with player unit center every update
         /// </summary>

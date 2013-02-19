@@ -135,8 +135,10 @@ namespace Platformer.Model
         public void Update(GameTime gameTime)
         {
             if (_state != UnitState.Running)    //not running, slow down
-                _velocity.X += _horizontalDeceleration * (float)gameTime.ElapsedGameTime.TotalSeconds 
+            {
+                _velocity.X += _horizontalDeceleration * (float)gameTime.ElapsedGameTime.TotalSeconds
                     * ((_velocity.X > 0) ? -1 : 1);     //make sure slowdown is opposite to direction of velocity
+            }
 
             if (_state == UnitState.InAir)
                 _velocity.Y += _gravity * (float)gameTime.ElapsedGameTime.TotalSeconds;
@@ -144,7 +146,8 @@ namespace Platformer.Model
             float speedFactor = _velocity.Length() / _maxSpeed;
             if (speedFactor > 1.0f)
                 _velocity *= speedFactor;
-            _sprite.Animate(0, gameTime, _velocity.X / _maxSpeed);
+
+            _sprite.Animate(1, gameTime, _velocity.X / _maxSpeed);  //running animation
         }
         #endregion
     }

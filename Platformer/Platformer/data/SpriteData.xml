@@ -1,5 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <SpriteDatas>
+<SpriteData Key="Gino" SpriteWidth="64" SpriteHeight="96"
+            NumFrames="3" NumStates="2" SecondsPerFrame="0.5"/>
 <SpriteData Key="Test" SpriteWidth="48" SpriteHeight="48"
             NumFrames="4" NumStates="4" SecondsPerFrame="1"/>
 </SpriteDatas>

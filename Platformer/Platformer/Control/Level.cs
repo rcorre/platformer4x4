@@ -37,7 +37,7 @@ namespace Platformer.Control
         Tile _hitDetectTile;
         xTile.Dimensions.Location _tileLocation;
         Vector2 centerPos = Vector2.Zero;
-        Unit unit = new Unit("Test", Vector2.Zero, false);
+        Unit _gino = new Gino(Vector2.Zero, true);
         #endregion
 
         #region properties
@@ -52,7 +52,8 @@ namespace Platformer.Control
                     Game1.SCREEN_WIDTH, Game1.SCREEN_HEIGHT));
 
             //load the map for the specified level
-            _tileMap = Content.Load<Map>("Maps\\" + levelNumber);
+            //_tileMap = Content.Load<Map>("Maps\\" + levelNumber);
+            _tileMap = Content.Load<Map>("Maps\\TestLevel2");
 
             //load tile sheet
             _tileMap.LoadTileSheets(MapDisplayDevice);
@@ -67,8 +68,9 @@ namespace Platformer.Control
         {
             handleInput(input);
             centerCamera(centerPos);
-            unit.Right = (int)centerPos.X;
-            unit.Bottom = (int)centerPos.Y;
+            _gino.Right = (int)centerPos.X;
+            _gino.Bottom = (int)centerPos.Y;
+            _gino.Update(gameTime);
         }
 
         private void handleInput(InputManager input)
@@ -113,7 +115,7 @@ namespace Platformer.Control
         public override void Draw(SpriteBatch sb)
         {
             _tileMap.Draw(MapDisplayDevice, _viewport);
-            SpriteView.DrawSprite(sb, unit, _viewport.X, _viewport.Y);
+            SpriteView.DrawSprite(sb, _gino, _viewport.X, _viewport.Y);
         }
         #endregion
     }

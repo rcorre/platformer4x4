@@ -30,8 +30,10 @@ namespace Platformer.Model
         public enum UnitState
         {
             Standing,
-            Running,
-            InAir,
+            RunningRight,
+            RunningLeft,
+            Jumping,
+            FreeFall,
         }
 
         #endregion
@@ -83,6 +85,8 @@ namespace Platformer.Model
         public Rectangle HitRect { get { return _hitRect; } }
 
         public Sprite Sprite { get { return _sprite; } }
+
+        public Vector2 Velocity { get { return _velocity; } }
         #endregion
 
         #region constructor
@@ -94,11 +98,13 @@ namespace Platformer.Model
             _walkAcceleration = data.WalkAcceleration;
             _maxSpeed = data.MaxSpeed;
             _jumpSpeed = data.JumpSpeed;
+            _gravity = data.Gravity;
             _hitRect = new Rectangle(
                 (int)(position.X - data.HitRectWidth / 2.0f),
                 (int)(position.Y - data.HitRectHeight / 2.0f),
                 data.HitRectWidth, data.HitRectHeight);
             _sprite = new Sprite(key, facingRight);  //sprite key should match unit key
+            _state = UnitState.InAir;
         }
         #endregion
 
@@ -145,7 +151,7 @@ namespace Platformer.Model
 
             float speedFactor = _velocity.Length() / _maxSpeed;
             if (speedFactor > 1.0f)
-                _velocity *= speedFactor;
+                _velocity /= speedFactor;
 
             _sprite.Animate(1, gameTime, _velocity.X / _maxSpeed);  //running animation
         }

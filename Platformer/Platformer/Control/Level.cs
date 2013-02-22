@@ -67,32 +67,31 @@ namespace Platformer.Control
         public override void Update(GameTime gameTime, InputManager input)
         {
             handleInput(input);
-            centerCamera(centerPos);
-            _gino.Right = (int)centerPos.X;
-            _gino.Bottom = (int)centerPos.Y;
+            centerCamera(_gino.Center);
             _gino.Update(gameTime);
+            moveUnit(_gino, gameTime);
         }
 
         private void handleInput(InputManager input)
         {
             if (input.MoveLeft)
-                centerPos.X -= 10;
+                _gino.WalkLeft();
             else if (input.MoveRight)
-            {
-                centerPos.X += 10;
-            }
-            if (input.MoveUp)
-                centerPos.Y -= 10;
-            if (input.MoveDown)
-                centerPos.Y += 10;
+                _gino.WalkRight();
+            if (input.Jump)
+                _gino.Jump();
         }
 
         /// <summary>
         /// Move a unit based on its velocity and the surrounding tiles
         /// </summary>
         /// <param name="unit">the unit to move</param>
-        private void moveUnit(Unit unit)
+        private void moveUnit(Unit unit, GameTime gameTime)
         {
+            int pxRight = (int)(unit.Velocity.X * (float)gameTime.ElapsedGameTime.TotalSeconds);
+            int pxDown = (int)(unit.Velocity.Y * (float)gameTime.ElapsedGameTime.TotalSeconds);
+            unit.Left += pxRight;
+            unit.Top += pxDown;
             //enter unit moving logic here
             //I suggest breaking down unit.Velocity into individual x and y components, cast into integers
         }

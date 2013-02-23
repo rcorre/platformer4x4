@@ -30,8 +30,8 @@ namespace Platformer.Model
         public enum UnitState
         {
             Standing,
-            RunningRight,
-            RunningLeft,
+            Running,
+            Drifting,   //not trying to run, but still moving
             Jumping,
             FreeFall,
         }
@@ -97,6 +97,7 @@ namespace Platformer.Model
             _velocity = Vector2.Zero;
             _walkAcceleration = data.WalkAcceleration;
             _maxSpeed = data.MaxSpeed;
+            _horizontalDeceleration = data.HorizontalDeceleration;
             _jumpSpeed = data.JumpSpeed;
             _gravity = data.Gravity;
             _hitRect = new Rectangle(
@@ -104,14 +105,14 @@ namespace Platformer.Model
                 (int)(position.Y - data.HitRectHeight / 2.0f),
                 data.HitRectWidth, data.HitRectHeight);
             _sprite = new Sprite(key, facingRight);  //sprite key should match unit key
-            _state = UnitState.InAir;
+            _state = UnitState.Standing;
         }
         #endregion
 
         #region methods
         public void WalkRight()
         {
-            if (_state != UnitState.InAir)
+            if (_state != UnitState.FreeFall && _state != UnitState.Jumping)
             {
                 _state = UnitState.Running;
                 _sprite.FacingRight = true;
@@ -121,7 +122,7 @@ namespace Platformer.Model
 
         public void WalkLeft()
         {
-            if (_state != UnitState.InAir)
+            if (_state != UnitState.FreeFall && _state != UnitState.Jumping)
             {
                 _state = UnitState.Running;
                 _sprite.FacingRight = false;
@@ -131,29 +132,36 @@ namespace Platformer.Model
 
         public void Jump()
         {
-            if (_state != UnitState.InAir)
+            if (_state != UnitState.FreeFall)
             {
                 _velocity.Y = -_jumpSpeed;
-                _state = UnitState.InAir;
+                _state = UnitState.FreeFall;
             }
         }
 
         public void Update(GameTime gameTime)
         {
-            if (_state != UnitState.Running)    //not running, slow down
+            if (_state == UnitState.Running)
             {
-                _velocity.X += _horizontalDeceleration * (float)gameTime.ElapsedGameTime.TotalSeconds
-                    * ((_velocity.X > 0) ? -1 : 1);     //make sure slowdown is opposite to direction of velocity
+                _velocity.X += _walkAcceleration * (float)gameTime.ElapsedGameTime.TotalSeconds
+                    * ((_sprite.FacingRight) ? 1 : -1);     //increase velocity in run direction
             }
 
-            if (_state == UnitState.InAir)
+            if (_state == UnitState.FreeFall)
                 _velocity.Y += _gravity * (float)gameTime.ElapsedGameTime.TotalSeconds;
 
-            float speedFactor = _velocity.Length() / _maxSpeed;
-            if (speedFactor > 1.0f)
-                _velocity /= speedFactor;
+            float xSpeedFactor = Math.Abs(_velocity.X / _maxSpeed);
+            if (xSpeedFactor > 1.0f)
+                _velocity.X /= xSpeedFactor;
+            else if (xSpeedFactor > 0.0f)
+                _velocity.X += _horizontalDeceleration * (float)gameTime.ElapsedGameTime.TotalSeconds
+                    * ((_velocity.X > 0) ? -1 : 1);     //make sure slowdown is opposite to direction of velocity
 
             _sprite.Animate(1, gameTime, _velocity.X / _maxSpeed);  //running animation
+            if (_state == UnitState.Running)
+            {
+                _state = UnitState.Drifting;
+            }
         }
         #endregion
     }

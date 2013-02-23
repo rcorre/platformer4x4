@@ -53,7 +53,7 @@ namespace Platformer.Control
 
             //load the map for the specified level
             //_tileMap = Content.Load<Map>("Maps\\" + levelNumber);
-            _tileMap = Content.Load<Map>("Maps\\TestLevel2");
+            _tileMap = Content.Load<Map>("Maps\\level0");
 
             //load tile sheet
             _tileMap.LoadTileSheets(MapDisplayDevice);

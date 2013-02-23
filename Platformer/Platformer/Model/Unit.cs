@@ -110,23 +110,12 @@ namespace Platformer.Model
         #endregion
 
         #region methods
-        public void WalkRight()
+        public void Walk(Direction direction)
         {
             if (_state != UnitState.FreeFall && _state != UnitState.Jumping)
             {
                 _state = UnitState.Running;
-                _sprite.FacingRight = true;
-                _velocity.X += _walkAcceleration;
-            }
-        }
-
-        public void WalkLeft()
-        {
-            if (_state != UnitState.FreeFall && _state != UnitState.Jumping)
-            {
-                _state = UnitState.Running;
-                _sprite.FacingRight = false;
-                _velocity.X -= _walkAcceleration;
+                _sprite.FacingRight = (direction == Direction.East);
             }
         }
 
@@ -139,12 +128,38 @@ namespace Platformer.Model
             }
         }
 
+        public void CollideWithObstacle(Direction direction)
+        {
+            switch (direction)
+            {
+                case Direction.South:
+                    _velocity.Y = 0;
+                    _state = UnitState.Drifting;
+                    break;
+                case Direction.North:
+                    _velocity.Y = 0;
+                    //stop jumping if hit head and start falling
+                    _state = (_state == UnitState.Jumping) ? UnitState.FreeFall : _state;
+                    break;
+                case Direction.East:
+                    _velocity.X = 0;
+                    _state = UnitState.Standing;
+                    break;
+                case Direction.West:
+                    _velocity.X = 0;
+                    _state = UnitState.Standing;
+                    break;
+            }
+
+        }
+
         public void Update(GameTime gameTime)
         {
             if (_state == UnitState.Running)
             {
                 _velocity.X += _walkAcceleration * (float)gameTime.ElapsedGameTime.TotalSeconds
                     * ((_sprite.FacingRight) ? 1 : -1);     //increase velocity in run direction
+                _state = UnitState.Drifting;
             }
 
             if (_state == UnitState.FreeFall)
@@ -158,10 +173,6 @@ namespace Platformer.Model
                     * ((_velocity.X > 0) ? -1 : 1);     //make sure slowdown is opposite to direction of velocity
 
             _sprite.Animate(1, gameTime, _velocity.X / _maxSpeed);  //running animation
-            if (_state == UnitState.Running)
-            {
-                _state = UnitState.Drifting;
-            }
         }
         #endregion
     }

@@ -18,6 +18,13 @@ using Platformer.Data;
 
 namespace Platformer
 {
+    public enum Direction
+    {
+        North,      //up
+        East,       //right
+        South,      //down
+        West        //left
+    }
     /// <summary>
     /// This is the main type for your game
     /// </summary>

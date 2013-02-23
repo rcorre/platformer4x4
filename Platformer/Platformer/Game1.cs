@@ -65,6 +65,7 @@ namespace Platformer
             //initialize helper pixel texture for debugging
             XnaHelper.PixelTexture = new Texture2D(GraphicsDevice, 1, 1);
             XnaHelper.PixelTexture.SetData<Color>(new Color[] {Color.White});
+            XnaHelper.Font = Content.Load<SpriteFont>("Fonts/standard_font");
 
             //needed for level to load and draw maps
             Level.MapDisplayDevice = new xTile.Display.XnaDisplayDevice(this.Content, this.GraphicsDevice);

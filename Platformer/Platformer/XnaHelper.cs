@@ -12,6 +12,8 @@ namespace Platformer
     {
         public static Texture2D PixelTexture;
 
+        public static SpriteFont Font;
+
         static Random rand = new Random();
         /// <summary>
         /// get a unit vector pointing from start to end
@@ -98,5 +100,43 @@ namespace Platformer
             sb.Draw(PixelTexture, rect, color);
         }
 
+        /// <summary>
+        /// Draws the given string as large as possible inside the boundaries Rectangle without going
+        /// outside of it.  This is accomplished by scaling the string (since the SpriteFont has a specific
+        /// size).
+        ///
+        /// If the string is not a perfect match inside of the boundaries (which it would rarely be), then
+        /// the string will be absolutely-centered inside of the boundaries.
+        /// </summary>
+        /// <param name="font"></param>
+        /// <param name="strToDraw"></param>
+        /// <param name="drawRect"></param>
+        static public void DisplayValue(SpriteBatch spriteBatch, string label, string value, Rectangle drawRect, Color color)
+        {
+            String strToDraw = label + ": " + value;
+            Vector2 size = Font.MeasureString(strToDraw);
+
+            float xScale = (drawRect.Width / size.X);
+            float yScale = (drawRect.Height / size.Y);
+
+            // Taking the smaller scaling value will result in the text always fitting in the boundaires.
+            float scale = Math.Min(xScale, yScale);
+
+            // Figure out the location to absolutely-center it in the boundaries rectangle.
+            int strWidth = (int)Math.Round(size.X * scale);
+            int strHeight = (int)Math.Round(size.Y * scale);
+            Vector2 position = new Vector2();
+            position.X = (((drawRect.Width - strWidth) / 2) + drawRect.X);
+            position.Y = (((drawRect.Height - strHeight) / 2) + drawRect.Y);
+
+            // A bunch of settings where we just want to use reasonable defaults.
+            float rotation = 0.0f;
+            Vector2 spriteOrigin = new Vector2(0, 0);
+            float spriteLayer = 0.0f; // all the way in the front
+            SpriteEffects spriteEffects = new SpriteEffects();
+
+            // Draw the string to the sprite batch!
+            spriteBatch.DrawString(Font, strToDraw, position, color, rotation, spriteOrigin, scale, spriteEffects, spriteLayer);
+        } // end DrawString()
     }
 }

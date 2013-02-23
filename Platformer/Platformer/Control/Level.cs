@@ -195,6 +195,8 @@ namespace Platformer.Control
         {
             _tileMap.Draw(MapDisplayDevice, _viewport);
             SpriteView.DrawSprite(sb, _gino, _viewport.X, _viewport.Y);
+            XnaHelper.DisplayValue(sb, "Velocity", _gino.Velocity.X.ToString(), 
+                new Rectangle(500, 100, 100, 20), Color.Black);
         }
         #endregion
     }

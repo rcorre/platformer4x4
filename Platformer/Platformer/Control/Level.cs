@@ -90,10 +90,90 @@ namespace Platformer.Control
         {
             int pxRight = (int)(unit.Velocity.X * (float)gameTime.ElapsedGameTime.TotalSeconds);
             int pxDown = (int)(unit.Velocity.Y * (float)gameTime.ElapsedGameTime.TotalSeconds);
-            unit.Left += pxRight;
-            unit.Top += pxDown;
-            //enter unit moving logic here
-            //I suggest breaking down unit.Velocity into individual x and y components, cast into integers
+
+            #region horizontal collision detection
+            if (pxRight != 0)
+            {
+                //Get the coordinate of the forward-facing edge
+                //If walking left, forwardEdge = left of bounding box
+                //If walking right, forwardEdge = right of bounding box
+                int forwardEdge = (pxRight > 0) ?
+                    unit.HitRect.Right : unit.HitRect.Left;
+                int closestObstacleX = forwardEdge + pxRight;
+
+                int xDirection = pxRight / Math.Abs(pxRight);
+
+                int startCol = forwardEdge / xTile.Dimensions.Size.Zero.Width;
+                int colsToScan = (pxRight + 1) / xTile.Dimensions.Size.Zero.Width;
+
+                for (int row = unit.HitRect.Top / xTile.Dimensions.Size.Zero.Height;
+                        row <= (unit.HitRect.Bottom - 1) / xTile.Dimensions.Size.Zero.Height;
+                        row++)
+                {
+                    for (int col = startCol;
+                            Math.Abs(col - startCol) <= colsToScan;
+                            col = col + xDirection)
+                    {
+                        if (_collisionLayer.Tiles[col, row] != null)
+                        {
+                            int obstacleBound = (pxRight > 0) ? col * xTile.Dimensions.Size.Zero.Width : (col + 1) * xTile.Dimensions.Size.Zero.Width;
+
+                            closestObstacleX = (pxRight > 0) ?
+                                Math.Min(closestObstacleX, obstacleBound) :
+                                Math.Max(closestObstacleX, obstacleBound);
+                        }
+                    }
+                }
+                pxRight = closestObstacleX - forwardEdge;
+            }
+            #endregion
+
+            #region vertical collision detection
+            if (pxDown != 0)
+            {
+                int forwardEdge = (pxDown > 0) ?
+                    unit.HitRect.Bottom : unit.HitRect.Top;
+
+                //At most, if no obstacles are hit, the player will come to a stop
+                //at the maximum movement distance
+                int closestObstacleY = forwardEdge + pxDown;
+
+                //get which direction to scan(Up or Down)
+                int yDirection = pxDown / Math.Abs(pxDown);
+
+                int startRow = forwardEdge / unit.HitRect.Height;
+                int rowsToScan = (pxDown + 1) / unit.HitRect.Height;
+
+                for (int col = unit.HitRect.Left / xTile.Dimensions.Size.Zero.Width;
+                        col <= (unit.HitRect.Right - 1) / xTile.Dimensions.Size.Zero.Width;
+                        col++)
+                {
+                    for (int row = startRow;
+                            Math.Abs(col - startRow) <= rowsToScan;
+                            col = col + yDirection)
+                    {
+                        if (_collisionLayer.Tiles[col, row] != null)
+                        {
+                            int obstacleBound = (pxDown > 0) ? col * xTile.Dimensions.Size.Zero.Height : (col + 1) * xTile.Dimensions.Size.Zero.Height;
+
+                            closestObstacleY = (pxDown > 0) ?
+                                Math.Min(closestObstacleY, obstacleBound) :
+                                Math.Max(closestObstacleY, obstacleBound);
+                        }
+                        if (pxDown > 0)
+                        {
+                            /*
+                            if (closestObstacleY == unit.HitRect.Bottom)
+                                _velocity.Y = 0;
+                            */
+                        }
+                    }
+                }
+                pxDown = closestObstacleY - forwardEdge;
+            }
+            #endregion
+
+            //move the unit the amount specified above
         }
 
         /// <summary>
@@ -115,6 +195,8 @@ namespace Platformer.Control
         {
             _tileMap.Draw(MapDisplayDevice, _viewport);
             SpriteView.DrawSprite(sb, _gino, _viewport.X, _viewport.Y);
+            XnaHelper.DisplayValue(sb, "Velocity", _gino.Velocity.X.ToString(), 
+                new Rectangle(500, 100, 100, 20), Color.Black);
         }
         #endregion
     }

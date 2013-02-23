@@ -9,6 +9,9 @@ namespace Platformer.Model
 {
     class Unit
     {
+        #region const
+        #endregion
+
         #region classes
         public class UnitData
         {
@@ -80,7 +83,31 @@ namespace Platformer.Model
             get { return _hitRect.Bottom; }
             set { Top = value - _hitRect.Height; }
         }
-        public Vector2 Center { get { return _position; } }
+
+        public Vector2 Center 
+        { 
+            get { return _position; }
+        }
+
+        public float X
+        {
+            get { return _position.X; }
+            set
+            {
+                _position.X = value;
+                Left = (int)(_position.X - _hitRect.Width / 2.0f);
+            }
+        }
+
+        public float Y
+        {
+            get { return _position.Y; }
+            set
+            {
+                _position.Y = value;
+                Top = (int)(_position.Y - _hitRect.Height / 2.0f);
+            }
+        }
 
         public Rectangle HitRect { get { return _hitRect; } }
 
@@ -155,6 +182,15 @@ namespace Platformer.Model
 
         public void Update(GameTime gameTime)
         {
+            if (_state == UnitState.Drifting)
+            {
+                if (Math.Abs(_velocity.X) <= _horizontalDeceleration)
+                    _velocity.X = 0;
+                else
+                    _velocity.X += _horizontalDeceleration * (float)gameTime.ElapsedGameTime.TotalSeconds
+                        * ((_velocity.X > 0) ? -1 : 1);     //make sure slowdown is opposite to direction of velocity
+            }
+
             if (_state == UnitState.Running)
             {
                 _velocity.X += _walkAcceleration * (float)gameTime.ElapsedGameTime.TotalSeconds
@@ -162,17 +198,23 @@ namespace Platformer.Model
                 _state = UnitState.Drifting;
             }
 
-            if (_state == UnitState.FreeFall)
-                _velocity.Y += _gravity * (float)gameTime.ElapsedGameTime.TotalSeconds;
+            _velocity.Y += _gravity * (float)gameTime.ElapsedGameTime.TotalSeconds;
 
             float xSpeedFactor = Math.Abs(_velocity.X / _maxSpeed);
             if (xSpeedFactor > 1.0f)
                 _velocity.X /= xSpeedFactor;
             else if (xSpeedFactor > 0.0f)
+            {
                 _velocity.X += _horizontalDeceleration * (float)gameTime.ElapsedGameTime.TotalSeconds
                     * ((_velocity.X > 0) ? -1 : 1);     //make sure slowdown is opposite to direction of velocity
+            }
 
             _sprite.Animate(1, gameTime, _velocity.X / _maxSpeed);  //running animation
+        }
+
+        public void Fall()
+        {
+            _state = UnitState.FreeFall;
         }
         #endregion
     }

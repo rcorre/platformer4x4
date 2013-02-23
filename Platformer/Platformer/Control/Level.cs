@@ -35,7 +35,7 @@ namespace Platformer.Control
         xTile.Dimensions.Rectangle _viewport;   //camera
         Layer _collisionLayer;   //layer of xTile map on which to detect collisions 
         Vector2 centerPos = Vector2.Zero;
-        Unit _gino = new Gino(Vector2.Zero, true);
+        Unit _gino = new Gino(new Vector2(100,100), true);
         #endregion
 
         #region properties
@@ -80,6 +80,103 @@ namespace Platformer.Control
                 _gino.Jump();
         }
 
+        /// <summary>
+        /// Move a unit based on its velocity and the surrounding tiles
+        /// </summary>
+        /// <param name="unit">the unit to move</param>
+        private void moveUnit(Unit unit, GameTime gameTime)
+        {
+            int pxRight = (int)(unit.Velocity.X * (float)gameTime.ElapsedGameTime.TotalSeconds);
+            int pxDown = (int)(unit.Velocity.Y * (float)gameTime.ElapsedGameTime.TotalSeconds);
+
+            #region horizontal collision detection
+            if (pxRight != 0)
+            {
+                //Get the coordinate of the forward-facing edge
+                //If walking left, forwardEdge = left of bounding box
+                //If walking right, forwardEdge = right of bounding box
+                int forwardEdge = (pxRight > 0) ? unit.Right : unit.Left;
+
+                //-1 for left, 1 for right
+                int xDirection = pxRight / Math.Abs(pxRight);
+
+                int startCol = forwardEdge / _collisionLayer.TileWidth;
+                int endCol = (forwardEdge + pxRight) / _collisionLayer.TileWidth;
+
+                unit.X += pxRight;
+
+                for (int row = unit.Top / _collisionLayer.TileHeight;
+                        row <= (unit.Bottom - 1) / _collisionLayer.TileHeight;
+                        row++)
+                {
+                    for (int col = startCol; col != endCol; col = col + xDirection)
+                    {
+                        if (_collisionLayer.Tiles[col, row] != null && _collisionLayer.Tiles[col, row].TileIndex != 0)
+                        {
+                            if (pxRight > 0)
+                            {
+                                unit.CollideWithObstacle(Direction.East);
+                                unit.Right = col * _collisionLayer.TileWidth;
+                            }
+                            else
+                            {
+                                unit.CollideWithObstacle(Direction.West);
+                                unit.Right = (col + 1) * _collisionLayer.TileWidth;
+                            }
+                            break;  //no need to check more
+                        }
+                    }
+                }
+            }
+            #endregion
+
+            #region vertical collision detection
+            if (pxDown != 0)
+            {
+                int forwardEdge = (pxDown > 0) ? unit.Bottom : unit.Top;
+
+                //-1 for down, 1 for up
+                int yDirection = pxDown / Math.Abs(pxDown);
+
+                //start at initial forward edge
+                int startRow = forwardEdge / _collisionLayer.TileHeight;
+                //assume unit moves full distance
+                unit.Y += pxDown;
+                //check up to new assumed unit hitrect edge
+                int endRow = (forwardEdge + pxDown) / _collisionLayer.TileHeight;
+
+                bool onGround = false;
+
+                for (int col = unit.Left / _collisionLayer.TileWidth;
+                        col <= (unit.Right - 1) / _collisionLayer.TileWidth;
+                        col++)
+                {
+                    for (int row = startRow; row != endRow; row = row + yDirection)
+                    {
+                        if (_collisionLayer.Tiles[col, row] != null && _collisionLayer.Tiles[col, row].TileIndex != 0)
+                        {
+                            if (pxDown > 0)
+                            {
+                                unit.CollideWithObstacle(Direction.South);
+                                unit.Bottom = row * _collisionLayer.TileHeight;
+                                onGround = true;
+                            }
+                            else
+                            {
+                                unit.CollideWithObstacle(Direction.North);
+                                unit.Right = (row + 1) * _collisionLayer.TileHeight;
+                            }
+                            break;  //no need to check more
+                        }
+                    }
+                }
+
+                if (!onGround)
+                    unit.Fall();
+            }
+            #endregion
+        }
+        /*
         /// <summary>
         /// Move a unit based on its velocity and the surrounding tiles
         /// </summary>
@@ -157,18 +254,13 @@ namespace Platformer.Control
                     {
                         if (_collisionLayer.Tiles[col, row] != null && _collisionLayer.Tiles[col,row].TileIndex != 0)
                         {
-                            int obstacleBound = (pxDown > 0) ? col * _collisionLayer.TileHeight : (col + 1) * xTile.Dimensions.Size.Zero.Height;
+                            unit.CollideWithObstacle(pxDown > 0 ? Direction.South : Direction.North);
+
+                            int obstacleBound = (pxDown > 0) ? col * _collisionLayer.TileHeight : (col + 1) * _collisionLayer.TileHeight;
 
                             closestObstacleY = (pxDown > 0) ?
                                 Math.Min(closestObstacleY, obstacleBound) :
                                 Math.Max(closestObstacleY, obstacleBound);
-                        }
-                        if (pxDown > 0)
-                        {
-                            /*
-                            if (closestObstacleY == unit.Bottom)
-                                _velocity.Y = 0;
-                            */
                         }
                     }
                 }
@@ -182,6 +274,7 @@ namespace Platformer.Control
             //move the unit the amount specified above
 
         }
+        */
 
         /// <summary>
         /// Center viewport on specified condition.
@@ -204,6 +297,7 @@ namespace Platformer.Control
             SpriteView.DrawSprite(sb, _gino, _viewport.X, _viewport.Y);
             XnaHelper.DisplayValue(sb, "Velocity", _gino.Velocity.X.ToString(), 
                 new Rectangle(500, 100, 100, 20), Color.Black);
+            XnaHelper.DrawRect(Color.Red, _gino.HitRect, sb);
         }
         #endregion
     }

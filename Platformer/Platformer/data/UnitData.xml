@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <UnitDatas>
-  <UnitData Key="Gino" HitRectHeight="64" HitRectWidth="48" WalkAcceleration="10"
-            MaxSpeed="200" JumpSpeed="300" HorizontalDeceleration="2" Gravity="500"/>
+  <UnitData Key="Gino" HitRectHeight="64" HitRectWidth="48" WalkAcceleration="600"
+            MaxSpeed="200" JumpSpeed="300" HorizontalDeceleration="100" Gravity="500"/>
   <UnitData Key="Test" HitRectHeight="32" HitRectWidth="32" WalkAcceleration="10"
             MaxSpeed="20" JumpSpeed="10" HorizontalDeceleration="1" Gravity="5"/>
 </UnitDatas>

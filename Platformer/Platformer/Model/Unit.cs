@@ -180,8 +180,14 @@ namespace Platformer.Model
 
         }
 
-        public void Update(GameTime gameTime)
+        public void Update(GameTime gameTime, bool onGround)
         {
+            if (!onGround)
+            {
+                _velocity.Y += _gravity * (float)gameTime.ElapsedGameTime.TotalSeconds;
+                _state = UnitState.FreeFall;
+            }
+
             if (_state == UnitState.Drifting)
             {
                 if (Math.Abs(_velocity.X) <= _horizontalDeceleration)
@@ -198,7 +204,6 @@ namespace Platformer.Model
                 _state = UnitState.Drifting;
             }
 
-            _velocity.Y += _gravity * (float)gameTime.ElapsedGameTime.TotalSeconds;
 
             float xSpeedFactor = Math.Abs(_velocity.X / _maxSpeed);
             if (xSpeedFactor > 1.0f)
@@ -210,11 +215,6 @@ namespace Platformer.Model
             }
 
             _sprite.Animate(1, gameTime, _velocity.X / _maxSpeed);  //running animation
-        }
-
-        public void Fall()
-        {
-            _state = UnitState.FreeFall;
         }
         #endregion
     }

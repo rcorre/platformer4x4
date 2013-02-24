@@ -35,7 +35,7 @@ namespace Platformer.Control
         xTile.Dimensions.Rectangle _viewport;   //camera
         Layer _collisionLayer;   //layer of xTile map on which to detect collisions 
         Vector2 centerPos = Vector2.Zero;
-        Unit _gino = new Gino(new Vector2(100,100), true);
+        Unit _gino = new Gino(new Vector2(200,100), true);
         #endregion
 
         #region properties
@@ -66,7 +66,7 @@ namespace Platformer.Control
         {
             handleInput(input);
             centerCamera(_gino.Center);
-            _gino.Update(gameTime);
+            _gino.Update(gameTime, onGround(_gino));
             moveUnit(_gino, gameTime);
         }
 
@@ -145,8 +145,6 @@ namespace Platformer.Control
                 //check up to new assumed unit hitrect edge
                 int endRow = (forwardEdge + pxDown) / _collisionLayer.TileHeight;
 
-                bool onGround = false;
-
                 for (int col = unit.Left / _collisionLayer.TileWidth;
                         col <= (unit.Right - 1) / _collisionLayer.TileWidth;
                         col++)
@@ -159,7 +157,6 @@ namespace Platformer.Control
                             {
                                 unit.CollideWithObstacle(Direction.South);
                                 unit.Bottom = row * _collisionLayer.TileHeight;
-                                onGround = true;
                             }
                             else
                             {
@@ -170,11 +167,23 @@ namespace Platformer.Control
                         }
                     }
                 }
-
-                if (!onGround)
-                    unit.Fall();
             }
             #endregion
+        }
+
+        private bool onGround(Unit unit)
+        {
+            int rowBelow = (unit.Bottom + 1) / _collisionLayer.TileHeight;
+            for (int col = unit.Left / _collisionLayer.TileWidth;
+                    col <= (unit.Right - 1) / _collisionLayer.TileWidth;
+                    col++)
+            {
+                if (_collisionLayer.Tiles[col, rowBelow] != null && _collisionLayer.Tiles[col, rowBelow].TileIndex != 0)
+                {
+                    return true;    //standing on a solid tile
+                }
+            }
+            return false;       //no solid tiles right beneath unit
         }
         /*
         /// <summary>
@@ -297,7 +306,6 @@ namespace Platformer.Control
             SpriteView.DrawSprite(sb, _gino, _viewport.X, _viewport.Y);
             XnaHelper.DisplayValue(sb, "Velocity", _gino.Velocity.X.ToString(), 
                 new Rectangle(500, 100, 100, 20), Color.Black);
-            XnaHelper.DrawRect(Color.Red, _gino.HitRect, sb);
         }
         #endregion
     }

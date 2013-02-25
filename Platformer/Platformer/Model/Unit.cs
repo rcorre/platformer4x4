@@ -169,11 +169,11 @@ namespace Platformer.Model
                     _state = (_state == UnitState.Jumping) ? UnitState.FreeFall : _state;
                     break;
                 case Direction.East:
-                    _velocity.X = 0;
+                    //_velocity.X = 0;
                     _state = UnitState.Standing;
                     break;
                 case Direction.West:
-                    _velocity.X = 0;
+                    //_velocity.X = 0;
                     _state = UnitState.Standing;
                     break;
             }
@@ -208,11 +208,6 @@ namespace Platformer.Model
             float xSpeedFactor = Math.Abs(_velocity.X / _maxSpeed);
             if (xSpeedFactor > 1.0f)
                 _velocity.X /= xSpeedFactor;
-            else if (xSpeedFactor > 0.0f)
-            {
-                _velocity.X += _horizontalDeceleration * (float)gameTime.ElapsedGameTime.TotalSeconds
-                    * ((_velocity.X > 0) ? -1 : 1);     //make sure slowdown is opposite to direction of velocity
-            }
 
             _sprite.Animate(1, gameTime, _velocity.X / _maxSpeed);  //running animation
         }

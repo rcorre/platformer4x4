@@ -105,13 +105,26 @@ namespace Platformer.Control
 
                 unit.X += pxRight;
 
-                for (int row = unit.Top / _collisionLayer.TileHeight;
+                for (int col = startCol; col != (endCol + xDirection); col = col + xDirection)
+                {
+                    for (int row = unit.Top / _collisionLayer.TileHeight;
                         row <= (unit.Bottom - 1) / _collisionLayer.TileHeight;
                         row++)
-                {
-                    for (int col = startCol; col != endCol; col = col + xDirection)
                     {
-                        if (_collisionLayer.Tiles[col, row] != null && _collisionLayer.Tiles[col, row].TileIndex != 0)
+                        //boundary checks----------------------------------------------------------------
+                        if (col < 0)
+                        {
+                            unit.CollideWithObstacle(Direction.West);
+                            unit.Left = 0;
+                        }
+                        else if (col > _collisionLayer.LayerWidth)
+                        {
+                            unit.CollideWithObstacle(Direction.East);
+                            unit.Right = _collisionLayer.LayerWidth * _collisionLayer.TileWidth;
+                        }
+                        //--------------------------------------------------------------------------------
+                        //within bounds -- check tile collision
+                        else if (_collisionLayer.Tiles[col, row] != null && _collisionLayer.Tiles[col, row].TileIndex != 0)
                         {
                             if (pxRight > 0)
                             {
@@ -121,7 +134,7 @@ namespace Platformer.Control
                             else
                             {
                                 unit.CollideWithObstacle(Direction.West);
-                                unit.Right = (col + 1) * _collisionLayer.TileWidth;
+                                unit.Left = (col + 1) * _collisionLayer.TileWidth;
                             }
                             break;  //no need to check more
                         }
@@ -135,7 +148,7 @@ namespace Platformer.Control
             {
                 int forwardEdge = (pxDown > 0) ? unit.Bottom : unit.Top;
 
-                //-1 for down, 1 for up
+                //1 for down, -1 for up
                 int yDirection = pxDown / Math.Abs(pxDown);
 
                 //start at initial forward edge
@@ -145,12 +158,35 @@ namespace Platformer.Control
                 //check up to new assumed unit hitrect edge
                 int endRow = (forwardEdge + pxDown) / _collisionLayer.TileHeight;
 
-                for (int col = unit.Left / _collisionLayer.TileWidth;
+                for (int row = startRow; row != (endRow + yDirection); row = row + yDirection)
+                {
+                    for (int col = (unit.Left + 1) / _collisionLayer.TileWidth;
                         col <= (unit.Right - 1) / _collisionLayer.TileWidth;
                         col++)
-                {
-                    for (int row = startRow; row != endRow; row = row + yDirection)
                     {
+                        //boundary checks----------------------------------------------------------------
+                        if (col < 0)
+                        {
+                            unit.CollideWithObstacle(Direction.West);
+                            unit.Left = 0;
+                        }
+                        else if (col > _collisionLayer.LayerWidth)
+                        {
+                            unit.CollideWithObstacle(Direction.East);
+                            unit.Right = _collisionLayer.LayerWidth * _collisionLayer.TileWidth;
+                        }
+                        if (row < 0)
+                        {
+                            unit.CollideWithObstacle(Direction.North);
+                            unit.Top = 0;
+                        }
+                        else if (row > _collisionLayer.LayerHeight)
+                        {
+                            unit.CollideWithObstacle(Direction.South);
+                            unit.Bottom = _collisionLayer.LayerHeight * _collisionLayer.TileHeight;
+                        }
+                        //--------------------------------------------------------------------------------
+
                         if (_collisionLayer.Tiles[col, row] != null && _collisionLayer.Tiles[col, row].TileIndex != 0)
                         {
                             if (pxDown > 0)
@@ -161,7 +197,7 @@ namespace Platformer.Control
                             else
                             {
                                 unit.CollideWithObstacle(Direction.North);
-                                unit.Right = (row + 1) * _collisionLayer.TileHeight;
+                                unit.Top = (row + 1) * _collisionLayer.TileHeight;
                             }
                             break;  //no need to check more
                         }
@@ -306,6 +342,7 @@ namespace Platformer.Control
             SpriteView.DrawSprite(sb, _gino, _viewport.X, _viewport.Y);
             XnaHelper.DisplayValue(sb, "Velocity", _gino.Velocity.X.ToString(), 
                 new Rectangle(500, 100, 100, 20), Color.Black);
+            XnaHelper.DrawRect(Color.Red, _gino.HitRect, sb);
         }
         #endregion
     }

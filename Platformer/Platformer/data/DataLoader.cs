@@ -18,6 +18,8 @@ namespace Platformer.Data
         //datafile locations
         const string SPRITEDATA_PATH = "Data/SpriteData.xml";
         const string UNITDATA_PATH = "Data/UnitData.xml";
+        const string PROGRESSDATA_CONTAINER = "ProgressData";
+        const string PROGRESSDATA_FILE = "progress.sav";
         //ref to Game1.Content for loading resources
         public static ContentManager Content;
 

@@ -7,5 +7,7 @@ namespace Platformer.Control
 {
     class ProgressData
     {
+        public int NumCoins;
+        public int CurrentLevel;
     }
 }

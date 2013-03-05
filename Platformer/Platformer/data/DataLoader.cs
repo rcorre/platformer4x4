@@ -1,8 +1,11 @@
 ﻿using System;
+using System.IO;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Xml;
 using System.Xml.Linq;
+using System.Xml.Serialization;
 
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
@@ -10,6 +13,7 @@ using Microsoft.Xna.Framework.Graphics;
 
 using Platformer.Model;
 using Platformer.View;
+using Platformer.Control;
 
 namespace Platformer.Data
 {
@@ -18,10 +22,11 @@ namespace Platformer.Data
         //datafile locations
         const string SPRITEDATA_PATH = "Data/SpriteData.xml";
         const string UNITDATA_PATH = "Data/UnitData.xml";
-        const string PROGRESSDATA_CONTAINER = "ProgressData";
-        const string PROGRESSDATA_FILE = "progress.sav";
         //ref to Game1.Content for loading resources
         public static ContentManager Content;
+        //for saving data:
+        const string PROGRESSDATA_CONTAINER = "ProgressData";
+        const string PROGRESSDATA_FILE = "progress.sav";
 
         public static Dictionary<string, Sprite.SpriteData> LoadSpriteData()
         {
@@ -52,6 +57,25 @@ namespace Platformer.Data
                         Gravity = (float)ud.Attribute("Gravity")
                     }).ToDictionary(t => t.Key);
         }
+
+        public static void SaveProgress(ProgressData data)
+        {
+            FileStream fs = new FileStream(PROGRESSDATA_FILE, FileMode.Create);
+            XmlSerializer xs = new XmlSerializer(data.GetType());
+            xs.Serialize(fs, data);
+            fs.Close();
+        }
+
+        public static ProgressData LoadProgress()
+        {
+            ProgressData data = new ProgressData();
+            FileStream fs = new FileStream(PROGRESSDATA_FILE, FileMode.Open, FileAccess.Read);
+            XmlSerializer xs = new XmlSerializer(data.GetType());
+            data = (ProgressData)xs.Deserialize(fs);
+            fs.Close();
+            return data;
+        }
+
 
     }
 }

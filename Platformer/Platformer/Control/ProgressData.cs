@@ -5,9 +5,10 @@ using System.Text;
 
 namespace Platformer.Control
 {
-    class ProgressData
+    public class ProgressData
     {
         public int NumCoins;
         public int CurrentLevel;
+        public bool[] LevelCompleted;
     }
 }

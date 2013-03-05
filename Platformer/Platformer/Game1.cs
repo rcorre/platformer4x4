@@ -32,6 +32,7 @@ namespace Platformer
     {
         public const int SCREEN_WIDTH = 1280;
         public const int SCREEN_HEIGHT = 720;
+        public const int NUM_LEVELS = 1;
 
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
@@ -85,7 +86,17 @@ namespace Platformer
             Sprite.SpriteDataDict = DataLoader.LoadSpriteData();
             SpriteView.LoadTextures(Sprite.SpriteDataDict.Keys.ToArray<string>(), Content);
 
-            _currentState = new Level(0);
+            //Later: change this in main menu
+            //initialize new data if select new game
+            //load data if select continue game
+            _currentState = new Level(0,
+                new ProgressData()
+                {
+                    NumCoins = 0,
+                    CurrentLevel = 0,
+                    LevelCompleted = new bool[NUM_LEVELS]
+                }
+                );
         }
 
 

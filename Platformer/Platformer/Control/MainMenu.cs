@@ -20,6 +20,10 @@ namespace Platformer.Control
         #endregion
 
         #region constructor
+        public MainMenu()
+        {
+
+        }
         #endregion
 
         #region methods

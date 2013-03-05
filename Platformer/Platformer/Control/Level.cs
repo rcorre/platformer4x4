@@ -36,13 +36,14 @@ namespace Platformer.Control
         Layer _collisionLayer;   //layer of xTile map on which to detect collisions 
         Vector2 centerPos = Vector2.Zero;
         Unit _gino = new Gino(new Vector2(200,100), true);
+        ProgressData _progressData;
         #endregion
 
         #region properties
         #endregion
 
         #region constructor
-        public Level(int levelNumber)
+        public Level(int levelNumber, ProgressData progressData)
         {
             //set camera size based on screen size
             _viewport = new xTile.Dimensions.Rectangle(
@@ -57,6 +58,8 @@ namespace Platformer.Control
             _tileMap.LoadTileSheets(MapDisplayDevice);
 
             _collisionLayer = _tileMap.Layers[0];
+
+            _progressData = progressData;
 
         }
         #endregion

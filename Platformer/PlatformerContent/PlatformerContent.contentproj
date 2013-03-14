@@ -52,20 +52,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="TileSheets\test_tiles.png">
-      <Name>test_tiles</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="Maps\0.tide">
-      <Name>0</Name>
-      <Importer>TideImporter</Importer>
-      <Processor>TideProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
     <Compile Include="spritesheets\Test.png">
       <Name>Test</Name>
       <Importer>TextureImporter</Importer>
@@ -80,43 +66,8 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Maps\TestLevel2.tide">
-      <Name>TestLevel2</Name>
-      <Importer>TideImporter</Importer>
-      <Processor>TideProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="Maps\sheet.png">
-      <Name>sheet</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="Maps\Hero_2.png">
-      <Name>Hero_2</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="Maps\level0.tide">
-      <Name>level0</Name>
-      <Importer>TideImporter</Importer>
-      <Processor>TideProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
     <Compile Include="Backgrounds\skyline.png">
       <Name>skyline</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="TileSheets\sheet2.png">
-      <Name>sheet2</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
@@ -126,6 +77,25 @@
       <Name>standard_font</Name>
       <Importer>FontDescriptionImporter</Importer>
       <Processor>FontDescriptionProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Maps\0.tide">
+      <Name>0</Name>
+      <Importer>TideImporter</Importer>
+      <Processor>TideProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="TileSheets\BasicTiles.png">
+      <Name>BasicTiles</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="TileSheets\PickupTilesheet.png">
+      <Name>PickupTilesheet</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
     </Compile>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\XNA Game Studio\$(XnaFrameworkVersion)\Microsoft.Xna.GameStudio.ContentPipeline.targets" />

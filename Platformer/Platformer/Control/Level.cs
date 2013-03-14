@@ -52,13 +52,13 @@ namespace Platformer.Control
 
             //load the map for the specified level
             //_tileMap = Content.Load<Map>("Maps\\" + levelNumber);
-            _tileMap = Content.Load<Map>("Maps\\TestLevel2");
+            _tileMap = Content.Load<Map>("Maps\\0");
 
             //load tile sheet
             _tileMap.LoadTileSheets(MapDisplayDevice);
 
             //_collisionLayer = _tileMap.Layers[0];
-            _collisionLayer = _tileMap.GetLayer("TestLevel");
+            _collisionLayer = _tileMap.GetLayer("Collision");
 
             _progressData = progressData;
 
@@ -347,7 +347,6 @@ namespace Platformer.Control
             SpriteView.DrawSprite(sb, _gino, _viewport.X, _viewport.Y);
             XnaHelper.DisplayValue(sb, "Velocity", _gino.Velocity.X.ToString(), 
                 new Rectangle(500, 100, 100, 20), Color.Black);
-            XnaHelper.DrawRect(Color.Red, _gino.HitRect, sb);
         }
         #endregion
     }

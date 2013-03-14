@@ -31,6 +31,7 @@ namespace Platformer.Model
         {
             get { return _sprite; }
         }
+        public string PickupName { get; private set; }
         #endregion
 
         #region fields
@@ -40,6 +41,7 @@ namespace Platformer.Model
         #region constructor
         public Pickup(int row, int col, Vector2 drawLocation, string pickupName)
         {
+            PickupName = pickupName;
             _sprite = new Sprite(pickupName, true);
             Active = true;
             Row = row;

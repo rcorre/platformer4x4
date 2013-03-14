@@ -9,10 +9,12 @@
       <Properties />
     </TileSheet>
     <TileSheet Id="PickupSheet">
-      <Description><![CDATA[Contains Pickup Markers]]></Description>
+      <Description><![CDATA[]]></Description>
       <ImageSource><![CDATA[..\TileSheets\PickupTilesheet.png]]></ImageSource>
       <Alignment SheetSize="1 x 1" TileSize="32 x 32" Margin="0 x 0" Spacing="0 x 0" />
-      <Properties />
+      <Properties>
+        <Property Key="@TileIndex@0@PickupType" Type="String"><![CDATA[Coin]]></Property>
+      </Properties>
     </TileSheet>
   </TileSheets>
   <Layers>

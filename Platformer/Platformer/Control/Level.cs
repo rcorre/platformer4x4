@@ -73,6 +73,7 @@ namespace Platformer.Control
             _pickupLayer = _tileMap.GetLayer("Pickups");
             Tile tile;
 
+            _pickups = new List<Pickup>();
             for (int row = 0; row < _pickupLayer.LayerHeight; row++)
             {
                 for (int col = 0; col < _pickupLayer.LayerWidth; col++)
@@ -93,6 +94,8 @@ namespace Platformer.Control
         public override void Update(GameTime gameTime, InputManager input)
         {
             handleInput(input);
+            foreach (Pickup p in _pickups)
+                p.Update(gameTime);
             centerCamera(_gino.Center);
             _gino.Update(gameTime, onGround(_gino));
             moveUnit(_gino, gameTime);

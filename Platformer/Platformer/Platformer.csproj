@@ -119,6 +119,7 @@
     <Compile Include="Data\DataLoader.cs" />
     <Compile Include="Model\Enemy.cs" />
     <Compile Include="Model\Gino.cs" />
+    <Compile Include="Model\Pickup.cs" />
     <Compile Include="Model\Sprite.cs" />
     <Compile Include="Model\Unit.cs" />
     <Compile Include="Program.cs" />

@@ -70,11 +70,28 @@ namespace Platformer.View
         /// <param name="unit">Unit to draw</param>
         /// <param name="xCameraOffset">x coordinate of left side of viewport</param>
         /// <param name="yCameraOffset">y coordinate of left side of viewport</param>
-        public static void DrawSprite(SpriteBatch sb, Unit unit, int xCameraOffset, int yCameraOffset)
+        public static void DrawUnit(SpriteBatch sb, Unit unit, int xCameraOffset, int yCameraOffset)
         {
             sprite = unit.Sprite;
             locationVector.X = unit.Center.X - xCameraOffset;
             locationVector.Y = unit.Center.Y - yCameraOffset;
+            drawSprite(sb, sprite.TextureKey, locationVector, sprite.TextureSelectRect,
+                 sprite.Shade, sprite.Origin, sprite.Angle, sprite.Scale, sprite.FacingRight);
+        }
+
+        /// <summary>
+        /// Draw a pickup to the screen
+        /// </summary>
+        /// <param name="sb">SpriteBatch with which to draw</param>
+        /// <param name="location">Location at which to draw sprite</param>
+        /// <param name="theSprite">Sprite to draw</param>
+        /// <param name="xCameraOffset">x coordinate of left side of viewport</param>
+        /// <param name="yCameraOffset">y coordinate of left side of viewport</param>
+        public static void DrawPickup(SpriteBatch sb, Pickup pickup, int xCameraOffset, int yCameraOffset)
+        {
+            sprite = pickup.PickupSprite;
+            locationVector.X = pickup.Position.X - xCameraOffset;
+            locationVector.Y = pickup.Position.Y - yCameraOffset;
             drawSprite(sb, sprite.TextureKey, locationVector, sprite.TextureSelectRect,
                  sprite.Shade, sprite.Origin, sprite.Angle, sprite.Scale, sprite.FacingRight);
         }

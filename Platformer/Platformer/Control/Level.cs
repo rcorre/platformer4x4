@@ -34,9 +34,11 @@ namespace Platformer.Control
         Map _tileMap;   //xTile map
         xTile.Dimensions.Rectangle _viewport;   //camera
         Layer _collisionLayer;   //layer of xTile map on which to detect collisions 
+        Layer _pickupLayer;
         Vector2 centerPos = Vector2.Zero;
         Unit _gino = new Gino(new Vector2(200,100), true);
         ProgressData _progressData;
+        List<Pickup> _pickups;
         #endregion
 
         #region properties
@@ -52,13 +54,12 @@ namespace Platformer.Control
 
             //load the map for the specified level
             //_tileMap = Content.Load<Map>("Maps\\" + levelNumber);
-            _tileMap = Content.Load<Map>("Maps\\0");
+            _tileMap = Content.Load<Map>("Maps\\" + levelNumber.ToString());
 
             //load tile sheet
             _tileMap.LoadTileSheets(MapDisplayDevice);
 
-            //_collisionLayer = _tileMap.Layers[0];
-            _collisionLayer = _tileMap.GetLayer("Collision");
+            scanMapLayers();
 
             _progressData = progressData;
 
@@ -66,6 +67,29 @@ namespace Platformer.Control
         #endregion
 
         #region methods
+        private void scanMapLayers()
+        {
+            _collisionLayer = _tileMap.GetLayer("Collision");
+            _pickupLayer = _tileMap.GetLayer("Pickups");
+            Tile tile;
+
+            for (int row = 0; row < _pickupLayer.LayerHeight; row++)
+            {
+                for (int col = 0; col < _pickupLayer.LayerWidth; col++)
+                {
+                    tile = _pickupLayer.Tiles[col, row];
+                    if (tile != null)
+                    {
+                        _pickups.Add(new Pickup(row, col,
+                        new Vector2(col * _pickupLayer.TileWidth, row * _pickupLayer.TileHeight),
+                        tile.TileIndexProperties["PickupType"]));
+                    }
+                }
+            }
+            //make marker layers invisible
+            _pickupLayer.Visible = false;
+        }
+
         public override void Update(GameTime gameTime, InputManager input)
         {
             handleInput(input);
@@ -344,7 +368,12 @@ namespace Platformer.Control
         public override void Draw(SpriteBatch sb)
         {
             _tileMap.Draw(MapDisplayDevice, _viewport);
-            SpriteView.DrawSprite(sb, _gino, _viewport.X, _viewport.Y);
+            foreach (Pickup p in _pickups)
+            {
+                SpriteView.DrawPickup(sb, p, _viewport.X, _viewport.Y);
+            }
+
+            SpriteView.DrawUnit(sb, _gino, _viewport.X, _viewport.Y);
             XnaHelper.DisplayValue(sb, "Velocity", _gino.Velocity.X.ToString(), 
                 new Rectangle(500, 100, 100, 20), Color.Black);
         }

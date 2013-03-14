@@ -2,6 +2,6 @@
 <SpriteDatas>
 <SpriteData Key="Gino" SpriteWidth="64" SpriteHeight="96"
             NumFrames="3" NumStates="2" SecondsPerFrame="0.5"/>
-<SpriteData Key="Test" SpriteWidth="48" SpriteHeight="48"
-            NumFrames="4" NumStates="4" SecondsPerFrame="1"/>
+<SpriteData Key="Coin" SpriteWidth="32" SpriteHeight="32"
+            NumFrames="3" NumStates="1" SecondsPerFrame="0.3"/>
 </SpriteDatas>

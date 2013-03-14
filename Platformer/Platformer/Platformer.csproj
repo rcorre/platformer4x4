@@ -121,14 +121,7 @@
     <Compile Include="Model\Gino.cs" />
     <Compile Include="Model\Sprite.cs" />
     <Compile Include="Model\Unit.cs" />
-    <Compile Include="old\Game1.cs" />
-    <Compile Include="old\GameState.cs" />
-    <Compile Include="old\InLevel.cs" />
-    <Compile Include="old\InputManager.cs" />
     <Compile Include="Program.cs" />
-    <Compile Include="old\Sprite.cs" />
-    <Compile Include="old\Tile.cs" />
-    <Compile Include="old\TileMap.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Game1.cs" />
     <Compile Include="View\LevelView.cs" />

@@ -57,7 +57,8 @@ namespace Platformer.Control
             //load tile sheet
             _tileMap.LoadTileSheets(MapDisplayDevice);
 
-            _collisionLayer = _tileMap.Layers[0];
+            //_collisionLayer = _tileMap.Layers[0];
+            _collisionLayer = _tileMap.GetLayer("TestLevel");
 
             _progressData = progressData;
 

@@ -72,6 +72,20 @@ namespace Platformer.Control
         {
             get { return _currentKeyState.IsKeyDown(Keys.Space) && _pastKeyState.IsKeyUp(Keys.Space); }
         }
+        /// <summary>
+        /// Whether debug key (B) is pressed
+        /// </summary>
+        public bool Debug1
+        {
+            get { return _currentKeyState.IsKeyDown(Keys.B) && _pastKeyState.IsKeyUp(Keys.B); }
+        }
+        /// <summary>
+        /// Whether debug key (V) is pressed
+        /// </summary>
+        public bool Debug2
+        {
+            get { return _currentKeyState.IsKeyDown(Keys.V) && _pastKeyState.IsKeyUp(Keys.V); }
+        }
         #endregion
 
         #region constructor

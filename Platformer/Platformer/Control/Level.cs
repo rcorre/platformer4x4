@@ -109,6 +109,10 @@ namespace Platformer.Control
                 _gino.Walk(Direction.East);
             if (input.Jump)
                 _gino.Jump();
+            if (input.Debug1)
+                Platformer.Data.DataLoader.SaveProgress(_progressData);
+            if (input.Debug2)
+                _progressData = Platformer.Data.DataLoader.LoadProgress();
         }
 
         /// <summary>

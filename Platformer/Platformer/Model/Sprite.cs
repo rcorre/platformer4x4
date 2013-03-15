@@ -117,6 +117,17 @@ namespace Platformer.Model
             }
         }
 
+        public void Reset()
+        {
+            _timeTillNext = _animationInterval;
+            _currentFrame = 0;
+            _currentState = 0;
+            _scale = 1.0f;
+            _angle = 0.0f;
+            _shade = Color.White;
+            _facingRight = true;
+        }
+
         #endregion
     }
 }

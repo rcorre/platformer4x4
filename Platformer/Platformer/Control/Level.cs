@@ -63,6 +63,8 @@ namespace Platformer.Control
 
             _progressData = progressData;
 
+            Weapon.Initialize();
+
         }
         #endregion
 
@@ -96,6 +98,7 @@ namespace Platformer.Control
             handleInput(input);
             foreach (Pickup p in _pickups)
                 p.Update(gameTime);
+            Weapon.UpdateProjectiles(gameTime);
             centerCamera(_gino.Center);
             _gino.Update(gameTime, onGround(_gino));
             moveUnit(_gino, gameTime);
@@ -406,6 +409,11 @@ namespace Platformer.Control
             }
 
             SpriteView.DrawUnit(sb, _gino, _viewport.X, _viewport.Y);
+
+            foreach (Projectile p in Weapon.Projectiles)
+                SpriteView.DrawProjectile(sb, p, _viewport.X, _viewport.Y);
+
+            //debug
             XnaHelper.DisplayValue(sb, "Velocity", _gino.Velocity.X.ToString(),
                 new Rectangle(500, 100, 100, 20), Color.Black);
             XnaHelper.DisplayValue(sb, "Coins", _progressData.NumCoins.ToString(),

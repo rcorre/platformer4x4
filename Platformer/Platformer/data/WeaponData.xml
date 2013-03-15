@@ -1,0 +1,4 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<WeaponDatas>
+  <WeaponData Key="Rifle" ProjectileSpriteKey="Bullet" ProjectileSpeed="40" FireRate="120" Ammo="10" Damage="10"/>
+</WeaponDatas>

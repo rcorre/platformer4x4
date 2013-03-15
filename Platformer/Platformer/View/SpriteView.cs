@@ -96,6 +96,26 @@ namespace Platformer.View
                  sprite.Shade, sprite.Origin, sprite.Angle, sprite.Scale, sprite.FacingRight);
         }
 
+        /// <summary>
+        /// Draw a pickup to the screen
+        /// </summary>
+        /// <param name="sb">SpriteBatch with which to draw</param>
+        /// <param name="location">Location at which to draw sprite</param>
+        /// <param name="theSprite">Sprite to draw</param>
+        /// <param name="xCameraOffset">x coordinate of left side of viewport</param>
+        /// <param name="yCameraOffset">y coordinate of left side of viewport</param>
+        public static void DrawProjectile(SpriteBatch sb, Projectile projectile, int xCameraOffset, int yCameraOffset)
+        {
+            if (!projectile.Active)
+                return;
+
+            sprite = projectile.ProjectileSprite;
+            locationVector.X = projectile.Position.X - xCameraOffset;
+            locationVector.Y = projectile.Position.Y - yCameraOffset;
+            drawSprite(sb, sprite.TextureKey, locationVector, sprite.TextureSelectRect,
+                 sprite.Shade, sprite.Origin, sprite.Angle, sprite.Scale, sprite.FacingRight);
+        }
+
         #endregion
     }
 }

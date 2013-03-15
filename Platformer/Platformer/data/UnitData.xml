@@ -2,6 +2,4 @@
 <UnitDatas>
   <UnitData Key="Gino" HitRectHeight="80" HitRectWidth="40" WalkAcceleration="700"
             MaxSpeed="200" JumpSpeed="400" HorizontalDeceleration="220" Gravity="500"/>
-  <UnitData Key="Test" HitRectHeight="32" HitRectWidth="32" WalkAcceleration="10"
-            MaxSpeed="20" JumpSpeed="10" HorizontalDeceleration="1" Gravity="5"/>
 </UnitDatas>

@@ -84,6 +84,8 @@ namespace Platformer
             Unit.UnitDataDict = DataLoader.LoadUnitData();
             //initialize sprite data
             Sprite.SpriteDataDict = DataLoader.LoadSpriteData();
+            //initialize weapon data
+            Weapon.Data = DataLoader.LoadWeaponData();
             SpriteView.LoadTextures(Sprite.SpriteDataDict.Keys.ToArray<string>(), Content);
 
             //Later: change this in main menu

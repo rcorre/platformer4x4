@@ -31,7 +31,7 @@ namespace Platformer.Model
     class Weapon
     {
         #region constant
-        const int MAX_PROJECTILE_COUNT = 10;
+        const int MAX_PROJECTILE_COUNT = 20;
         #endregion
 
         #region static
@@ -68,6 +68,7 @@ namespace Platformer.Model
         float _projectileSpeed;
         bool _firing;
         Vector2 _fireLocation, _fireDirection;
+        string _projectileSpriteKey;
         #endregion
 
         #region constructor
@@ -81,6 +82,7 @@ namespace Platformer.Model
             _fireTime = TimeSpan.FromSeconds(1.0f / data.FireRate);
             _tillNextFire = _fireTime;
             _projectileSpeed = data.ProjectileSpeed;
+            _projectileSpriteKey = data.ProjectileSpriteKey;
             _ammo = data.Ammo;
             _damage = data.Damage;
         }
@@ -103,8 +105,8 @@ namespace Platformer.Model
                 if (!Projectiles[i].Active)
                 {
                     Projectiles[i].Active = true;
+                    Projectiles[i].ProjectileSprite = new Sprite(_projectileSpriteKey, fireDirection.X > 0);
                     Vector2.Multiply(ref fireDirection, _projectileSpeed, out Projectiles[i].Velocity);
-                    Projectiles[i].ProjectileSprite.Reset();
                     Projectiles[i].Position = fireLocation;
                     _ammo -= 1;
                     _tillNextFire = _fireTime;

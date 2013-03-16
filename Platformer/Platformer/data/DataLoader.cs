@@ -22,6 +22,7 @@ namespace Platformer.Data
         //datafile locations
         const string SPRITEDATA_PATH = "Data/SpriteData.xml";
         const string UNITDATA_PATH = "Data/UnitData.xml";
+        const string WEAPONDATA_PATH = "Data/WeaponData.xml";
         //ref to Game1.Content for loading resources
         public static ContentManager Content;
         //for saving data:
@@ -56,6 +57,27 @@ namespace Platformer.Data
                         HorizontalDeceleration = (float)ud.Attribute("HorizontalDeceleration"),
                         Gravity = (float)ud.Attribute("Gravity")
                     }).ToDictionary(t => t.Key);
+        }
+
+        public static Dictionary<string, WeaponData> LoadWeaponData()
+        {
+            return (from el in XElement.Load(WEAPONDATA_PATH).Descendants("WeaponData")
+                    select buildWeaponData(el)).ToDictionary(t => t.Key);
+                    
+        }
+
+        private static WeaponData buildWeaponData(XElement el)
+        {
+            WeaponData data = new WeaponData();
+            Type dataType = data.GetType();
+
+            foreach (XAttribute at in el.Attributes())
+            {
+                    string fieldName = at.Name.LocalName;
+                    System.Reflection.FieldInfo p = dataType.GetField(fieldName);
+                    data.GetType().GetField(fieldName).SetValue(data, Convert.ChangeType(at.Value, p.FieldType));
+            }
+            return data;
         }
 
         public static void SaveProgress(ProgressData data)

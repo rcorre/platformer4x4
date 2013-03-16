@@ -39,6 +39,7 @@ namespace Platformer.Control
         Unit _gino = new Gino(new Vector2(200,100), true);
         ProgressData _progressData;
         List<Pickup> _pickups;
+        Weapon _currentWeapon;
         #endregion
 
         #region properties
@@ -53,7 +54,6 @@ namespace Platformer.Control
                     Game1.SCREEN_WIDTH, Game1.SCREEN_HEIGHT));
 
             //load the map for the specified level
-            //_tileMap = Content.Load<Map>("Maps\\" + levelNumber);
             _tileMap = Content.Load<Map>("Maps\\" + levelNumber.ToString());
 
             //load tile sheet
@@ -64,6 +64,8 @@ namespace Platformer.Control
             _progressData = progressData;
 
             Weapon.Initialize();
+
+            _currentWeapon = new Weapon("Rifle", _gino);
 
         }
         #endregion
@@ -98,6 +100,7 @@ namespace Platformer.Control
             handleInput(input);
             foreach (Pickup p in _pickups)
                 p.Update(gameTime);
+            _currentWeapon.Update(gameTime);
             Weapon.UpdateProjectiles(gameTime);
             centerCamera(_gino.Center);
             _gino.Update(gameTime, onGround(_gino));
@@ -112,6 +115,8 @@ namespace Platformer.Control
                 _gino.Walk(Direction.East);
             if (input.Jump)
                 _gino.Jump();
+            if (input.Fire)
+                _currentWeapon.Fire(_gino.Center, _gino.Sprite.FacingRight ? Vector2.UnitX : -Vector2.UnitX);
             if (input.Debug1)
                 Platformer.Data.DataLoader.SaveProgress(_progressData);
             if (input.Debug2)

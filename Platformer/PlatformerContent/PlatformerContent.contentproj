@@ -45,13 +45,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="spritesheets\character.png">
-      <Name>character</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
     <Compile Include="spritesheets\Test.png">
       <Name>Test</Name>
       <Importer>TextureImporter</Importer>
@@ -101,6 +94,13 @@
   <ItemGroup>
     <Compile Include="spritesheets\Coin.png">
       <Name>Coin</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="spritesheets\Bullet.png">
+      <Name>Bullet</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>

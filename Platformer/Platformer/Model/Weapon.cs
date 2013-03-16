@@ -9,13 +9,18 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace Platformer.Model
 {
-    struct Projectile
+    class Projectile
     {
         public bool Active;
         public Sprite ProjectileSprite;
         public Vector2 Position;
         public Vector2 Velocity;
         int Damage;
+
+        public void CollideWithObstacle(Direction direction)
+        {
+            Active = false;
+        }
     }
 
     class WeaponData

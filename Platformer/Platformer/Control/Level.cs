@@ -103,7 +103,7 @@ namespace Platformer.Control
             _currentWeapon.Update(gameTime);
             Weapon.UpdateProjectiles(gameTime);
             centerCamera(_gino.Center);
-            _gino.Update(gameTime, onGround(_gino));
+            _gino.Update(gameTime, onGround(_gino.Bottom, _gino.Left, _gino.Right));
             moveUnit(_gino, gameTime);
         }
 
@@ -123,6 +123,33 @@ namespace Platformer.Control
                 _progressData = Platformer.Data.DataLoader.LoadProgress();
         }
 
+        private void getPickup(string name, int row, int col)
+        {
+            _pickups.RemoveAll(t => t.Row == row && t.Col == col);
+            switch (name)
+            {
+                case "Coin":
+                    _progressData.NumCoins += 1;
+                    break;
+            }
+        }
+
+        private void moveProjectiles(GameTime gameTime)
+        {
+            foreach (Projectile p in Weapon.Projectiles)
+            {
+                if (p.Active)
+                {
+                    //move x
+                    int col = (int)p.Position.X / _collisionLayer.TileWidth;
+                    int endCol = (int)(p.Position.X + p.Velocity.X * (float)gameTime.ElapsedGameTime.TotalSeconds)  
+                        / _collisionLayer.TileWidth;
+                    int closestObstacle = 
+                    while (startCol != endCol)
+                }
+            }
+        }
+
         /// <summary>
         /// Move a unit based on its velocity and the surrounding tiles
         /// </summary>
@@ -137,18 +164,6 @@ namespace Platformer.Control
             if (pxDown != 0)
                 checkVerticalCollision(unit, pxDown);
         }
-
-        private void getPickup(string name, int row, int col)
-        {
-            _pickups.RemoveAll(t => t.Row == row && t.Col == col);
-            switch (name)
-            {
-                case "Coin":
-                    _progressData.NumCoins += 1;
-                    break;
-            }
-        }
-
 
         private void checkHorizontalCollision(Unit unit, int pxRight)
         {
@@ -276,11 +291,140 @@ namespace Platformer.Control
             }
         }
 
-        private bool onGround(Unit unit)
+        private void checkHorizontalCollision(Projectile p, int pxRight)
         {
-            int rowBelow = (unit.Bottom + 1) / _collisionLayer.TileHeight;
-            for (int col = unit.Left / _collisionLayer.TileWidth;
-                    col <= (unit.Right - 1) / _collisionLayer.TileWidth;
+            //Get the coordinate of the forward-facing edge
+            //If walking left, forwardEdge = left of bounding box
+            //If walking right, forwardEdge = right of bounding box
+            int forwardEdge = (int)p.Position.X;
+
+            //-1 for left, 1 for right
+            int xDirection = pxRight / Math.Abs(pxRight);
+
+            int startCol = forwardEdge / _collisionLayer.TileWidth;
+            int endCol = (forwardEdge + pxRight) / _collisionLayer.TileWidth;
+
+            p.Position.X += pxRight;
+
+            for (int col = startCol; col != (endCol + xDirection); col = col + xDirection)
+            {
+                for (int row = (int)p.Position.Y / _collisionLayer.TileHeight;
+                    row <= p.Position.Y / _collisionLayer.TileHeight;
+                    row++)
+                {
+
+                    //boundary checks----------------------------------------------------------------
+                    if (col < 0)
+                    {
+                        p.CollideWithObstacle(Direction.West);
+                        p.Position.X = 0;
+                    }
+                    else if (col > _collisionLayer.LayerWidth)
+                    {
+                        p.CollideWithObstacle(Direction.East);
+                        p.Position.X = _collisionLayer.LayerWidth * _collisionLayer.TileWidth;
+                    }
+                    //--------------------------------------------------------------------------------
+                    //within bounds -- check tile collision
+                    else if (_collisionLayer.Tiles[col, row] != null && _collisionLayer.Tiles[col, row].TileIndex != 0)
+                    {
+                        if (pxRight > 0)
+                        {
+                            p.CollideWithObstacle(Direction.East);
+                            p.Position.X = col * _collisionLayer.TileWidth;
+                        }
+                        else
+                        {
+                            p.CollideWithObstacle(Direction.West);
+                            p.Position.X = (col + 1) * _collisionLayer.TileWidth;
+                        }
+                        break;  //no need to check more
+                    }
+                }
+            }
+        }
+
+        private void checkVerticalCollision(Projectile p, int pxDown)
+        {
+            int forwardEdge = (int)p.Position.Y;
+
+            //1 for down, -1 for up
+            int yDirection = pxDown / Math.Abs(pxDown);
+
+            //start at initial forward edge
+            int startRow = forwardEdge / _collisionLayer.TileHeight;
+            //assume unit moves full distance
+            p.Position.Y += pxDown;
+            //check up to new assumed unit hitrect edge
+            int endRow = (forwardEdge + pxDown) / _collisionLayer.TileHeight;
+
+            for (int row = startRow; row != (endRow + yDirection); row = row + yDirection)
+            {
+                for (int col = ((int)p.Position.X + 1) / _collisionLayer.TileWidth;
+                    col <= (p.Position.X - 1) / _collisionLayer.TileWidth;
+                    col++)
+                {
+                    //boundary checks----------------------------------------------------------------
+                    if (col < 0)
+                    {
+                        p.CollideWithObstacle(Direction.West);
+                        p.Position.X = 0;
+                    }
+                    else if (col > _collisionLayer.LayerWidth)
+                    {
+                        p.CollideWithObstacle(Direction.East);
+                        p.Position.Y = _collisionLayer.LayerWidth * _collisionLayer.TileWidth;
+                    }
+                    if (row < 0)
+                    {
+                        p.CollideWithObstacle(Direction.North);
+                        p.Top = 0;
+                    }
+                    else if (row > _collisionLayer.LayerHeight)
+                    {
+                        p.CollideWithObstacle(Direction.South);
+                        p.Position.Y = _collisionLayer.LayerHeight * _collisionLayer.TileHeight;
+                    }
+                    //--------------------------------------------------------------------------------
+
+                    if (_collisionLayer.Tiles[col, row] != null && _collisionLayer.Tiles[col, row].TileIndex != 0)
+                    {
+                        if (pxDown > 0)
+                        {
+                            unit.CollideWithObstacle(Direction.South);
+                            unit.Bottom = row * _collisionLayer.TileHeight;
+                        }
+                        else
+                        {
+                            unit.CollideWithObstacle(Direction.North);
+                            unit.Top = (row + 1) * _collisionLayer.TileHeight;
+                        }
+                        break;  //no need to check more
+                    }
+                }
+            }
+        }
+
+        private bool onGround(int bottom, int left, int right)
+        {
+            int rowBelow = (bottom + 1) / _collisionLayer.TileHeight;
+            for (int col = left / _collisionLayer.TileWidth;
+                    col <= (right - 1) / _collisionLayer.TileWidth;
+                    col++)
+            {
+                if (_collisionLayer.Tiles[col, rowBelow] != null && _collisionLayer.Tiles[col, rowBelow].TileIndex != 0)
+                {
+                    return true;    //standing on a solid tile
+                }
+            }
+            return false;       //no solid tiles right beneath unit
+        }
+
+        private bool onGround(int bottom, int left, int right)
+        {
+            int rowBelow = (bottom + 1) / _collisionLayer.TileHeight;
+            for (int col = left / _collisionLayer.TileWidth;
+                    col <= (right - 1) / _collisionLayer.TileWidth;
                     col++)
             {
                 if (_collisionLayer.Tiles[col, rowBelow] != null && _collisionLayer.Tiles[col, rowBelow].TileIndex != 0)

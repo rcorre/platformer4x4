@@ -70,7 +70,7 @@ namespace Platformer.Control
         /// </summary>
         public bool Fire
         {
-            get { return _currentKeyState.IsKeyDown(Keys.Space) && _pastKeyState.IsKeyUp(Keys.Space); }
+            get { return _currentKeyState.IsKeyDown(Keys.Space); }
         }
         /// <summary>
         /// Whether debug key (B) is pressed

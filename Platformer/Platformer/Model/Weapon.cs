@@ -45,6 +45,10 @@ namespace Platformer.Model
         public static void Initialize()
         {
             Projectiles = new Projectile[MAX_PROJECTILE_COUNT];
+            for (int i = 0; i < Projectiles.Length; i++)
+            {
+                Projectiles[i] = new Projectile();
+            }
         }
 
         public static void UpdateProjectiles(GameTime gameTime)
@@ -53,9 +57,6 @@ namespace Platformer.Model
             {
                 if (Projectiles[i].Active)
                 {
-                    Vector2.Add(ref Projectiles[i].Position,
-                        ref Projectiles[i].Velocity,
-                        out Projectiles[i].Position);
                     Projectiles[i].ProjectileSprite.Animate(0, gameTime, 1.0f);
                 }
             }
@@ -63,6 +64,7 @@ namespace Platformer.Model
         #endregion
 
         #region properties
+        public int Ammo;
         #endregion
 
         #region fields

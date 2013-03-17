@@ -102,6 +102,7 @@ namespace Platformer.Control
                 p.Update(gameTime);
             _currentWeapon.Update(gameTime);
             Weapon.UpdateProjectiles(gameTime);
+            moveProjectiles(gameTime);
             centerCamera(_gino.Center);
             _gino.Update(gameTime, onGround(_gino.Bottom, _gino.Left, _gino.Right));
             moveUnit(_gino, gameTime);
@@ -140,12 +141,13 @@ namespace Platformer.Control
             {
                 if (p.Active)
                 {
-                    //move x
-                    int col = (int)p.Position.X / _collisionLayer.TileWidth;
-                    int endCol = (int)(p.Position.X + p.Velocity.X * (float)gameTime.ElapsedGameTime.TotalSeconds)  
-                        / _collisionLayer.TileWidth;
-                    int closestObstacle = 
-                    while (startCol != endCol)
+                    int pxRight = (int)(p.Velocity.X * (float)gameTime.ElapsedGameTime.TotalSeconds);
+                    int pxDown = (int)(p.Velocity.Y * (float)gameTime.ElapsedGameTime.TotalSeconds);
+
+                    if (pxRight != 0)
+                        checkHorizontalCollision(p, pxRight);
+                    if (pxDown != 0)
+                        checkVerticalCollision(p, pxDown);
                 }
             }
         }
@@ -177,6 +179,8 @@ namespace Platformer.Control
 
             int startCol = forwardEdge / _collisionLayer.TileWidth;
             int endCol = (forwardEdge + pxRight) / _collisionLayer.TileWidth;
+            startCol = (int)MathHelper.Clamp(startCol, 0, _collisionLayer.LayerWidth - 1);
+            endCol = (int)MathHelper.Clamp(endCol, 0, _collisionLayer.LayerWidth - 1);
 
             unit.X += pxRight;
 
@@ -237,6 +241,9 @@ namespace Platformer.Control
             unit.Y += pxDown;
             //check up to new assumed unit hitrect edge
             int endRow = (forwardEdge + pxDown) / _collisionLayer.TileHeight;
+
+            startRow = (int)MathHelper.Clamp(startRow, 0, _collisionLayer.LayerHeight - 1);
+            endRow = (int)MathHelper.Clamp(endRow, 0, _collisionLayer.LayerHeight - 1);
 
             for (int row = startRow; row != (endRow + yDirection); row = row + yDirection)
             {
@@ -303,6 +310,8 @@ namespace Platformer.Control
 
             int startCol = forwardEdge / _collisionLayer.TileWidth;
             int endCol = (forwardEdge + pxRight) / _collisionLayer.TileWidth;
+            startCol = (int)MathHelper.Clamp(startCol, 0, _collisionLayer.LayerWidth - 1);
+            endCol = (int)MathHelper.Clamp(endCol, 0, _collisionLayer.LayerWidth - 1);
 
             p.Position.X += pxRight;
 
@@ -357,6 +366,8 @@ namespace Platformer.Control
             p.Position.Y += pxDown;
             //check up to new assumed unit hitrect edge
             int endRow = (forwardEdge + pxDown) / _collisionLayer.TileHeight;
+            startRow = (int)MathHelper.Clamp(startRow, 0, _collisionLayer.LayerHeight - 1);
+            endRow = (int)MathHelper.Clamp(endRow, 0, _collisionLayer.LayerHeight - 1);
 
             for (int row = startRow; row != (endRow + yDirection); row = row + yDirection)
             {
@@ -378,7 +389,7 @@ namespace Platformer.Control
                     if (row < 0)
                     {
                         p.CollideWithObstacle(Direction.North);
-                        p.Top = 0;
+                        p.Position.Y = 0;
                     }
                     else if (row > _collisionLayer.LayerHeight)
                     {
@@ -391,13 +402,13 @@ namespace Platformer.Control
                     {
                         if (pxDown > 0)
                         {
-                            unit.CollideWithObstacle(Direction.South);
-                            unit.Bottom = row * _collisionLayer.TileHeight;
+                            p.CollideWithObstacle(Direction.South);
+                            p.Position.Y = row * _collisionLayer.TileHeight;
                         }
                         else
                         {
-                            unit.CollideWithObstacle(Direction.North);
-                            unit.Top = (row + 1) * _collisionLayer.TileHeight;
+                            p.CollideWithObstacle(Direction.North);
+                            p.Position.Y = (row + 1) * _collisionLayer.TileHeight;
                         }
                         break;  //no need to check more
                     }
@@ -419,120 +430,6 @@ namespace Platformer.Control
             }
             return false;       //no solid tiles right beneath unit
         }
-
-        private bool onGround(int bottom, int left, int right)
-        {
-            int rowBelow = (bottom + 1) / _collisionLayer.TileHeight;
-            for (int col = left / _collisionLayer.TileWidth;
-                    col <= (right - 1) / _collisionLayer.TileWidth;
-                    col++)
-            {
-                if (_collisionLayer.Tiles[col, rowBelow] != null && _collisionLayer.Tiles[col, rowBelow].TileIndex != 0)
-                {
-                    return true;    //standing on a solid tile
-                }
-            }
-            return false;       //no solid tiles right beneath unit
-        }
-        /*
-        /// <summary>
-        /// Move a unit based on its velocity and the surrounding tiles
-        /// </summary>
-        /// <param name="unit">the unit to move</param>
-        private void moveUnit(Unit unit, GameTime gameTime)
-        {
-            int pxRight = (int)(unit.Velocity.X * (float)gameTime.ElapsedGameTime.TotalSeconds);
-            int pxDown = (int)(unit.Velocity.Y * (float)gameTime.ElapsedGameTime.TotalSeconds);
-
-            #region horizontal collision detection
-            if (pxRight != 0)
-            {
-                //Get the coordinate of the forward-facing edge
-                //If walking left, forwardEdge = left of bounding box
-                //If walking right, forwardEdge = right of bounding box
-                int forwardEdge = (pxRight > 0) ? unit.Right : unit.Left;
-                    
-                //start assuming no obstacle hit (move full distance)
-                int closestObstacleX = forwardEdge + pxRight;
-
-                //-1 for left, 1 for right
-                int xDirection = pxRight / Math.Abs(pxRight);
-
-                int startCol = forwardEdge / _collisionLayer.TileWidth;
-                int colsToScan = (pxRight + 1) / _collisionLayer.TileWidth;
-
-                for (int row = unit.Top / _collisionLayer.TileHeight;
-                        row <= (unit.Bottom - 1) / _collisionLayer.TileHeight;
-                        row++)
-                {
-                    for (int col = startCol;
-                            Math.Abs(col - startCol) <= colsToScan;
-                            col = col + xDirection)
-                    {
-                        if (_collisionLayer.Tiles[col, row] != null && _collisionLayer.Tiles[col,row].TileIndex != 0)
-                        {
-                            int obstacleBound = (pxRight > 0) ? col * _collisionLayer.TileWidth : (col + 1) * _collisionLayer.TileWidth;
-
-                            closestObstacleX = (pxRight > 0) ?
-                                Math.Min(closestObstacleX, obstacleBound) :
-                                Math.Max(closestObstacleX, obstacleBound);
-                        }
-                    }
-                }
-                if (pxRight > 0)
-                    unit.Right = closestObstacleX;
-                else
-                    unit.Left = closestObstacleX;
-            }
-            #endregion
-
-            #region vertical collision detection
-            if (pxDown != 0)
-            {
-                int forwardEdge = (pxDown > 0) ?
-                    unit.Bottom : unit.Top;
-
-                //At most, if no obstacles are hit, the player will come to a stop
-                //at the maximum movement distance
-                int closestObstacleY = forwardEdge + pxDown;
-
-                //get which direction to scan(Up or Down)
-                int yDirection = pxDown / Math.Abs(pxDown);
-
-                int startRow = forwardEdge / _collisionLayer.TileHeight;
-                int rowsToScan = (pxDown + 1) / _collisionLayer.TileHeight;
-
-                for (int col = unit.Left / _collisionLayer.TileWidth;
-                        col <= (unit.Right - 1) / _collisionLayer.TileWidth;
-                        col++)
-                {
-                    for (int row = startRow;
-                            Math.Abs(col - startRow) <= rowsToScan;
-                            col = col + yDirection)
-                    {
-                        if (_collisionLayer.Tiles[col, row] != null && _collisionLayer.Tiles[col,row].TileIndex != 0)
-                        {
-                            unit.CollideWithObstacle(pxDown > 0 ? Direction.South : Direction.North);
-
-                            int obstacleBound = (pxDown > 0) ? col * _collisionLayer.TileHeight : (col + 1) * _collisionLayer.TileHeight;
-
-                            closestObstacleY = (pxDown > 0) ?
-                                Math.Min(closestObstacleY, obstacleBound) :
-                                Math.Max(closestObstacleY, obstacleBound);
-                        }
-                    }
-                }
-                if (pxDown > 0)
-                    unit.Bottom = closestObstacleY;
-                else
-                    unit.Top = closestObstacleY;
-            }
-            #endregion
-
-            //move the unit the amount specified above
-
-        }
-        */
 
         /// <summary>
         /// Center viewport on specified condition.

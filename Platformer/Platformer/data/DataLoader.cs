@@ -23,6 +23,7 @@ namespace Platformer.Data
         const string SPRITEDATA_PATH = "Data/SpriteData.xml";
         const string UNITDATA_PATH = "Data/UnitData.xml";
         const string WEAPONDATA_PATH = "Data/WeaponData.xml";
+        const string OVERWORLDDATA_PATH = "Data/OverworldData.xml";
         //ref to Game1.Content for loading resources
         public static ContentManager Content;
         //for saving data:
@@ -78,6 +79,27 @@ namespace Platformer.Data
                     data.GetType().GetField(fieldName).SetValue(data, Convert.ChangeType(at.Value, p.FieldType));
             }
             return data;
+        }
+
+        public static Overworld.OverworldNode[] LoadOverworldData()
+        {
+            return (from el in XElement.Load(OVERWORLDDATA_PATH).Descendants("OverworldData")
+                    select buildOverworldNode(el)).ToArray();
+                    
+        }
+
+        private static Overworld.OverworldNode buildOverworldNode(XElement el)
+        {
+            Overworld.OverworldNode node = new Overworld.OverworldNode();
+            Type dataType = node.GetType();
+
+            foreach (XAttribute at in el.Attributes())
+            {
+                    string fieldName = at.Name.LocalName;
+                    System.Reflection.FieldInfo p = dataType.GetField(fieldName);
+                    node.GetType().GetField(fieldName).SetValue(node, Convert.ChangeType(at.Value, p.FieldType));
+            }
+            return node;
         }
 
         public static void SaveProgress(ProgressData data)

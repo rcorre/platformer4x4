@@ -6,11 +6,22 @@ using System.Text;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
+using Platformer.Model;
+using Platformer.View;
+
 namespace Platformer.Control
 {
+
     class Overworld : GameState
     {
         #region static
+        public struct OverworldNode
+        {
+            public int LevelNumber;
+            public string LevelName;
+            public int X, Y;
+        }
+        public static OverworldNode[] Nodes;
         #endregion
 
         #region fields
@@ -30,7 +41,14 @@ namespace Platformer.Control
         #region methods
         public override void Update(GameTime gameTime, InputManager input)
         {
-            throw new NotImplementedException();
+            //TODO -- add move animation between levels, checking for whether levels are connected/completed
+
+            if (input.MoveLeft && _progressData.CurrentLevel > 0)
+                _progressData.CurrentLevel--;
+            else if (input.MoveRight && _progressData.CurrentLevel < Nodes.Length - 1)
+                _progressData.CurrentLevel++;
+            else if (input.ConfirmSelection)
+                SelectLevel(_progressData.CurrentLevel);
         }
 
         /// <summary>
@@ -45,7 +63,11 @@ namespace Platformer.Control
 
         public override void Draw(SpriteBatch sb)
         {
-            throw new NotImplementedException();
+            OverworldView.DrawBackground(sb);
+            foreach (OverworldNode node in Nodes)
+            {
+                OverworldView.DrawNode(sb, node.X, node.Y, _progressData.LevelCompleted[node.LevelNumber]);
+            }
         }
         #endregion
     }

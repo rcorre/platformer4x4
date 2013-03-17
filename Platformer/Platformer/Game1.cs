@@ -86,11 +86,14 @@ namespace Platformer
             Sprite.SpriteDataDict = DataLoader.LoadSpriteData();
             //initialize weapon data
             Weapon.Data = DataLoader.LoadWeaponData();
+            Overworld.Nodes = DataLoader.LoadOverworldData();
+            OverworldView.LoadTextures(Content.Load<Texture2D>("Icons/Node"), Content.Load<Texture2D>("Backgrounds/skyline"));
             SpriteView.LoadTextures(Sprite.SpriteDataDict.Keys.ToArray<string>(), Content);
 
             //Later: change this in main menu
             //initialize new data if select new game
             //load data if select continue game
+            /*
             _currentState = new Level(0,
                 new ProgressData()
                 {
@@ -99,6 +102,8 @@ namespace Platformer
                     LevelCompleted = new bool[NUM_LEVELS]
                 }
                 );
+            */
+            _currentState = new Overworld(new ProgressData());
         }
 
 

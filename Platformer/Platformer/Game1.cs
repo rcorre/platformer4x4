@@ -103,7 +103,14 @@ namespace Platformer
                 }
                 );
             */
-            _currentState = new Overworld(new ProgressData());
+            _currentState = new Overworld(
+                new ProgressData()
+                {
+                    NumCoins = 0,
+                    CurrentLevel = 0,
+                    LevelCompleted = new bool[NUM_LEVELS]
+                }
+                );
         }
 
 

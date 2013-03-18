@@ -15,7 +15,7 @@ namespace Platformer.Control
     class Overworld : GameState
     {
         #region static
-        public struct OverworldNode
+        public class OverworldNode
         {
             public int LevelNumber;
             public string LevelName;

@@ -83,7 +83,7 @@ namespace Platformer.Data
 
         public static Overworld.OverworldNode[] LoadOverworldData()
         {
-            return (from el in XElement.Load(OVERWORLDDATA_PATH).Descendants("OverworldData")
+            return (from el in XElement.Load(OVERWORLDDATA_PATH).Descendants("OverworldNode")
                     select buildOverworldNode(el)).ToArray();
                     
         }

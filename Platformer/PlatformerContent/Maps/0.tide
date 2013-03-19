@@ -1,24 +1,18 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Map Id="0">
+<Map Id="Untitled">
   <Description><![CDATA[]]></Description>
   <TileSheets>
-    <TileSheet Id="BasicTiles">
-      <Description><![CDATA[]]></Description>
-      <ImageSource><![CDATA[..\TileSheets\BasicTiles.png]]></ImageSource>
-      <Alignment SheetSize="5 x 6" TileSize="32 x 32" Margin="0 x 0" Spacing="0 x 0" />
-      <Properties />
-    </TileSheet>
     <TileSheet Id="LevelMarkers">
-      <Description><![CDATA[Mark gino start location, level end location, and shop locations]]></Description>
+      <Description><![CDATA[]]></Description>
       <ImageSource><![CDATA[..\TileSheets\LevelMarkers.png]]></ImageSource>
       <Alignment SheetSize="2 x 2" TileSize="32 x 32" Margin="0 x 0" Spacing="0 x 0" />
       <Properties>
         <Property Key="@TileIndex@0@MarkerType" Type="String"><![CDATA[Start]]></Property>
         <Property Key="@TileIndex@1@MarkerType" Type="String"><![CDATA[End]]></Property>
-        <Property Key="@TileIndex@2@MarkerType" Type="String"><![CDATA[Shop]]></Property>
+        <Property Key="@TileIndex@2@MarkerType" Type="String"><![CDATA[End]]></Property>
       </Properties>
     </TileSheet>
-    <TileSheet Id="PickupSheet">
+    <TileSheet Id="PickupMarkers">
       <Description><![CDATA[]]></Description>
       <ImageSource><![CDATA[..\TileSheets\PickupTilesheet.png]]></ImageSource>
       <Alignment SheetSize="1 x 1" TileSize="32 x 32" Margin="0 x 0" Spacing="0 x 0" />
@@ -26,10 +20,16 @@
         <Property Key="@TileIndex@0@PickupType" Type="String"><![CDATA[Coin]]></Property>
       </Properties>
     </TileSheet>
+    <TileSheet Id="Terrain">
+      <Description><![CDATA[]]></Description>
+      <ImageSource><![CDATA[..\TileSheets\BasicTiles.png]]></ImageSource>
+      <Alignment SheetSize="5 x 6" TileSize="32 x 32" Margin="0 x 0" Spacing="0 x 0" />
+      <Properties />
+    </TileSheet>
   </TileSheets>
   <Layers>
     <Layer Id="Collision" Visible="True">
-      <Description><![CDATA[Collision detection will be performed on this layer]]></Description>
+      <Description><![CDATA[]]></Description>
       <Dimensions LayerSize="50 x 25" TileSize="32 x 32" />
       <TileArray>
         <Row>
@@ -87,20 +87,20 @@
           <Null Count="50" />
         </Row>
         <Row>
-          <Null Count="18" />
-          <TileSheet Ref="BasicTiles" />
-          <Static Index="1" BlendMode="Alpha" />
-          <Static Index="1" BlendMode="Alpha" />
-          <Static Index="1" BlendMode="Alpha" />
-          <Static Index="1" BlendMode="Alpha" />
-          <Null Count="28" />
+          <Null Count="50" />
         </Row>
         <Row>
+          <Null Count="4" />
+          <TileSheet Ref="Terrain" />
           <Static Index="1" BlendMode="Alpha" />
           <Static Index="1" BlendMode="Alpha" />
           <Static Index="1" BlendMode="Alpha" />
+          <Null Count="10" />
+          <Static Index="1" BlendMode="Alpha" />
+          <Null Count="6" />
           <Static Index="1" BlendMode="Alpha" />
           <Static Index="1" BlendMode="Alpha" />
+          <Null Count="5" />
           <Static Index="1" BlendMode="Alpha" />
           <Static Index="1" BlendMode="Alpha" />
           <Null Count="11" />
@@ -108,63 +108,31 @@
           <Static Index="1" BlendMode="Alpha" />
           <Static Index="1" BlendMode="Alpha" />
           <Static Index="1" BlendMode="Alpha" />
-          <Null Count="1" />
-          <Static Index="1" BlendMode="Alpha" />
-          <Static Index="1" BlendMode="Alpha" />
-          <Static Index="1" BlendMode="Alpha" />
-          <Static Index="1" BlendMode="Alpha" />
-          <Static Index="1" BlendMode="Alpha" />
-          <Null Count="3" />
-          <Static Index="1" BlendMode="Alpha" />
-          <Static Index="1" BlendMode="Alpha" />
-          <Static Index="1" BlendMode="Alpha" />
-          <Static Index="1" BlendMode="Alpha" />
-          <Static Index="1" BlendMode="Alpha" />
-          <Null Count="4" />
-          <Static Index="1" BlendMode="Alpha" />
-          <Static Index="1" BlendMode="Alpha" />
-          <Null Count="4" />
-          <Static Index="1" BlendMode="Alpha" />
-          <Static Index="1" BlendMode="Alpha" />
           <Null Count="2" />
         </Row>
         <Row>
+          <Null Count="4" />
+          <Static Index="1" BlendMode="Alpha" />
+          <Static Index="1" BlendMode="Alpha" />
+          <Static Index="1" BlendMode="Alpha" />
+          <Null Count="7" />
           <Static Index="1" BlendMode="Alpha" />
           <Static Index="1" BlendMode="Alpha" />
           <Static Index="1" BlendMode="Alpha" />
           <Static Index="1" BlendMode="Alpha" />
+          <Null Count="6" />
           <Static Index="1" BlendMode="Alpha" />
           <Static Index="1" BlendMode="Alpha" />
+          <Null Count="5" />
           <Static Index="1" BlendMode="Alpha" />
           <Static Index="1" BlendMode="Alpha" />
-          <Static Index="1" BlendMode="Alpha" />
-          <Static Index="1" BlendMode="Alpha" />
-          <Static Index="1" BlendMode="Alpha" />
-          <Static Index="1" BlendMode="Alpha" />
-          <Static Index="1" BlendMode="Alpha" />
-          <Static Index="1" BlendMode="Alpha" />
-          <Static Index="1" BlendMode="Alpha" />
-          <Null Count="3" />
-          <Static Index="1" BlendMode="Alpha" />
-          <Static Index="1" BlendMode="Alpha" />
-          <Static Index="1" BlendMode="Alpha" />
+          <Null Count="5" />
           <Static Index="1" BlendMode="Alpha" />
           <Null Count="1" />
           <Static Index="1" BlendMode="Alpha" />
-          <Static Index="1" BlendMode="Alpha" />
-          <Static Index="1" BlendMode="Alpha" />
-          <Static Index="1" BlendMode="Alpha" />
-          <Static Index="1" BlendMode="Alpha" />
           <Null Count="3" />
           <Static Index="1" BlendMode="Alpha" />
           <Static Index="1" BlendMode="Alpha" />
-          <Static Index="1" BlendMode="Alpha" />
-          <Static Index="1" BlendMode="Alpha" />
-          <Static Index="1" BlendMode="Alpha" />
-          <Null Count="4" />
-          <Static Index="1" BlendMode="Alpha" />
-          <Static Index="1" BlendMode="Alpha" />
-          <Null Count="4" />
           <Static Index="1" BlendMode="Alpha" />
           <Static Index="1" BlendMode="Alpha" />
           <Null Count="2" />
@@ -381,7 +349,104 @@
       <Properties />
     </Layer>
     <Layer Id="Pickups" Visible="True">
-      <Description><![CDATA[Place pickup markers on this layer]]></Description>
+      <Description><![CDATA[]]></Description>
+      <Dimensions LayerSize="50 x 25" TileSize="32 x 32" />
+      <TileArray>
+        <Row>
+          <Null Count="50" />
+        </Row>
+        <Row>
+          <Null Count="50" />
+        </Row>
+        <Row>
+          <Null Count="50" />
+        </Row>
+        <Row>
+          <Null Count="50" />
+        </Row>
+        <Row>
+          <Null Count="50" />
+        </Row>
+        <Row>
+          <Null Count="50" />
+        </Row>
+        <Row>
+          <Null Count="50" />
+        </Row>
+        <Row>
+          <Null Count="50" />
+        </Row>
+        <Row>
+          <Null Count="50" />
+        </Row>
+        <Row>
+          <Null Count="50" />
+        </Row>
+        <Row>
+          <Null Count="50" />
+        </Row>
+        <Row>
+          <Null Count="50" />
+        </Row>
+        <Row>
+          <Null Count="50" />
+        </Row>
+        <Row>
+          <Null Count="50" />
+        </Row>
+        <Row>
+          <Null Count="21" />
+          <TileSheet Ref="PickupMarkers" />
+          <Static Index="0" BlendMode="Alpha" />
+          <Null Count="28" />
+        </Row>
+        <Row>
+          <Null Count="50" />
+        </Row>
+        <Row>
+          <Null Count="42" />
+          <Static Index="0" BlendMode="Alpha" />
+          <Null Count="7" />
+        </Row>
+        <Row>
+          <Null Count="6" />
+          <Static Index="0" BlendMode="Alpha" />
+          <Null Count="8" />
+          <Static Index="0" BlendMode="Alpha" />
+          <Null Count="11" />
+          <Static Index="0" BlendMode="Alpha" />
+          <Null Count="5" />
+          <Static Index="0" BlendMode="Alpha" />
+          <Null Count="16" />
+        </Row>
+        <Row>
+          <Null Count="22" />
+          <Static Index="0" BlendMode="Alpha" />
+          <Null Count="27" />
+        </Row>
+        <Row>
+          <Null Count="50" />
+        </Row>
+        <Row>
+          <Null Count="50" />
+        </Row>
+        <Row>
+          <Null Count="50" />
+        </Row>
+        <Row>
+          <Null Count="50" />
+        </Row>
+        <Row>
+          <Null Count="50" />
+        </Row>
+        <Row>
+          <Null Count="50" />
+        </Row>
+      </TileArray>
+      <Properties />
+    </Layer>
+    <Layer Id="LevelMarkers" Visible="True">
+      <Description><![CDATA[]]></Description>
       <Dimensions LayerSize="50 x 25" TileSize="32 x 32" />
       <TileArray>
         <Row>
@@ -433,135 +498,38 @@
           <Null Count="50" />
         </Row>
         <Row>
-          <Null Count="26" />
-          <TileSheet Ref="PickupSheet" />
-          <Static Index="0" BlendMode="Alpha" />
-          <Null Count="23" />
-        </Row>
-        <Row>
-          <Null Count="20" />
-          <Static Index="0" BlendMode="Alpha" />
-          <Null Count="20" />
-          <Static Index="0" BlendMode="Alpha" />
-          <Null Count="5" />
-          <Static Index="0" BlendMode="Alpha" />
-          <Null Count="2" />
-        </Row>
-        <Row>
-          <Null Count="6" />
-          <Static Index="0" BlendMode="Alpha" />
-          <Null Count="27" />
-          <Static Index="0" BlendMode="Alpha" />
-          <Null Count="15" />
-        </Row>
-        <Row>
-          <Null Count="12" />
-          <Static Index="0" BlendMode="Alpha" />
-          <Null Count="37" />
-        </Row>
-        <Row>
           <Null Count="50" />
         </Row>
         <Row>
           <Null Count="50" />
         </Row>
         <Row>
-          <Null Count="50" />
-        </Row>
-        <Row>
-          <Null Count="50" />
-        </Row>
-        <Row>
-          <Null Count="50" />
-        </Row>
-      </TileArray>
-      <Properties />
-    </Layer>
-    <Layer Id="LevelMarkers" Visible="True">
-      <Description><![CDATA[]]></Description>
-      <Dimensions LayerSize="100 x 25" TileSize="32 x 32" />
-      <TileArray>
-        <Row>
-          <Null Count="100" />
-        </Row>
-        <Row>
-          <Null Count="100" />
-        </Row>
-        <Row>
-          <Null Count="100" />
-        </Row>
-        <Row>
-          <Null Count="100" />
-        </Row>
-        <Row>
-          <Null Count="100" />
-        </Row>
-        <Row>
-          <Null Count="100" />
-        </Row>
-        <Row>
-          <Null Count="100" />
-        </Row>
-        <Row>
-          <Null Count="100" />
-        </Row>
-        <Row>
-          <Null Count="100" />
-        </Row>
-        <Row>
-          <Null Count="100" />
-        </Row>
-        <Row>
-          <Null Count="100" />
-        </Row>
-        <Row>
-          <Null Count="100" />
-        </Row>
-        <Row>
-          <Null Count="100" />
-        </Row>
-        <Row>
-          <Null Count="100" />
-        </Row>
-        <Row>
-          <Null Count="100" />
-        </Row>
-        <Row>
-          <Null Count="100" />
-        </Row>
-        <Row>
-          <Null Count="100" />
-        </Row>
-        <Row>
-          <Null Count="100" />
-        </Row>
-        <Row>
-          <Null Count="2" />
+          <Null Count="24" />
           <TileSheet Ref="LevelMarkers" />
-          <Static Index="0" BlendMode="Alpha" />
-          <Null Count="21" />
           <Static Index="2" BlendMode="Alpha" />
           <Null Count="21" />
           <Static Index="1" BlendMode="Alpha" />
-          <Null Count="53" />
+          <Null Count="3" />
         </Row>
         <Row>
-          <Null Count="100" />
+          <Null Count="50" />
         </Row>
         <Row>
-          <Null Count="100" />
+          <Null Count="1" />
+          <Static Index="0" BlendMode="Alpha" />
+          <Null Count="48" />
         </Row>
         <Row>
-          <Null Count="100" />
+          <Null Count="50" />
         </Row>
         <Row>
-          <Null Count="100" />
+          <Null Count="50" />
         </Row>
         <Row>
-          <Null Count="100" />
+          <Null Count="50" />
         </Row>
         <Row>
-          <Null Count="100" />
+          <Null Count="50" />
         </Row>
       </TileArray>
       <Properties />

@@ -73,13 +73,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Maps\0.tide">
-      <Name>0</Name>
-      <Importer>TideImporter</Importer>
-      <Processor>TideProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
     <Compile Include="TileSheets\BasicTiles.png">
       <Name>BasicTiles</Name>
       <Importer>TextureImporter</Importer>
@@ -117,6 +110,13 @@
       <Name>LevelMarkers</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Maps\0.tide">
+      <Name>0</Name>
+      <Importer>TideImporter</Importer>
+      <Processor>TideProcessor</Processor>
     </Compile>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\XNA Game Studio\$(XnaFrameworkVersion)\Microsoft.Xna.GameStudio.ContentPipeline.targets" />

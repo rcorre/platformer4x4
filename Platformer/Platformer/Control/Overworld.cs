@@ -15,6 +15,10 @@ namespace Platformer.Control
     class Overworld : GameState
     {
         #region static
+
+        /// <summary>
+        /// Represents a level on the overworld map
+        /// </summary>
         public class OverworldNode
         {
             public int LevelNumber;

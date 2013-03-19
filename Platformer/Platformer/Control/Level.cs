@@ -34,12 +34,15 @@ namespace Platformer.Control
         Map _tileMap;   //xTile map
         xTile.Dimensions.Rectangle _viewport;   //camera
         Layer _collisionLayer;   //layer of xTile map on which to detect collisions 
-        Layer _pickupLayer;
+        Layer _pickupLayer;      // mark pickups
+        Layer _markerLayer;     //mark start, end, and shop locations
         Vector2 centerPos = Vector2.Zero;
-        Unit _gino = new Gino(new Vector2(200,100), true);
+        Gino _gino = new Gino(Vector2.Zero, true);
+        Enemy[] _enemies;
         ProgressData _progressData;
         List<Pickup> _pickups;
         Weapon _currentWeapon;
+        Point _endPoint;
         #endregion
 
         #region properties
@@ -62,6 +65,7 @@ namespace Platformer.Control
             scanMapLayers();
 
             _progressData = progressData;
+            _progressData.CurrentLevel = levelNumber;
 
             Weapon.Initialize();
 
@@ -75,6 +79,7 @@ namespace Platformer.Control
         {
             _collisionLayer = _tileMap.GetLayer("Collision");
             _pickupLayer = _tileMap.GetLayer("Pickups");
+            _markerLayer = _tileMap.GetLayer("LevelMarkers");
             Tile tile;
 
             _pickups = new List<Pickup>();
@@ -91,8 +96,31 @@ namespace Platformer.Control
                     }
                 }
             }
+
+            for (int row = 0; row < _markerLayer.LayerHeight; row++)
+            {
+                for (int col = 0; col < _markerLayer.LayerWidth; col++)
+                {
+                    tile = _markerLayer.Tiles[col, row];
+                    if (tile != null)
+                    {
+                        switch (tile.TileIndexProperties["MarkerType"].ToString())
+                        {
+                            case "Start":
+                                _gino.Bottom = (row + 1) * _markerLayer.TileHeight;
+                                _gino.Left = col * _markerLayer.TileWidth;
+                                break;
+                            case "End":
+                                _endPoint.X = (int)((col + 0.5f) * _markerLayer.TileWidth);
+                                _endPoint.Y = (int)((row + 0.5f) * _markerLayer.TileHeight);
+                                break;
+                        }
+                    }
+                }
+            }
             //make marker layers invisible
             _pickupLayer.Visible = false;
+            _markerLayer.Visible = false;
         }
 
         public override void Update(GameTime gameTime, InputManager input)
@@ -105,6 +133,8 @@ namespace Platformer.Control
             moveProjectiles(gameTime);
             centerCamera(_gino.Center);
             _gino.Update(gameTime, onGround(_gino.Bottom, _gino.Left, _gino.Right));
+            if (_gino.HitRect.Contains(_endPoint))
+                completeLevel();
             moveUnit(_gino, gameTime);
         }
 
@@ -444,6 +474,12 @@ namespace Platformer.Control
             _viewport.Y = (int)MathHelper.Clamp(
                 (centerPosition.Y - Game1.SCREEN_HEIGHT / 2.0f),
                 0, _tileMap.DisplayHeight - _viewport.Height);
+        }
+
+        private void completeLevel()
+        {
+            _progressData.LevelCompleted[_progressData.CurrentLevel] = true;
+            NewState = new Overworld(_progressData);
         }
 
         public override void Draw(SpriteBatch sb)

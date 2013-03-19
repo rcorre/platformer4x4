@@ -2,4 +2,6 @@
 <UnitDatas>
   <UnitData Key="Gino" HitRectHeight="80" HitRectWidth="40" WalkAcceleration="700"
             MaxSpeed="200" JumpSpeed="400" HorizontalDeceleration="220" Gravity="500"/>
+  <UnitData Key="Enemy1" HitRectHeight="80" HitRectWidth="40" WalkAcceleration="700"
+            MaxSpeed="200" JumpSpeed="400" HorizontalDeceleration="220" Gravity="500"/>
 </UnitDatas>

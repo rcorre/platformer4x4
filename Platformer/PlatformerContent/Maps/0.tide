@@ -8,6 +8,16 @@
       <Alignment SheetSize="5 x 6" TileSize="32 x 32" Margin="0 x 0" Spacing="0 x 0" />
       <Properties />
     </TileSheet>
+    <TileSheet Id="LevelMarkers">
+      <Description><![CDATA[Mark gino start location, level end location, and shop locations]]></Description>
+      <ImageSource><![CDATA[..\TileSheets\LevelMarkers.png]]></ImageSource>
+      <Alignment SheetSize="2 x 2" TileSize="32 x 32" Margin="0 x 0" Spacing="0 x 0" />
+      <Properties>
+        <Property Key="@TileIndex@0@MarkerType" Type="String"><![CDATA[Start]]></Property>
+        <Property Key="@TileIndex@1@MarkerType" Type="String"><![CDATA[End]]></Property>
+        <Property Key="@TileIndex@2@MarkerType" Type="String"><![CDATA[Shop]]></Property>
+      </Properties>
+    </TileSheet>
     <TileSheet Id="PickupSheet">
       <Description><![CDATA[]]></Description>
       <ImageSource><![CDATA[..\TileSheets\PickupTilesheet.png]]></ImageSource>
@@ -463,6 +473,95 @@
         </Row>
         <Row>
           <Null Count="50" />
+        </Row>
+      </TileArray>
+      <Properties />
+    </Layer>
+    <Layer Id="LevelMarkers" Visible="True">
+      <Description><![CDATA[]]></Description>
+      <Dimensions LayerSize="100 x 25" TileSize="32 x 32" />
+      <TileArray>
+        <Row>
+          <Null Count="100" />
+        </Row>
+        <Row>
+          <Null Count="100" />
+        </Row>
+        <Row>
+          <Null Count="100" />
+        </Row>
+        <Row>
+          <Null Count="100" />
+        </Row>
+        <Row>
+          <Null Count="100" />
+        </Row>
+        <Row>
+          <Null Count="100" />
+        </Row>
+        <Row>
+          <Null Count="100" />
+        </Row>
+        <Row>
+          <Null Count="100" />
+        </Row>
+        <Row>
+          <Null Count="100" />
+        </Row>
+        <Row>
+          <Null Count="100" />
+        </Row>
+        <Row>
+          <Null Count="100" />
+        </Row>
+        <Row>
+          <Null Count="100" />
+        </Row>
+        <Row>
+          <Null Count="100" />
+        </Row>
+        <Row>
+          <Null Count="100" />
+        </Row>
+        <Row>
+          <Null Count="100" />
+        </Row>
+        <Row>
+          <Null Count="100" />
+        </Row>
+        <Row>
+          <Null Count="100" />
+        </Row>
+        <Row>
+          <Null Count="100" />
+        </Row>
+        <Row>
+          <Null Count="2" />
+          <TileSheet Ref="LevelMarkers" />
+          <Static Index="0" BlendMode="Alpha" />
+          <Null Count="21" />
+          <Static Index="2" BlendMode="Alpha" />
+          <Null Count="21" />
+          <Static Index="1" BlendMode="Alpha" />
+          <Null Count="53" />
+        </Row>
+        <Row>
+          <Null Count="100" />
+        </Row>
+        <Row>
+          <Null Count="100" />
+        </Row>
+        <Row>
+          <Null Count="100" />
+        </Row>
+        <Row>
+          <Null Count="100" />
+        </Row>
+        <Row>
+          <Null Count="100" />
+        </Row>
+        <Row>
+          <Null Count="100" />
         </Row>
       </TileArray>
       <Properties />

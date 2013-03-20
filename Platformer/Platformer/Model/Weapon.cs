@@ -106,15 +106,16 @@ namespace Platformer.Model
 
         public void Fire(Vector2 fireLocation, Vector2 fireDirection)
         {
-
+            ;
             if (_tillNextFire > TimeSpan.Zero || _ammo <= 0)
             {
-                SoundPlayer.playSoundEffects("kick");
+                
                 return;
             }
 
             for (int i = 0; i < Projectiles.Length; i++)
             {
+                SoundPlayer.playSoundEffects("kick");
                 if (!Projectiles[i].Active)
                 {
                     Projectiles[i].Active = true;

@@ -74,6 +74,8 @@ namespace Platformer
             XnaHelper.PixelTexture = new Texture2D(GraphicsDevice, 1, 1);
             XnaHelper.PixelTexture.SetData<Color>(new Color[] {Color.White});
             XnaHelper.Font = Content.Load<SpriteFont>("Fonts/standard_font");
+            SpriteFont Font1 = Content.Load<SpriteFont>("Fonts/TitleFont");
+            Texture2D sprite = Content.Load<Texture2D>("spritesheets/Gino");
 
             //needed for level to load and draw maps
             Level.MapDisplayDevice = new xTile.Display.XnaDisplayDevice(this.Content, this.GraphicsDevice);
@@ -93,14 +95,16 @@ namespace Platformer
             //Later: change this in main menu
             //initialize new data if select new game
             //load data if select continue game
-            _currentState = new Overworld(
-                new ProgressData()
-                {
-                    NumCoins = 0,
-                    CurrentLevel = 0,
-                    LevelCompleted = new bool[Overworld.Nodes.Length]
-                }
-                );
+
+            _currentState = new MainMenu(GraphicsDevice, Font1, sprite);
+//            _currentState = new Overworld(
+//                new ProgressData()
+//                {
+//                    NumCoins = 0,
+//                    CurrentLevel = 0,
+//                    LevelCompleted = new bool[Overworld.Nodes.Length]
+//                }
+ //               );                            ***************************moved to MainMenu
         }
 
 

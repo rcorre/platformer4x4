@@ -146,7 +146,6 @@ namespace Platformer.Control
                 _gino.Walk(Direction.East);
             if (input.Jump)
             {
-                SoundPlayer.playSoundEffects("snare");
                 _gino.Jump();
             }
 

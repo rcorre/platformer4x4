@@ -133,7 +133,7 @@ namespace Platformer
         {
             //make sure to update inputmanager, otherwise player input will not be detected
             _input.Update();
-
+            SoundPlayer.Update();
             // Allows the game to exit
             if (_currentState.RequestExit)
                 this.Exit();

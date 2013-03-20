@@ -93,22 +93,12 @@ namespace Platformer
             //Later: change this in main menu
             //initialize new data if select new game
             //load data if select continue game
-            /*
-            _currentState = new Level(0,
-                new ProgressData()
-                {
-                    NumCoins = 0,
-                    CurrentLevel = 0,
-                    LevelCompleted = new bool[NUM_LEVELS]
-                }
-                );
-            */
             _currentState = new Overworld(
                 new ProgressData()
                 {
                     NumCoins = 0,
                     CurrentLevel = 0,
-                    LevelCompleted = new bool[NUM_LEVELS]
+                    LevelCompleted = new bool[Overworld.Nodes.Length]
                 }
                 );
         }

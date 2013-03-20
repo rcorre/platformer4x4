@@ -145,7 +145,11 @@ namespace Platformer.Control
             else if (input.MoveRight)
                 _gino.Walk(Direction.East);
             if (input.Jump)
+            {
+                SoundPlayer.playSoundEffects("snare");
                 _gino.Jump();
+            }
+
             if (input.Fire)
                 _currentWeapon.Fire(_gino.Center, _gino.Sprite.FacingRight ? Vector2.UnitX : -Vector2.UnitX);
             if (input.Debug1)

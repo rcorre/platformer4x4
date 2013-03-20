@@ -59,6 +59,7 @@ namespace Platformer
         protected override void Initialize()
         {
             _input = new InputManager();
+            SoundPlayer.Initialize();
             base.Initialize();
         }
 

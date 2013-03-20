@@ -12,14 +12,11 @@ namespace Platformer.View
     class SoundPlayer
     {
         #region static
-        static int soundNum = 1;
         private static SoundBank tracks;
         private static Cue currentSong;
         private static Cue soundEffect;
-        public static int CurrentSound;
         public static bool EnableSoundPlayer;
         public static AudioEngine Audio;
-        // public static SoundBank Sounds;
         public static WaveBank Waves;
         public static Random random = new Random();
         #endregion
@@ -28,13 +25,12 @@ namespace Platformer.View
         #endregion
 
         #region properties
-        SoundEffect[] sounds = new SoundEffect[soundNum];
+       
         #endregion
 
         #region constructor
         static SoundPlayer()
         {
-            // sounds = Game1.Sounds;
             EnableSoundPlayer = true;
         }
         #endregion
@@ -42,12 +38,10 @@ namespace Platformer.View
         #region methods
         public static void Initialize()
         {
-            int i = 0;
             Audio = new AudioEngine("Content//new.xgs");
             Waves = new WaveBank(Audio, "Content//Wave Bank.xwb");
             tracks = new SoundBank(Audio, "Content//Sound Bank.xsb");
-
-            //currentSound = tracks.GetCue("shuffledrum");
+  
             StartSound();
         }
 
@@ -62,23 +56,15 @@ namespace Platformer.View
 
         public static void StartSound()
         {
-            //int soundidx;
-
-            //  if (currentSound != null && currentSound.IsPlaying)
-            //        StopSound();
-
-            //do
-            // {
-            //     soundidx =  random.Next(soundNum);
-            // } while (soundidx == CurrentSound && soundNum > 1);
-
             currentSong = tracks.GetCue("shuffledrum");
-            //CurrentSound = soundidx;
             currentSong.Play();
         }
         /// <summary>
-        /// takes in a string that identifies the cue, then plays selected cue
-        /// if new cues are added to the project, they also need to be referenced here
+        /// Takes in a string that identifies the cue, then plays selected cue.
+        /// If new cues are added to the project, they also need to be referenced here
+        /// These are the three sound effects i have for now.
+        /// To add or remove cues: rebuild xact project, re-add new.gs, Sound Bank.xsb and Wave Bank.xwb as new items to PlatformerContent.
+        /// To play a sound effect: call SoundPlayer.playSoundEffects("cuename");
         /// </summary>
         public static void playSoundEffects(String soundID)
         {
@@ -111,7 +97,9 @@ namespace Platformer.View
             currentSong = null;
         }
         /// <summary>
-        /// Update SoundPlayer. Delete this method if updating every frame is not necessary
+        /// Update SoundPlayer, this allows you to loop the cues.
+        /// If the cue has stopped looping, then it will re-start it.
+        /// 
         /// </summary>
         /// <param name="gameTime"></param>
         public static void Update()

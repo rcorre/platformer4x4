@@ -6,6 +6,7 @@ using System.Text;
 
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Platformer.View;
 
 namespace Platformer.Model
 {
@@ -98,14 +99,19 @@ namespace Platformer.Model
         #region methods
         public void Update(GameTime gameTime)
         {
+            
             if (_tillNextFire > TimeSpan.Zero)
                 _tillNextFire -= gameTime.ElapsedGameTime;
         }
 
         public void Fire(Vector2 fireLocation, Vector2 fireDirection)
         {
+
             if (_tillNextFire > TimeSpan.Zero || _ammo <= 0)
+            {
+                SoundPlayer.playSoundEffects("kick");
                 return;
+            }
 
             for (int i = 0; i < Projectiles.Length; i++)
             {

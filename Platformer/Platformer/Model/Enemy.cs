@@ -10,6 +10,7 @@ namespace Platformer.Model
     class Enemy : Unit
     {
         #region static
+        static string[] enemyKeys;//for multiple enemy types
         #endregion
 
         #region fields
@@ -26,6 +27,7 @@ namespace Platformer.Model
         #endregion
 
         #region methods
+
         #endregion
     }
 }

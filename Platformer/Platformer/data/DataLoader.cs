@@ -83,12 +83,15 @@ namespace Platformer.Data
 
         public static Overworld.OverworldNode[] LoadOverworldData()
         {
+            int numNodes = 0;
+            foreach (XElement el in XElement.Load(OVERWORLDDATA_PATH).Descendants("OverworldNode"))
+                numNodes++;     //count nodes
+
             return (from el in XElement.Load(OVERWORLDDATA_PATH).Descendants("OverworldNode")
-                    select buildOverworldNode(el)).ToArray();
-                    
+                    select buildOverworldNode(el, numNodes)).ToArray();
         }
 
-        private static Overworld.OverworldNode buildOverworldNode(XElement el)
+        private static Overworld.OverworldNode buildOverworldNode(XElement el, int numNodes)
         {
             Overworld.OverworldNode node = new Overworld.OverworldNode();
             Type dataType = node.GetType();
@@ -96,8 +99,20 @@ namespace Platformer.Data
             foreach (XAttribute at in el.Attributes())
             {
                     string fieldName = at.Name.LocalName;
-                    System.Reflection.FieldInfo p = dataType.GetField(fieldName);
-                    node.GetType().GetField(fieldName).SetValue(node, Convert.ChangeType(at.Value, p.FieldType));
+                    if (fieldName == "ConnectedTo")
+                    {
+                        string[] nums = at.Value.Split(',');
+                        node.ConnectedTo = new bool[numNodes];
+                        for (int i = 0; i < nums.Length; i++)
+                        {
+                            node.ConnectedTo[Int32.Parse(nums[i])] = true;
+                        }
+                    }
+                    else
+                    {
+                        System.Reflection.FieldInfo p = dataType.GetField(fieldName);
+                        node.GetType().GetField(fieldName).SetValue(node, Convert.ChangeType(at.Value, p.FieldType));
+                    }
             }
             return node;
         }

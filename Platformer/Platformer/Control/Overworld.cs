@@ -24,6 +24,7 @@ namespace Platformer.Control
             public int LevelNumber;
             public string LevelName;
             public int X, Y;
+            public bool[] ConnectedTo;    //ConnectedTo[i] is true if node <LevelNumber> is connected to node <i>
         }
         public static OverworldNode[] Nodes;
         #endregion

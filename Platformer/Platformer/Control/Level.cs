@@ -51,6 +51,7 @@ namespace Platformer.Control
         #region constructor
         public Level(int levelNumber, ProgressData progressData)
         {
+          
             //set camera size based on screen size
             _viewport = new xTile.Dimensions.Rectangle(
                 new xTile.Dimensions.Size(
@@ -68,7 +69,7 @@ namespace Platformer.Control
             _progressData.CurrentLevel = levelNumber;
 
             Weapon.Initialize();
-
+            
             _currentWeapon = new Weapon("Rifle", _gino);
 
         }
@@ -125,6 +126,7 @@ namespace Platformer.Control
 
         public override void Update(GameTime gameTime, InputManager input)
         {
+            SoundPlayer.Update("testsong");
             handleInput(input);
             foreach (Pickup p in _pickups)
                 p.Update(gameTime);
@@ -160,6 +162,7 @@ namespace Platformer.Control
             switch (name)
             {
                 case "Coin":
+                    SoundPlayer.playSoundEffects("hihat");
                     _progressData.NumCoins += 1;
                     break;
             }
@@ -480,6 +483,8 @@ namespace Platformer.Control
         {
             _progressData.LevelCompleted[_progressData.CurrentLevel] = true;
             NewState = new Overworld(_progressData);
+            SoundPlayer.StopSound();
+           // SoundPlayer.StartSound("shuffledrum");
         }
 
         public override void Draw(SpriteBatch sb)

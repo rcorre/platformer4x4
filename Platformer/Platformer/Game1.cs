@@ -60,6 +60,7 @@ namespace Platformer
         {
             _input = new InputManager();
             SoundPlayer.Initialize();
+            SoundPlayer.StartSound("shuffledrum");
             base.Initialize();
         }
 
@@ -110,6 +111,7 @@ namespace Platformer
                     NumCoins = 0,
                     CurrentLevel = 0,
                     LevelCompleted = new bool[NUM_LEVELS]
+
                 }
                 );
         }
@@ -131,16 +133,20 @@ namespace Platformer
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime)
         {
+            
             //make sure to update inputmanager, otherwise player input will not be detected
             _input.Update();
-            SoundPlayer.Update();
+            //SoundPlayer.Update();
+            
             // Allows the game to exit
             if (_currentState.RequestExit)
                 this.Exit();
 
-            if (_currentState.NewState != null)     //new state requested
+            if (_currentState.NewState != null)
+            //new state requested
                 _currentState = _currentState.NewState;
-
+                
+            
             _currentState.Update(gameTime, _input);
 
             base.Update(gameTime);

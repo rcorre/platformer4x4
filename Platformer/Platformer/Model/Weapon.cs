@@ -115,7 +115,7 @@ namespace Platformer.Model
 
             for (int i = 0; i < Projectiles.Length; i++)
             {
-                SoundPlayer.playSoundEffects("kick");
+                SoundPlayer.playSoundEffects("snare");
                 if (!Projectiles[i].Active)
                 {
                     Projectiles[i].Active = true;

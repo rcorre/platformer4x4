@@ -42,7 +42,7 @@ namespace Platformer.View
             Waves = new WaveBank(Audio, "Content//Wave Bank.xwb");
             tracks = new SoundBank(Audio, "Content//Sound Bank.xsb");
   
-            StartSound();
+            //StartSound("shuffledrum");
         }
 
         /// <summary>
@@ -54,9 +54,9 @@ namespace Platformer.View
         /// </summary>
         /// <param name="musicName">Name of sound effect</param>
 
-        public static void StartSound()
+        public static void StartSound(String songID)
         {
-            currentSong = tracks.GetCue("shuffledrum");
+            currentSong = tracks.GetCue(songID);
             currentSong.Play();
         }
         /// <summary>
@@ -68,21 +68,9 @@ namespace Platformer.View
         /// </summary>
         public static void playSoundEffects(String soundID)
         {
-            if (soundID == "hihat")
-            {
-                soundEffect = tracks.GetCue("hihat");
-                soundEffect.Play();
-            }
-            else if (soundID == "kick")
-            {
-                soundEffect = tracks.GetCue("kick");
-                soundEffect.Play();
-            }
-            else if (soundID == "snare")
-            {
-                soundEffect = tracks.GetCue("snare");
-                soundEffect.Play();
-            }
+            soundEffect = tracks.GetCue(soundID);
+            soundEffect.Play();
+      
 
         }
 
@@ -102,15 +90,20 @@ namespace Platformer.View
         /// 
         /// </summary>
         /// <param name="gameTime"></param>
-        public static void Update()
+        public static void Update(String current)
         {
             if (EnableSoundPlayer)
             {
-                if ((currentSong == null)) StartSound();
-                else if (!currentSong.IsPlaying)
+                if ((currentSong == null))
                 {
-                    StopSound();
-                    StartSound();
+                   // currentSong = tracks.GetCue(current);
+                    StartSound(current);
+                    
+                }
+                else if(currentSong.IsPlaying)
+                {
+                    //
+                    //StartSound(current);
                 }
             }
             else

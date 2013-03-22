@@ -126,7 +126,7 @@ namespace Platformer.Control
 
         public override void Update(GameTime gameTime, InputManager input)
         {
-            SoundPlayer.Update("SLOWDRUM");
+            SoundPlayer.Update("testsong");
             handleInput(input);
             foreach (Pickup p in _pickups)
                 p.Update(gameTime);
@@ -484,7 +484,8 @@ namespace Platformer.Control
             _progressData.LevelCompleted[_progressData.CurrentLevel] = true;
             NewState = new Overworld(_progressData);
             SoundPlayer.StopSound();
-           // SoundPlayer.StartSound("shuffledrum");
+            //trigger the end-level sound
+            SoundPlayer.playSoundEffects("Transform");
         }
 
         public override void Draw(SpriteBatch sb)

@@ -56,8 +56,8 @@ namespace Platformer.View
 
         public static void StartSound(String songID)
         {
-            currentSong = tracks.GetCue(songID);
-            currentSong.Play();
+                currentSong = tracks.GetCue(songID);
+                currentSong.Play(); 
         }
         /// <summary>
         /// Takes in a string that identifies the cue, then plays selected cue.

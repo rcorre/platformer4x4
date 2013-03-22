@@ -28,7 +28,11 @@ namespace Platformer.Model
         #endregion
 
         #region methods
-        
+        public void turnAround()
+        {
+            
+
+        }
         #endregion
     }
 }

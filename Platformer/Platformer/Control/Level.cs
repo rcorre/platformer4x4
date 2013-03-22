@@ -43,6 +43,7 @@ namespace Platformer.Control
         List<Pickup> _pickups;
         Weapon _currentWeapon;
         Point _endPoint;
+        String currentSong;
         #endregion
 
         #region properties
@@ -71,6 +72,7 @@ namespace Platformer.Control
             Weapon.Initialize();
             
             _currentWeapon = new Weapon("Rifle", _gino);
+            
 
         }
         #endregion
@@ -126,7 +128,22 @@ namespace Platformer.Control
 
         public override void Update(GameTime gameTime, InputManager input)
         {
-            SoundPlayer.Update("testsong");
+            if (_progressData.CurrentLevel == 0)
+            {
+                SoundPlayer.Update("testsong");
+            }
+            else if (_progressData.CurrentLevel == 1)
+            {
+                SoundPlayer.Update("testsong");
+            }
+            else if (_progressData.CurrentLevel == 2)
+            {
+                SoundPlayer.Update("testsong");
+            }
+            else if (_progressData.CurrentLevel == 3)
+            {
+                SoundPlayer.Update("testsong");
+            }
             handleInput(input);
             foreach (Pickup p in _pickups)
                 p.Update(gameTime);

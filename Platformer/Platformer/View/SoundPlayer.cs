@@ -42,7 +42,7 @@ namespace Platformer.View
             Waves = new WaveBank(Audio, "Content//Wave Bank.xwb");
             tracks = new SoundBank(Audio, "Content//Sound Bank.xsb");
   
-            //StartSound("shuffledrum");
+            StartSound("shuffledrum");
         }
 
         /// <summary>
@@ -100,10 +100,10 @@ namespace Platformer.View
                     StartSound(current);
                     
                 }
-                else if(currentSong.IsPlaying)
+                else if(!currentSong.IsPlaying)
                 {
-                    //
-                    //StartSound(current);
+                    
+                    StartSound(current);
                 }
             }
             else

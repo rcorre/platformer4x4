@@ -60,7 +60,7 @@ namespace Platformer
         {
             _input = new InputManager();
             SoundPlayer.Initialize();
-            SoundPlayer.StartSound("shuffledrum");
+           
             base.Initialize();
         }
 

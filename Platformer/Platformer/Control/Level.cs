@@ -126,7 +126,7 @@ namespace Platformer.Control
 
         public override void Update(GameTime gameTime, InputManager input)
         {
-            SoundPlayer.Update("testsong");
+            SoundPlayer.Update("SLOWDRUM");
             handleInput(input);
             foreach (Pickup p in _pickups)
                 p.Update(gameTime);

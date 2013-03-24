@@ -98,7 +98,6 @@ namespace Platformer.View
                 {
                    // currentSong = tracks.GetCue(current);
                     StartSound(current);
-                    
                 }
                 else if(!currentSong.IsPlaying)
                 {

@@ -60,8 +60,7 @@ namespace Platformer.Control
                     Game1.SCREEN_WIDTH, Game1.SCREEN_HEIGHT));
 
             //load the map for the specified level
-            _tileMap = Content.Load<Map>("Maps\\" + levelNumber.ToString());
-
+            _tileMap = Content.Load<Map>("Maps\\Level" + levelNumber.ToString());
             //load tile sheet
             _tileMap.LoadTileSheets(MapDisplayDevice);
 

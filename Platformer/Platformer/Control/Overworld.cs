@@ -24,6 +24,7 @@ namespace Platformer.Control
             public int LevelNumber;
             public string LevelName;
             public int X, Y;
+            public bool[] ConnectedTo;    //ConnectedTo[i] is true if node <LevelNumber> is connected to node <i>
         }
         public static OverworldNode[] Nodes;
         #endregion
@@ -46,10 +47,15 @@ namespace Platformer.Control
         public override void Update(GameTime gameTime, InputManager input)
         {
             //TODO -- add move animation between levels, checking for whether levels are connected/completed
+
             SoundPlayer.Update("shuffledrum");
             if (input.MoveLeft && _progressData.CurrentLevel > 0)
+
+
+            if (input.SelectLeft && _progressData.CurrentLevel > 0)
+
                 _progressData.CurrentLevel--;
-            else if (input.MoveRight && _progressData.CurrentLevel < Nodes.Length - 1)
+            else if (input.SelectRight && _progressData.CurrentLevel < Nodes.Length - 1)
                 _progressData.CurrentLevel++;
             else if (input.ConfirmSelection)
             {

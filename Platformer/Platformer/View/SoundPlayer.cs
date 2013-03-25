@@ -31,7 +31,7 @@ namespace Platformer.View
         #region constructor
         static SoundPlayer()
         {
-            EnableSoundPlayer = true;
+            EnableSoundPlayer = false;
         }
         #endregion
 

@@ -66,6 +66,13 @@ namespace Platformer.Control
             get { return _currentKeyState.IsKeyDown(Keys.Enter) && _pastKeyState.IsKeyUp(Keys.Enter); }
         }
         /// <summary>
+        /// Whether the player has tapped the exit key
+        /// </summary>
+        public bool Exit
+        {
+            get { return _currentKeyState.IsKeyDown(Keys.Escape) && _pastKeyState.IsKeyUp(Keys.Escape); }
+        }
+        /// <summary>
         /// Whether the player has tapped the jump button
         /// </summary>
         public bool Jump

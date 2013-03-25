@@ -1,3 +1,4 @@
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -59,8 +60,6 @@ namespace Platformer
         protected override void Initialize()
         {
             _input = new InputManager();
-            SoundPlayer.Initialize();
-           
             base.Initialize();
         }
 
@@ -76,6 +75,8 @@ namespace Platformer
             XnaHelper.PixelTexture = new Texture2D(GraphicsDevice, 1, 1);
             XnaHelper.PixelTexture.SetData<Color>(new Color[] {Color.White});
             XnaHelper.Font = Content.Load<SpriteFont>("Fonts/standard_font");
+            SpriteFont Font1 = Content.Load<SpriteFont>("Fonts/TitleFont");
+            Texture2D sprite = Content.Load<Texture2D>("spritesheets/Gino");
 
             //needed for level to load and draw maps
             Level.MapDisplayDevice = new xTile.Display.XnaDisplayDevice(this.Content, this.GraphicsDevice);
@@ -95,25 +96,16 @@ namespace Platformer
             //Later: change this in main menu
             //initialize new data if select new game
             //load data if select continue game
-            /*
-            _currentState = new Level(0,
-                new ProgressData()
-                {
-                    NumCoins = 0,
-                    CurrentLevel = 0,
-                    LevelCompleted = new bool[NUM_LEVELS]
-                }
-                );
-            */
-            _currentState = new Overworld(
-                new ProgressData()
-                {
-                    NumCoins = 0,
-                    CurrentLevel = 0,
-                    LevelCompleted = new bool[NUM_LEVELS]
 
-                }
-                );
+            _currentState = new MainMenu(GraphicsDevice, Font1, sprite);
+//            _currentState = new Overworld(
+//                new ProgressData()
+//                {
+//                    NumCoins = 0,
+//                    CurrentLevel = 0,
+//                    LevelCompleted = new bool[Overworld.Nodes.Length]
+//                }
+ //               );                            ***************************moved to MainMenu
         }
 
 
@@ -133,20 +125,16 @@ namespace Platformer
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime)
         {
-            
             //make sure to update inputmanager, otherwise player input will not be detected
             _input.Update();
-            //SoundPlayer.Update();
-            
+
             // Allows the game to exit
             if (_currentState.RequestExit)
                 this.Exit();
 
-            if (_currentState.NewState != null)
-            //new state requested
+            if (_currentState.NewState != null)     //new state requested
                 _currentState = _currentState.NewState;
-                
-            
+
             _currentState.Update(gameTime, _input);
 
             base.Update(gameTime);
@@ -169,3 +157,4 @@ namespace Platformer
         }
     }
 }
+

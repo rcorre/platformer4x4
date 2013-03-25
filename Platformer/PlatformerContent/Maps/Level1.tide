@@ -21,7 +21,7 @@
       <ImageSource><![CDATA[..\TileSheets\enemie.png]]></ImageSource>
       <Alignment SheetSize="1 x 1" TileSize="32 x 32" Margin="0 x 0" Spacing="0 x 0" />
       <Properties>
-        <Property Key="@TileIndex@0@Enemies" Type="Boolean"><![CDATA[True]]></Property>
+        <Property Key="@TileIndex@0@Name" Type="String"><![CDATA[Gino]]></Property>
       </Properties>
     </TileSheet>
     <TileSheet Id="Level1Sheet">
@@ -9895,6 +9895,120 @@
         </Row>
         <Row>
           <Null Count="200" />
+        </Row>
+      </TileArray>
+      <Properties />
+    </Layer>
+    <Layer Id="Enemies" Visible="True">
+      <Description><![CDATA[]]></Description>
+      <Dimensions LayerSize="100 x 32" TileSize="32 x 32" />
+      <TileArray>
+        <Row>
+          <Null Count="100" />
+        </Row>
+        <Row>
+          <Null Count="100" />
+        </Row>
+        <Row>
+          <Null Count="100" />
+        </Row>
+        <Row>
+          <Null Count="100" />
+        </Row>
+        <Row>
+          <Null Count="100" />
+        </Row>
+        <Row>
+          <Null Count="100" />
+        </Row>
+        <Row>
+          <Null Count="100" />
+        </Row>
+        <Row>
+          <Null Count="100" />
+        </Row>
+        <Row>
+          <Null Count="100" />
+        </Row>
+        <Row>
+          <Null Count="100" />
+        </Row>
+        <Row>
+          <Null Count="100" />
+        </Row>
+        <Row>
+          <Null Count="100" />
+        </Row>
+        <Row>
+          <Null Count="100" />
+        </Row>
+        <Row>
+          <Null Count="100" />
+        </Row>
+        <Row>
+          <Null Count="100" />
+        </Row>
+        <Row>
+          <Null Count="100" />
+        </Row>
+        <Row>
+          <Null Count="100" />
+        </Row>
+        <Row>
+          <Null Count="20" />
+          <TileSheet Ref="Enemies" />
+          <Static Index="0" BlendMode="Alpha" />
+          <Null Count="79" />
+        </Row>
+        <Row>
+          <Null Count="4" />
+          <Static Index="0" BlendMode="Alpha" />
+          <Null Count="95" />
+        </Row>
+        <Row>
+          <Null Count="100" />
+        </Row>
+        <Row>
+          <Null Count="30" />
+          <Static Index="0" BlendMode="Alpha" />
+          <Null Count="69" />
+        </Row>
+        <Row>
+          <Null Count="100" />
+        </Row>
+        <Row>
+          <Null Count="100" />
+        </Row>
+        <Row>
+          <Null Count="100" />
+        </Row>
+        <Row>
+          <Null Count="100" />
+        </Row>
+        <Row>
+          <Null Count="10" />
+          <Static Index="0" BlendMode="Alpha" />
+          <Null Count="3" />
+          <Static Index="0" BlendMode="Alpha" />
+          <Null Count="85" />
+        </Row>
+        <Row>
+          <Null Count="100" />
+        </Row>
+        <Row>
+          <Null Count="100" />
+        </Row>
+        <Row>
+          <Null Count="100" />
+        </Row>
+        <Row>
+          <Null Count="100" />
+        </Row>
+        <Row>
+          <Null Count="100" />
+        </Row>
+        <Row>
+          <Null Count="100" />
         </Row>
       </TileArray>
       <Properties />

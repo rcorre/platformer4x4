@@ -25,22 +25,28 @@ namespace Platformer.Model
 
         #region constructor
         public Enemy(string key, Vector2 position, bool facingRight)
-            :base(key, position, facingRight)
-        {
-            
-        }
+            : base(key, position, facingRight)
+        { }
         #endregion
 
         #region methods
-       
-          public void Walk(GameTime gameTime)
-          {
-              
-       
-              
-             // this.Walk(Direction.West);
-                  
-          }
+        public override void CollideWithObstacle(Direction direction)
+        {
+            base.CollideWithObstacle(direction);
+            switch (direction)
+            {
+                case Direction.East:
+                case Direction.West:
+                    _velocity.X = -_velocity.X;
+                    break;
+            }
+        }
+
+        public override void Update(GameTime gameTime, bool onGround)
+        {
+            Walk(Sprite.FacingRight ? Direction.East : Direction.West);
+            base.Update(gameTime, onGround);
         }
         #endregion
     }
+}

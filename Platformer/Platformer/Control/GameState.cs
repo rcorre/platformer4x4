@@ -11,6 +11,7 @@ namespace Platformer.Control
     abstract class GameState
     {
         #region static
+        
         #endregion
 
         #region fields

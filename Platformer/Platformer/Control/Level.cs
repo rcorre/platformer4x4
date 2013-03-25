@@ -43,6 +43,7 @@ namespace Platformer.Control
         List<Pickup> _pickups;
         Weapon _currentWeapon;
         Point _endPoint;
+        String currentSong;
         #endregion
 
         #region properties
@@ -51,6 +52,8 @@ namespace Platformer.Control
         #region constructor
         public Level(int levelNumber, ProgressData progressData)
         {
+            _enemies = new Enemy[1];
+            _enemies[0] = new Enemy("Gino", new Vector2(600, 500), false);
             //set camera size based on screen size
             _viewport = new xTile.Dimensions.Rectangle(
                 new xTile.Dimensions.Size(
@@ -67,8 +70,9 @@ namespace Platformer.Control
             _progressData.CurrentLevel = levelNumber;
 
             Weapon.Initialize();
-
+            
             _currentWeapon = new Weapon("Rifle", _gino);
+            
 
         }
         #endregion
@@ -124,17 +128,41 @@ namespace Platformer.Control
 
         public override void Update(GameTime gameTime, InputManager input)
         {
+            if (_progressData.CurrentLevel == 0)
+            {
+                SoundPlayer.Update("SLOWDRUM");
+            }
+            else if (_progressData.CurrentLevel == 1)
+            {
+                SoundPlayer.Update("testsong");
+            }
+            else if (_progressData.CurrentLevel == 2)
+            {
+                SoundPlayer.Update("testsong");
+            }
+            else if (_progressData.CurrentLevel == 3)
+            {
+                SoundPlayer.Update("testsong");
+            }
             handleInput(input);
+
             foreach (Pickup p in _pickups)
                 p.Update(gameTime);
+
             _currentWeapon.Update(gameTime);
             Weapon.UpdateProjectiles(gameTime);
             moveProjectiles(gameTime);
             centerCamera(_gino.Center);
             _gino.Update(gameTime, onGround(_gino.Bottom, _gino.Left, _gino.Right));
+            _enemies[0].Update(gameTime, onGround(_enemies[0].Bottom, _enemies[0].Left, _enemies[0].Right));
             if (_gino.HitRect.Contains(_endPoint))
                 completeLevel();
             moveUnit(_gino, gameTime);
+            moveUnit(_enemies[0], gameTime);
+            _enemies[0].Walk(gameTime);
+            
+     
+            
         }
 
         private void handleInput(InputManager input)
@@ -159,6 +187,7 @@ namespace Platformer.Control
             switch (name)
             {
                 case "Coin":
+                    SoundPlayer.playSoundEffects("hihat");
                     _progressData.NumCoins += 1;
                     break;
             }
@@ -230,11 +259,13 @@ namespace Platformer.Control
                     if (col < 0)
                     {
                         unit.CollideWithObstacle(Direction.West);
+                        //_enemies[0].Walk(Direction.West);
                         unit.Left = 0;
                     }
                     else if (col > _collisionLayer.LayerWidth)
                     {
                         unit.CollideWithObstacle(Direction.East);
+                       // _enemies[0].Walk(Direction.West);
                         unit.Right = _collisionLayer.LayerWidth * _collisionLayer.TileWidth;
                     }
                     //--------------------------------------------------------------------------------
@@ -244,11 +275,13 @@ namespace Platformer.Control
                         if (pxRight > 0)
                         {
                             unit.CollideWithObstacle(Direction.East);
+                            
                             unit.Right = col * _collisionLayer.TileWidth;
                         }
                         else
                         {
                             unit.CollideWithObstacle(Direction.West);
+                            
                             unit.Left = (col + 1) * _collisionLayer.TileWidth;
                         }
                         break;  //no need to check more
@@ -479,6 +512,9 @@ namespace Platformer.Control
         {
             _progressData.LevelCompleted[_progressData.CurrentLevel] = true;
             NewState = new Overworld(_progressData);
+            SoundPlayer.StopSound();
+            //trigger the end-level sound
+            SoundPlayer.playSoundEffects("Transform");
         }
 
         public override void Draw(SpriteBatch sb)
@@ -499,6 +535,7 @@ namespace Platformer.Control
                 new Rectangle(500, 100, 100, 20), Color.Black);
             XnaHelper.DisplayValue(sb, "Coins", _progressData.NumCoins.ToString(),
                 new Rectangle(300, 100, 100, 20), Color.Black);
+            SpriteView.DrawUnit(sb, _enemies[0], _viewport.X, _viewport.Y);
         }
         #endregion
     }

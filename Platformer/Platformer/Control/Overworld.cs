@@ -48,12 +48,21 @@ namespace Platformer.Control
         {
             //TODO -- add move animation between levels, checking for whether levels are connected/completed
 
+            SoundPlayer.Update("shuffledrum");
+            if (input.MoveLeft && _progressData.CurrentLevel > 0)
+
+
             if (input.SelectLeft && _progressData.CurrentLevel > 0)
+
                 _progressData.CurrentLevel--;
             else if (input.SelectRight && _progressData.CurrentLevel < Nodes.Length - 1)
                 _progressData.CurrentLevel++;
             else if (input.ConfirmSelection)
+            {
                 SelectLevel(_progressData.CurrentLevel);
+                SoundPlayer.StopSound();
+                
+            }
         }
 
         /// <summary>
@@ -68,6 +77,7 @@ namespace Platformer.Control
 
         public override void Draw(SpriteBatch sb)
         {
+            
             OverworldView.DrawBackground(sb);
             foreach (OverworldNode node in Nodes)
             {

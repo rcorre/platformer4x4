@@ -26,6 +26,23 @@ namespace Platformer.Model
         #endregion
 
         #region methods
+        public override void CollideWithObstacle(Direction direction)
+        {
+            base.CollideWithObstacle(direction);
+            switch (direction)
+            {
+                case Direction.East:
+                case Direction.West:
+                   _velocity.X = -_velocity.X;
+                   break;
+            }
+        }
+
+        public override void Update(GameTime gameTime, bool onGround)
+        {
+            Walk(Sprite.FacingRight ? Direction.East : Direction.West);
+            base.Update(gameTime, onGround);
+        }
         #endregion
     }
 }

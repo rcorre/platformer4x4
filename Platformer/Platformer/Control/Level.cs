@@ -38,9 +38,9 @@ namespace Platformer.Control
         Layer _markerLayer;     //mark start, end, and shop locations
         Vector2 centerPos = Vector2.Zero;
         Gino _gino = new Gino(Vector2.Zero, true);
-        Enemy[] _enemies;
         ProgressData _progressData;
         List<Pickup> _pickups;
+        List<Enemy> _enemies;
         Weapon _currentWeapon;
         Point _endPoint;
         #endregion
@@ -79,6 +79,7 @@ namespace Platformer.Control
             _collisionLayer = _tileMap.GetLayer("Collision");
             _pickupLayer = _tileMap.GetLayer("Pickups");
             _markerLayer = _tileMap.GetLayer("LevelMarkers");
+            Layer enemyLayer = _tileMap.GetLayer("Enemies");
             Tile tile;
 
             _pickups = new List<Pickup>();
@@ -117,9 +118,25 @@ namespace Platformer.Control
                     }
                 }
             }
+
+            _enemies = new List<Enemy>();
+            for (int row = 0; row < enemyLayer.LayerHeight; row++)
+            {
+                for (int col = 0; col < enemyLayer.LayerWidth; col++)
+                {
+                    tile = enemyLayer.Tiles[col, row];
+                    if (tile != null)
+                    {
+                        string enemyName = tile.TileIndexProperties["Name"].ToString();
+                        Vector2 enemyLocation = new Vector2(col * enemyLayer.TileWidth, row * enemyLayer.TileHeight);
+                        _enemies.Add(new Enemy(enemyName, enemyLocation, false));
+                    }
+                }
+            }
             //make marker layers invisible
             _pickupLayer.Visible = false;
             _markerLayer.Visible = false;
+            enemyLayer.Visible = false;
         }
 
         public override void Update(GameTime gameTime, InputManager input)
@@ -127,6 +144,8 @@ namespace Platformer.Control
             handleInput(input);
             foreach (Pickup p in _pickups)
                 p.Update(gameTime);
+            foreach (Enemy e in _enemies)
+                e.Update(gameTime, onGround(e.Bottom, e.Left, e.Right));
             _currentWeapon.Update(gameTime);
             Weapon.UpdateProjectiles(gameTime);
             moveProjectiles(gameTime);
@@ -487,6 +506,11 @@ namespace Platformer.Control
             foreach (Pickup p in _pickups)
             {
                 SpriteView.DrawPickup(sb, p, _viewport.X, _viewport.Y);
+            }
+
+            foreach (Unit u in _enemies)
+            {
+                SpriteView.DrawUnit(sb, u, _viewport.X, _viewport.Y);
             }
 
             SpriteView.DrawUnit(sb, _gino, _viewport.X, _viewport.Y);

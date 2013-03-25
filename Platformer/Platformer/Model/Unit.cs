@@ -43,7 +43,7 @@ namespace Platformer.Model
 
         #region fields
         Vector2 _position;  //center of hitrect and draw point of sprite
-        Vector2 _velocity;  //speed and direction   (px/s)
+        protected Vector2 _velocity;  //speed and direction   (px/s)
         float _walkAcceleration;    //how much unit can accelerate when moving (px/sec^2)
         float _maxSpeed;    //max speed a unit can reach while moving (px/sec)
         float _jumpSpeed;    //initial vertical velocity while jumping (px/sec)
@@ -155,7 +155,7 @@ namespace Platformer.Model
             }
         }
 
-        public void CollideWithObstacle(Direction direction)
+        public virtual void CollideWithObstacle(Direction direction)
         {
             switch (direction)
             {
@@ -180,7 +180,7 @@ namespace Platformer.Model
 
         }
 
-        public void Update(GameTime gameTime, bool onGround)
+        public virtual void Update(GameTime gameTime, bool onGround)
         {
             if (!onGround)
             {

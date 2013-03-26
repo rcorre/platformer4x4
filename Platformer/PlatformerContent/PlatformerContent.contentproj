@@ -124,6 +124,16 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Maps\Level2.tide">
+      <Name>Level2</Name>
+      <Importer>TideImporter</Importer>
+      <Processor>TideProcessor</Processor>
+    </Compile>
+    <Compile Include="Maps\Level3.tide">
+      <Name>Level3</Name>
+      <Importer>TideImporter</Importer>
+      <Processor>TideProcessor</Processor>
+    </Compile>
     <None Include="new.xgs">
       <Name>new</Name>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -173,6 +183,13 @@
   <ItemGroup>
     <Compile Include="Backgrounds\background.png">
       <Name>background</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Backgrounds\background1.png">
+      <Name>background1</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>

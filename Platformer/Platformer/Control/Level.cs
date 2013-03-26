@@ -259,7 +259,7 @@ namespace Platformer.Control
                     row++)
                 {
                     //pickup checks
-                    if (_pickupLayer.Tiles[col, row] != null)
+                    if (unit == _gino && _pickupLayer.Tiles[col, row] != null)
                     {
                         getPickup(_pickupLayer.Tiles[col, row].TileIndexProperties["PickupType"], row, col);
                         _pickupLayer.Tiles[col, row] = null;
@@ -275,6 +275,10 @@ namespace Platformer.Control
                     {
                         unit.CollideWithObstacle(Direction.East);
                         unit.Right = _collisionLayer.LayerWidth * _collisionLayer.TileWidth;
+                    }
+                    else if (row < 0 || row >= _collisionLayer.LayerHeight)
+                    {
+                        continue;
                     }
                     //--------------------------------------------------------------------------------
                     //within bounds -- check tile collision
@@ -319,8 +323,12 @@ namespace Platformer.Control
                     col <= (unit.Right - 1) / _collisionLayer.TileWidth;
                     col++)
                 {
+                    if (!_collisionLayer.IsValidTileLocation(col, row))
+                    {
+                        continue;
+                    }
                     //pickup checks
-                    if (_pickupLayer.Tiles[col, row] != null)
+                    if (unit == _gino && _pickupLayer.IsValidTileLocation(col, row) && _pickupLayer.Tiles[col, row] != null)
                     {
                         getPickup(_pickupLayer.Tiles[col, row].TileIndexProperties["PickupType"], row, col);
                         _pickupLayer.Tiles[col, row] = null;
@@ -389,17 +397,23 @@ namespace Platformer.Control
                     row <= p.Position.Y / _collisionLayer.TileHeight;
                     row++)
                 {
+                    if (!_collisionLayer.IsValidTileLocation(col, row))
+                    {
+                        continue;
+                    }
 
                     //boundary checks----------------------------------------------------------------
                     if (col < 0)
                     {
                         p.CollideWithObstacle(Direction.West);
                         p.Position.X = 0;
+                        break;
                     }
                     else if (col > _collisionLayer.LayerWidth)
                     {
                         p.CollideWithObstacle(Direction.East);
                         p.Position.X = _collisionLayer.LayerWidth * _collisionLayer.TileWidth;
+                        break;
                     }
                     //--------------------------------------------------------------------------------
                     //within bounds -- check tile collision
@@ -448,21 +462,25 @@ namespace Platformer.Control
                     {
                         p.CollideWithObstacle(Direction.West);
                         p.Position.X = 0;
+                        break;
                     }
                     else if (col > _collisionLayer.LayerWidth)
                     {
                         p.CollideWithObstacle(Direction.East);
                         p.Position.Y = _collisionLayer.LayerWidth * _collisionLayer.TileWidth;
+                        break;
                     }
                     if (row < 0)
                     {
                         p.CollideWithObstacle(Direction.North);
                         p.Position.Y = 0;
+                        break;
                     }
                     else if (row > _collisionLayer.LayerHeight)
                     {
                         p.CollideWithObstacle(Direction.South);
                         p.Position.Y = _collisionLayer.LayerHeight * _collisionLayer.TileHeight;
+                        break;
                     }
                     //--------------------------------------------------------------------------------
 
@@ -487,7 +505,12 @@ namespace Platformer.Control
         private bool onGround(int bottom, int left, int right)
         {
             int rowBelow = (bottom + 1) / _collisionLayer.TileHeight;
-            for (int col = left / _collisionLayer.TileWidth;
+            if (rowBelow >= _collisionLayer.LayerHeight)
+            {
+                return false;   //below level
+            }
+
+            for (int col = (int)MathHelper.Clamp(left / _collisionLayer.TileWidth, 0, _collisionLayer.LayerWidth - 1);
                     col <= (right - 1) / _collisionLayer.TileWidth;
                     col++)
             {

@@ -21,7 +21,7 @@
       <ImageSource><![CDATA[..\TileSheets\enemie.png]]></ImageSource>
       <Alignment SheetSize="1 x 1" TileSize="32 x 32" Margin="0 x 0" Spacing="0 x 0" />
       <Properties>
-        <Property Key="@TileIndex@0@Name" Type="String"><![CDATA[Gino]]></Property>
+        <Property Key="@TileIndex@0@Name" Type="String"><![CDATA[Thug]]></Property>
       </Properties>
     </TileSheet>
     <TileSheet Id="Level1Sheet">

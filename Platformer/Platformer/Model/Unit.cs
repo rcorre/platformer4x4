@@ -112,7 +112,11 @@ namespace Platformer.Model
 
         public Rectangle HitRect { get { return _hitRect; } }
 
-        public Sprite Sprite { get { return _sprite; } }
+        public Sprite Sprite 
+        { 
+            get { return _sprite; }
+            protected set { _sprite = value; }
+        }
 
         public Vector2 Velocity { get { return _velocity; } }
         #endregion
@@ -212,7 +216,7 @@ namespace Platformer.Model
             if (xSpeedFactor > 1.0f)
                 _velocity.X /= xSpeedFactor;
 
-            _sprite.Animate(1, gameTime, _velocity.X / _maxSpeed);  //running animation
+            _sprite.Animate(0, gameTime, _velocity.X / _maxSpeed);  //running animation
         }
         #endregion
     }

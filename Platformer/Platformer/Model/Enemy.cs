@@ -13,7 +13,7 @@ namespace Platformer.Model
     class Enemy : Unit
     {
         #region static
-        static string ENEMY_KEY = "gino";//to test walking function
+        static string ENEMY_KEY = "Enemy1";//to test walking function
         #endregion
 
         #region fields

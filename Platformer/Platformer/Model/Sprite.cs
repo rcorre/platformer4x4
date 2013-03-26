@@ -101,7 +101,7 @@ namespace Platformer.Model
         {
             if (animationNumber != _currentState)
             {   //change state, reset timer and frame
-                _currentState = animationNumber;
+                _currentState = animationNumber % _numStates;
                 _currentFrame = 0;
                 _timeTillNext = _animationInterval;
             }

@@ -97,7 +97,7 @@ namespace Platformer.Model
         /// <param name="animationNumber">Animation to play. If different from last call, reset at frame 0 for the new state</param>
         /// <param name="gameTime">Time elapsed since last call</param>
         /// <param name="speedFactor">Multiplier for animation speed. 1.0f is normal, 0.0f means freeze animation</param>
-        public void Animate(int animationNumber, GameTime gameTime, float speedFactor)
+        public void Animate(int animationNumber, GameTime gameTime, float speedFactor, bool loop)
         {
             if (animationNumber != _currentState)
             {   //change state, reset timer and frame
@@ -107,7 +107,9 @@ namespace Platformer.Model
             }
 
             //decrement timer till next frame
-            _timeTillNext -= TimeSpan.FromSeconds((float)gameTime.ElapsedGameTime.TotalSeconds * speedFactor);
+            //unless sprite is set not to loop and is already at last frame
+            if (!(!loop && _currentFrame == _framesPerAnimation - 1))
+                _timeTillNext -= TimeSpan.FromSeconds((float)gameTime.ElapsedGameTime.TotalSeconds * speedFactor);
 
             if (_timeTillNext <= TimeSpan.Zero)     //ready for new frame
             {
@@ -115,6 +117,12 @@ namespace Platformer.Model
                 _currentFrame = (_currentFrame + 1) % _framesPerAnimation;
                 _timeTillNext = _animationInterval;     //reset timer
             }
+        }
+
+        public void ResetAnimation()
+        {
+            _currentFrame = 0;
+            _timeTillNext = _animationInterval;     //reset timer
         }
 
         public void Reset()

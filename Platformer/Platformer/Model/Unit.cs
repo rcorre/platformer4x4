@@ -193,6 +193,7 @@ namespace Platformer.Model
             {
                 _velocity.Y += _gravity * (float)gameTime.ElapsedGameTime.TotalSeconds;
                 _state = UnitState.FreeFall;
+                _sprite.Animate(1, gameTime, 5.0f, false);  //jumping animation
             }
 
             if (_state == UnitState.Drifting)
@@ -202,6 +203,14 @@ namespace Platformer.Model
                 else
                     _velocity.X += _horizontalDeceleration * (float)gameTime.ElapsedGameTime.TotalSeconds
                         * ((_velocity.X > 0) ? -1 : 1);     //make sure slowdown is opposite to direction of velocity
+                if (_velocity.X == 0)
+                {
+                    _sprite.ResetAnimation();
+                }
+                else
+                {
+                    _sprite.Animate(0, gameTime, _velocity.X / _maxSpeed, true);  //running animation
+                }
             }
 
             if (_state == UnitState.Running)
@@ -209,6 +218,7 @@ namespace Platformer.Model
                 _velocity.X += _walkAcceleration * (float)gameTime.ElapsedGameTime.TotalSeconds
                     * ((_sprite.FacingRight) ? 1 : -1);     //increase velocity in run direction
                 _state = UnitState.Drifting;
+                _sprite.Animate(0, gameTime, _velocity.X / _maxSpeed, true);  //running animation
             }
 
 
@@ -216,7 +226,6 @@ namespace Platformer.Model
             if (xSpeedFactor > 1.0f)
                 _velocity.X /= xSpeedFactor;
 
-            _sprite.Animate(0, gameTime, _velocity.X / _maxSpeed);  //running animation
         }
         #endregion
     }

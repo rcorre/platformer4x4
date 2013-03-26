@@ -53,7 +53,7 @@ namespace Platformer.Model
         #region methods
         public void Update(GameTime gameTime)
         {
-            _sprite.Animate(0, gameTime, 1.0f);
+            _sprite.Animate(0, gameTime, 1.0f, true);
         }
         #endregion
     }

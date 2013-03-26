@@ -58,7 +58,7 @@ namespace Platformer.Model
             {
                 if (Projectiles[i].Active)
                 {
-                    Projectiles[i].ProjectileSprite.Animate(0, gameTime, 1.0f);
+                    Projectiles[i].ProjectileSprite.Animate(0, gameTime, 1.0f, true);
                 }
             }
         }

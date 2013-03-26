@@ -473,11 +473,13 @@ namespace Platformer.Control
                 return false;   //below level
             }
 
+
             for (int col = (int)MathHelper.Clamp(left / _collisionLayer.TileWidth, 0, _collisionLayer.LayerWidth - 1);
                     col <= (right - 1) / _collisionLayer.TileWidth;
                     col++)
             {
-                if (_collisionLayer.Tiles[col, rowBelow] != null && _collisionLayer.Tiles[col, rowBelow].TileIndex != 0)
+                if (_collisionLayer.IsValidTileLocation(col, rowBelow) &&
+                    _collisionLayer.Tiles[col, rowBelow] != null && _collisionLayer.Tiles[col, rowBelow].TileIndex != 0)
                 {
                     return true;    //standing on a solid tile
                 }
@@ -502,7 +504,7 @@ namespace Platformer.Control
 
         private void completeLevel()
         {
-            _progressData.LevelCompleted[_progressData.CurrentLevel] = true;
+            _progressData.LevelCompleted[_progressData.CurrentLevel - 1] = true;
             NewState = new Overworld(_progressData);
             SoundPlayer.StopSound();
             //trigger the end-level sound

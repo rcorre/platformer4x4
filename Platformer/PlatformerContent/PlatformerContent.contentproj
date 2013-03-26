@@ -49,13 +49,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="spritesheets\Test.png">
-      <Name>Test</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
     <Compile Include="spritesheets\Gino.png">
       <Name>Gino</Name>
       <Importer>TextureImporter</Importer>
@@ -114,13 +107,6 @@
       <Name>LevelMarkers</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="Maps\0.tide">
-      <Name>0</Name>
-      <Importer>TideImporter</Importer>
-      <Processor>TideProcessor</Processor>
     </Compile>
   </ItemGroup>
   <ItemGroup>

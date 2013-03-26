@@ -39,6 +39,7 @@ namespace Platformer.Control
         #region constructor
         public Overworld(ProgressData progressData)
         {
+            SoundPlayer.StartSound("shuffledrum");
             _progressData = progressData;
         }
         #endregion
@@ -53,7 +54,10 @@ namespace Platformer.Control
             else if (input.SelectRight && _progressData.CurrentLevel < Nodes.Length - 1)
                 _progressData.CurrentLevel++;
             else if (input.ConfirmSelection)
+            {
+                SoundPlayer.StopSound();
                 SelectLevel(_progressData.CurrentLevel);
+            }
         }
 
         /// <summary>

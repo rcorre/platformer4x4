@@ -145,7 +145,10 @@ namespace Platformer.Control
             foreach (Pickup p in _pickups)
                 p.Update(gameTime);
             foreach (Enemy e in _enemies)
+            {
                 e.Update(gameTime, onGround(e.Bottom, e.Left, e.Right));
+                moveUnit(e, gameTime);
+            }
             _currentWeapon.Update(gameTime);
             Weapon.UpdateProjectiles(gameTime);
             moveProjectiles(gameTime);

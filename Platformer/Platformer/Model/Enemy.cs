@@ -36,8 +36,10 @@ namespace Platformer.Model
             switch (direction)
             {
                 case Direction.East:
+                    Sprite.FacingRight = false;
+                    break;
                 case Direction.West:
-                    _velocity.X = -_velocity.X;
+                    Sprite.FacingRight = true;
                     break;
             }
         }

@@ -237,6 +237,11 @@ namespace Platformer.Control
 
         private void checkHorizontalCollision(Unit unit, int pxRight)
         {
+            if (unit.Left < 0 || unit.Right >= _collisionLayer.LayerWidth * _collisionLayer.TileWidth)
+            {
+                unit.X += pxRight;
+                return;
+            }
             //Get the coordinate of the forward-facing edge
             //If walking left, forwardEdge = left of bounding box
             //If walking right, forwardEdge = right of bounding box
@@ -258,6 +263,10 @@ namespace Platformer.Control
                     row <= (unit.Bottom - 1) / _collisionLayer.TileHeight;
                     row++)
                 {
+                    if (!_collisionLayer.IsValidTileLocation(col, row))
+                    {
+                        continue;
+                    }
                     //pickup checks
                     if (unit == _gino && _pickupLayer.Tiles[col, row] != null)
                     {
@@ -265,22 +274,6 @@ namespace Platformer.Control
                         _pickupLayer.Tiles[col, row] = null;
                     }
 
-                    //boundary checks----------------------------------------------------------------
-                    if (col < 0)
-                    {
-                        unit.CollideWithObstacle(Direction.West);
-                        unit.Left = 0;
-                    }
-                    else if (col > _collisionLayer.LayerWidth)
-                    {
-                        unit.CollideWithObstacle(Direction.East);
-                        unit.Right = _collisionLayer.LayerWidth * _collisionLayer.TileWidth;
-                    }
-                    else if (row < 0 || row >= _collisionLayer.LayerHeight)
-                    {
-                        continue;
-                    }
-                    //--------------------------------------------------------------------------------
                     //within bounds -- check tile collision
                     else if (_collisionLayer.Tiles[col, row] != null && _collisionLayer.Tiles[col, row].TileIndex != 0)
                     {
@@ -302,6 +295,11 @@ namespace Platformer.Control
 
         private void checkVerticalCollision(Unit unit, int pxDown)
         {
+            if (unit.Bottom >= _collisionLayer.LayerHeight * _collisionLayer.TileHeight)
+            {
+                unit.Y += pxDown;
+                return; //let unit fall
+            }
             int forwardEdge = (pxDown > 0) ? unit.Bottom : unit.Top;
 
             //1 for down, -1 for up
@@ -327,34 +325,13 @@ namespace Platformer.Control
                     {
                         continue;
                     }
+
                     //pickup checks
                     if (unit == _gino && _pickupLayer.IsValidTileLocation(col, row) && _pickupLayer.Tiles[col, row] != null)
                     {
                         getPickup(_pickupLayer.Tiles[col, row].TileIndexProperties["PickupType"], row, col);
                         _pickupLayer.Tiles[col, row] = null;
                     }
-                    //boundary checks----------------------------------------------------------------
-                    if (col < 0)
-                    {
-                        unit.CollideWithObstacle(Direction.West);
-                        unit.Left = 0;
-                    }
-                    else if (col > _collisionLayer.LayerWidth)
-                    {
-                        unit.CollideWithObstacle(Direction.East);
-                        unit.Right = _collisionLayer.LayerWidth * _collisionLayer.TileWidth;
-                    }
-                    if (row < 0)
-                    {
-                        unit.CollideWithObstacle(Direction.North);
-                        unit.Top = 0;
-                    }
-                    else if (row > _collisionLayer.LayerHeight)
-                    {
-                        unit.CollideWithObstacle(Direction.South);
-                        unit.Bottom = _collisionLayer.LayerHeight * _collisionLayer.TileHeight;
-                    }
-                    //--------------------------------------------------------------------------------
 
                     if (_collisionLayer.Tiles[col, row] != null && _collisionLayer.Tiles[col, row].TileIndex != 0)
                     {
@@ -402,20 +379,6 @@ namespace Platformer.Control
                         continue;
                     }
 
-                    //boundary checks----------------------------------------------------------------
-                    if (col < 0)
-                    {
-                        p.CollideWithObstacle(Direction.West);
-                        p.Position.X = 0;
-                        break;
-                    }
-                    else if (col > _collisionLayer.LayerWidth)
-                    {
-                        p.CollideWithObstacle(Direction.East);
-                        p.Position.X = _collisionLayer.LayerWidth * _collisionLayer.TileWidth;
-                        break;
-                    }
-                    //--------------------------------------------------------------------------------
                     //within bounds -- check tile collision
                     else if (_collisionLayer.Tiles[col, row] != null && _collisionLayer.Tiles[col, row].TileIndex != 0)
                     {

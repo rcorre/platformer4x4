@@ -9955,21 +9955,17 @@
           <Null Count="100" />
         </Row>
         <Row>
-          <Null Count="20" />
-          <TileSheet Ref="Enemies" />
-          <Static Index="0" BlendMode="Alpha" />
-          <Null Count="79" />
+          <Null Count="100" />
         </Row>
         <Row>
-          <Null Count="4" />
-          <Static Index="0" BlendMode="Alpha" />
-          <Null Count="95" />
+          <Null Count="100" />
         </Row>
         <Row>
           <Null Count="100" />
         </Row>
         <Row>
           <Null Count="30" />
+          <TileSheet Ref="Enemies" />
           <Static Index="0" BlendMode="Alpha" />
           <Null Count="69" />
         </Row>
@@ -9983,12 +9979,7 @@
           <Null Count="100" />
         </Row>
         <Row>
-          <Null Count="100" />
-        </Row>
-        <Row>
-          <Null Count="10" />
-          <Static Index="0" BlendMode="Alpha" />
-          <Null Count="3" />
+          <Null Count="14" />
           <Static Index="0" BlendMode="Alpha" />
           <Null Count="85" />
         </Row>
@@ -10003,6 +9994,11 @@
         </Row>
         <Row>
           <Null Count="100" />
+        </Row>
+        <Row>
+          <Null Count="46" />
+          <Static Index="0" BlendMode="Alpha" />
+          <Null Count="53" />
         </Row>
         <Row>
           <Null Count="100" />

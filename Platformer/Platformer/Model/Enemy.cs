@@ -36,14 +36,7 @@ namespace Platformer.Model
           public void Walk(GameTime gameTime)
           {
               
-              this.Walk(Direction.East);
-            
-              if (this.X > 700 && this.X < 900)
-              {
-                  this.Jump();
-              }
-              else if (this.X > 700)
-                  this.Walk(Direction.West);
+       
               
              // this.Walk(Direction.West);
                   

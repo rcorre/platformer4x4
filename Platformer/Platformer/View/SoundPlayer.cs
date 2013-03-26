@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -25,13 +26,13 @@ namespace Platformer.View
         #endregion
 
         #region properties
-       
+
         #endregion
 
         #region constructor
         static SoundPlayer()
         {
-            EnableSoundPlayer = false;
+            EnableSoundPlayer = true;
         }
         #endregion
 
@@ -41,8 +42,8 @@ namespace Platformer.View
             Audio = new AudioEngine("Content//new.xgs");
             Waves = new WaveBank(Audio, "Content//Wave Bank.xwb");
             tracks = new SoundBank(Audio, "Content//Sound Bank.xsb");
-  
-            StartSound("shuffledrum");
+
+
         }
 
         /// <summary>
@@ -56,8 +57,8 @@ namespace Platformer.View
 
         public static void StartSound(String songID)
         {
-                currentSong = tracks.GetCue(songID);
-                currentSong.Play(); 
+            currentSong = tracks.GetCue(songID);
+            currentSong.Play();
         }
         /// <summary>
         /// Takes in a string that identifies the cue, then plays selected cue.
@@ -70,7 +71,7 @@ namespace Platformer.View
         {
             soundEffect = tracks.GetCue(soundID);
             soundEffect.Play();
-      
+
 
         }
 
@@ -96,12 +97,12 @@ namespace Platformer.View
             {
                 if ((currentSong == null))
                 {
-                   // currentSong = tracks.GetCue(current);
+                    // currentSong = tracks.GetCue(current);
                     StartSound(current);
                 }
-                else if(!currentSong.IsPlaying)
+                else if (!currentSong.IsPlaying)
                 {
-                    
+
                     StartSound(current);
                 }
             }

@@ -1,4 +1,3 @@
-
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -60,6 +59,7 @@ namespace Platformer
         protected override void Initialize()
         {
             _input = new InputManager();
+
             base.Initialize();
         }
 
@@ -73,7 +73,7 @@ namespace Platformer
 
             //initialize helper pixel texture for debugging
             XnaHelper.PixelTexture = new Texture2D(GraphicsDevice, 1, 1);
-            XnaHelper.PixelTexture.SetData<Color>(new Color[] {Color.White});
+            XnaHelper.PixelTexture.SetData<Color>(new Color[] { Color.White });
             XnaHelper.Font = Content.Load<SpriteFont>("Fonts/standard_font");
             SpriteFont Font1 = Content.Load<SpriteFont>("Fonts/TitleFont");
             Texture2D sprite = Content.Load<Texture2D>("spritesheets/Gino");
@@ -98,14 +98,14 @@ namespace Platformer
             //load data if select continue game
 
             _currentState = new MainMenu(GraphicsDevice, Font1, sprite);
-//            _currentState = new Overworld(
-//                new ProgressData()
-//                {
-//                    NumCoins = 0,
-//                    CurrentLevel = 0,
-//                    LevelCompleted = new bool[Overworld.Nodes.Length]
-//                }
- //               );                            ***************************moved to MainMenu
+            //            _currentState = new Overworld(
+            //                new ProgressData()
+            //                {
+            //                    NumCoins = 0,
+            //                    CurrentLevel = 0,
+            //                    LevelCompleted = new bool[Overworld.Nodes.Length]
+            //                }
+            //               );                            ***************************moved to MainMenu
         }
 
 
@@ -157,4 +157,3 @@ namespace Platformer
         }
     }
 }
-

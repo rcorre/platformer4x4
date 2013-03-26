@@ -15,7 +15,7 @@ namespace Platformer.View
 
         #region static
         static Texture2D nodeTexture, backgroundTexture;
-        static Color completedColor, uncompletedColor, unavailableColor;
+        static Color completedColor, uncompletedColor, unavailableColor, selectedColor;
         public static void LoadTextures(Texture2D node, Texture2D background)
         {
             nodeTexture = node;
@@ -23,6 +23,7 @@ namespace Platformer.View
             completedColor = Color.Green;
             uncompletedColor = Color.Yellow;
             unavailableColor = Color.Gray;
+            selectedColor = Color.AliceBlue;
         }
         static Vector2 tempVec;
         #endregion
@@ -37,11 +38,13 @@ namespace Platformer.View
         #endregion
 
         #region methods
-        public static void DrawNode(SpriteBatch sb, int x, int y, bool completed)
+        public static void DrawNode(SpriteBatch sb, int x, int y, bool completed, bool selected)
         {
             tempVec.X = x;
             tempVec.Y = y;
-            sb.Draw(nodeTexture, tempVec, completed ? completedColor : uncompletedColor);
+            Color color = completed ? completedColor : uncompletedColor;
+            color = selected ? selectedColor : color;
+            sb.Draw(nodeTexture, tempVec, color);
         }
         public static void DrawBackground(SpriteBatch sb)
         {

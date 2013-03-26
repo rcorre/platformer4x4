@@ -67,7 +67,8 @@ namespace Platformer.Control
         /// <param name="levelNum">index of selected level (level numbers start at 0)</param>
         private void SelectLevel(int levelNum)
         {
-            NewState = new Level(levelNum, _progressData);
+            //offset by 1 to match naming scheme
+            NewState = new Level(levelNum + 1, _progressData);
         }
 
         public override void Draw(SpriteBatch sb)
@@ -75,7 +76,8 @@ namespace Platformer.Control
             OverworldView.DrawBackground(sb);
             foreach (OverworldNode node in Nodes)
             {
-                OverworldView.DrawNode(sb, node.X, node.Y, _progressData.LevelCompleted[node.LevelNumber]);
+                OverworldView.DrawNode(sb, node.X, node.Y, _progressData.LevelCompleted[node.LevelNumber],
+                    _progressData.CurrentLevel == node.LevelNumber);
             }
         }
         #endregion

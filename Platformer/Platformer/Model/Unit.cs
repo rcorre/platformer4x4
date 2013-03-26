@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 
 using Microsoft.Xna.Framework;
+using Platformer.View;
 
 namespace Platformer.Model
 {
@@ -152,6 +153,8 @@ namespace Platformer.Model
             {
                 _velocity.Y = -_jumpSpeed;
                 _state = UnitState.FreeFall;
+                SoundPlayer.playSoundEffects("kick");
+           
             }
         }
 

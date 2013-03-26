@@ -9,6 +9,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.GamerServices;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
+using Platformer.View;
 
 
 namespace Platformer.Control
@@ -20,7 +21,7 @@ namespace Platformer.Control
         enum buttonState { up, down };
         string[] buttonTxt = { "Start Game", "Instructions", "Quit" };
         const int numBullets = 21, bulletHeight = 5, bulletWidth = 10;
-        Rectangle crop = new Rectangle(0,0,64,96);
+        Rectangle crop = new Rectangle(0, 0, 64, 96);
         #endregion
 
         #region fields
@@ -56,6 +57,7 @@ namespace Platformer.Control
         #region constructor
         public MainMenu(GraphicsDevice g, SpriteFont f, Texture2D s)
         {
+            SoundPlayer.Initialize();
             graphics = g;
             Font1 = f;
             sprite = s;
@@ -98,6 +100,7 @@ namespace Platformer.Control
 
         private void fireBullet(Vector2 image)
         {
+            SoundPlayer.playSoundEffects("snare");
             bool found = false;
             int i = 0;
             while (!found)
@@ -149,9 +152,9 @@ namespace Platformer.Control
                                 CurrentLevel = 0,
                                 LevelCompleted = new bool[Overworld.Nodes.Length]
                             }
-                        );   
-                    
-     
+                        );
+
+
                     if (buttonSt[1] == buttonState.down) //instructions
                         ;
                     if (buttonSt[2] == buttonState.down) //quit

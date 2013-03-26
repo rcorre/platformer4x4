@@ -3,16 +3,21 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
+
 using Microsoft.Xna.Framework;
+using Platformer.Control;
+using Platformer.Model;
 
 namespace Platformer.Model
 {
     class Enemy : Unit
     {
         #region static
+        static string ENEMY_KEY = "gino";//to test walking function
         #endregion
 
         #region fields
+        Vector2 position;
         #endregion
 
         #region properties
@@ -22,10 +27,20 @@ namespace Platformer.Model
         public Enemy(string key, Vector2 position, bool facingRight)
             :base(key, position, facingRight)
         {
+            
         }
         #endregion
 
         #region methods
+       
+          public void Walk(GameTime gameTime)
+          {
+              
+       
+              
+             // this.Walk(Direction.West);
+                  
+          }
+        }
         #endregion
     }
-}

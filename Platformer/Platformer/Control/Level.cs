@@ -151,7 +151,7 @@ namespace Platformer.Control
             }
             else if (_progressData.CurrentLevel == 2)
             {
-                SoundPlayer.Update("shuffledrum");
+                SoundPlayer.Update("djangostiger");
             }
             else if (_progressData.CurrentLevel == 3)
             {

@@ -143,11 +143,11 @@ namespace Platformer.Control
         {
             if (_progressData.CurrentLevel == 0)
             {
-                SoundPlayer.Update("testsong");
+                SoundPlayer.Update("rosesdepicardie");
             }
             else if (_progressData.CurrentLevel == 1)
             {
-                SoundPlayer.Update("SLOWDRUM");// these are 24-bit .wav PCMs
+                SoundPlayer.Update("djangostiger");// these are 24-bit .wav PCMs
             }
             else if (_progressData.CurrentLevel == 2)
             {
@@ -198,7 +198,7 @@ namespace Platformer.Control
             {
                 case "Coin":
                     _progressData.NumCoins += 1;
-                    SoundPlayer.playSoundEffects("hihat");
+                    SoundPlayer.playSoundEffects("hihatloop");
                     break;
             }
         }
@@ -508,7 +508,7 @@ namespace Platformer.Control
             NewState = new Overworld(_progressData);
             SoundPlayer.StopSound();
             //trigger the end-level sound
-            SoundPlayer.playSoundEffects("Transform");
+            SoundPlayer.playSoundEffects("endgamesound");
         }
 
         public override void Draw(SpriteBatch sb)

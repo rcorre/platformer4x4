@@ -58,6 +58,7 @@ namespace Platformer.Control
         public MainMenu(GraphicsDevice g, SpriteFont f, Texture2D s)
         {
             SoundPlayer.Initialize();
+            SoundPlayer.StartSound("rosesdepicardie");
             graphics = g;
             Font1 = f;
             sprite = s;
@@ -100,7 +101,7 @@ namespace Platformer.Control
 
         private void fireBullet(Vector2 image)
         {
-            SoundPlayer.playSoundEffects("snare");
+            SoundPlayer.playSoundEffects("jumpsnare");
             bool found = false;
             int i = 0;
             while (!found)

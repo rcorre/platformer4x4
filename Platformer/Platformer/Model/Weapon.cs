@@ -106,7 +106,7 @@ namespace Platformer.Model
 
         public void Fire(Vector2 fireLocation, Vector2 fireDirection)
         {
-            ;
+            
             if (_tillNextFire > TimeSpan.Zero || _ammo <= 0)
             {
                 
@@ -115,7 +115,7 @@ namespace Platformer.Model
 
             for (int i = 0; i < Projectiles.Length; i++)
             {
-                SoundPlayer.playSoundEffects("snare");
+                SoundPlayer.playSoundEffects("jumpsnare");
                 if (!Projectiles[i].Active)
                 {
                     Projectiles[i].Active = true;

@@ -12,7 +12,7 @@ namespace Platformer.Model
     {
         #region const
         const float DIE_TIME = 2;
-        const float AIR_RESIST_FACTOR = 1.003f;
+        const float AIR_RESIST= 30;
         #endregion
 
         #region classes
@@ -225,7 +225,8 @@ namespace Platformer.Model
             if (!onGround)
             {
                 _velocity.Y += _gravity * (float)gameTime.ElapsedGameTime.TotalSeconds;
-                _velocity.X /= AIR_RESIST_FACTOR;
+                _velocity.X += (float)gameTime.ElapsedGameTime.TotalSeconds * AIR_RESIST 
+                    * ((_velocity.X > 0) ? -1 : 1);
                 _state = UnitState.FreeFall;
                 _sprite.Animate(1, gameTime, 5.0f, false);  //jumping animation
             }

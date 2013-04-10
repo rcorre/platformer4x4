@@ -25,6 +25,7 @@ namespace Platformer.Model
             public int HitRectHeight;
             public float HorizontalDeceleration;
             public float Gravity;
+            public float Health;
         }
         #endregion
 
@@ -38,6 +39,7 @@ namespace Platformer.Model
             Drifting,   //not trying to run, but still moving
             Jumping,
             FreeFall,
+            Dead,
         }
 
         #endregion
@@ -50,6 +52,7 @@ namespace Platformer.Model
         float _jumpSpeed;    //initial vertical velocity while jumping (px/sec)
         float _horizontalDeceleration;  //how much to slow down each second while not running (px/sec^2)
         float _gravity;    //how much to increase vertical velocity while inAir (px/sec^2)
+        float _health;      //how much damage unit can take
         Rectangle _hitRect; //for hit detection. Likely smaller than sprite
         Sprite _sprite;     //contains drawing information to be passed to SpriteView in Level.cs
         UnitState _state;   //current state of unit
@@ -112,6 +115,10 @@ namespace Platformer.Model
 
         public Rectangle HitRect { get { return _hitRect; } }
 
+        public float Health { get { return _health; } }
+
+        public bool Collides { get { return _state != UnitState.Dead; } }
+
         public Sprite Sprite 
         { 
             get { return _sprite; }
@@ -160,6 +167,16 @@ namespace Platformer.Model
                 SoundPlayer.playSoundEffects("kick");
            
             }
+        }
+
+        public void TakeDamage(int amount)
+        {
+            _health -= amount;
+            if (_health <= 0)
+            {
+                _state = UnitState.Dead;
+                }
+
         }
 
         public virtual void CollideWithObstacle(Direction direction)

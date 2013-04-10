@@ -205,6 +205,7 @@ namespace Platformer.Control
 
         private void moveProjectiles(GameTime gameTime)
         {
+            Point point;
             foreach (Projectile p in Weapon.Projectiles)
             {
                 if (p.Active)
@@ -216,6 +217,27 @@ namespace Platformer.Control
                         checkHorizontalCollision(p, pxRight);
                     if (pxDown != 0)
                         checkVerticalCollision(p, pxDown);
+
+                    point.X = (int)p.Position.X;
+                    point.Y = (int)p.Position.Y;
+
+                    if (p.Hostile)  //check for collision with player
+                    {
+                        if (_gino.HitRect.Contains(point))
+                        {
+                            p.CollideWithUnit(_gino);
+                        }
+                    }
+                    else           //check for collision with enemies
+                    {
+                        foreach (Unit u in _enemies)
+                        {
+                            if (u.HitRect.Contains(point))
+                            {
+                                p.CollideWithUnit(u);
+                            }
+                        }
+                    }
                 }
             }
         }

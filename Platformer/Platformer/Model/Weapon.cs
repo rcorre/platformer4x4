@@ -13,14 +13,23 @@ namespace Platformer.Model
     class Projectile
     {
         public bool Active;
+        public bool Hostile;    //if true, collides with player. else collides with enemies
         public Sprite ProjectileSprite;
         public Vector2 Position;
         public Vector2 Velocity;
-        int Damage;
+        public int Damage;
 
         public void CollideWithObstacle(Direction direction)
         {
             Active = false;
+        }
+        public void CollideWithUnit(Unit unit)
+        {
+            if (unit.State == Unit.UnitState.Dead)
+                return;
+
+            Active = false;
+            unit.Damage(Damage);
         }
     }
 
@@ -75,6 +84,7 @@ namespace Platformer.Model
         int _damage;
         float _projectileSpeed;
         bool _firing;
+        bool _hostile;
         Vector2 _fireLocation, _fireDirection;
         string _projectileSpriteKey;
         #endregion
@@ -87,6 +97,7 @@ namespace Platformer.Model
         protected Weapon(WeaponData data, Unit owner)
         {
             _owner = owner;
+            _hostile = (owner.GetType() != typeof(Gino));
             _fireTime = TimeSpan.FromSeconds(1.0f / data.FireRate);
             _tillNextFire = _fireTime;
             _projectileSpeed = data.ProjectileSpeed;
@@ -119,6 +130,8 @@ namespace Platformer.Model
                 if (!Projectiles[i].Active)
                 {
                     Projectiles[i].Active = true;
+                    Projectiles[i].Hostile = _hostile;
+                    Projectiles[i].Damage = _damage;
                     Projectiles[i].ProjectileSprite = new Sprite(_projectileSpriteKey, fireDirection.X > 0);
                     Vector2.Multiply(ref fireDirection, _projectileSpeed, out Projectiles[i].Velocity);
                     Projectiles[i].Position = fireLocation;

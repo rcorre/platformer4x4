@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <SpriteDatas>
 <SpriteData Key="Gino" SpriteWidth="64" SpriteHeight="96"
-            NumFrames="3" NumStates="2" SecondsPerFrame="0.5"/>
+            NumFrames="3" NumStates="2" SecondsPerFrame="0.3"/>
 <SpriteData Key="Gino-Rifle" SpriteWidth="60" SpriteHeight="70"
             NumFrames="4" NumStates="3" SecondsPerFrame="0.2"/>
 <SpriteData Key="Gino-Revolver" SpriteWidth="60" SpriteHeight="70"

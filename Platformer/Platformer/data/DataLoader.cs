@@ -55,6 +55,7 @@ namespace Platformer.Data
                         WalkAcceleration = (float)ud.Attribute("WalkAcceleration"),
                         MaxSpeed = (float)ud.Attribute("MaxSpeed"),
                         JumpSpeed = (float)ud.Attribute("JumpSpeed"),
+                        Health = (int)ud.Attribute("Health"),
                         HorizontalDeceleration = (float)ud.Attribute("HorizontalDeceleration"),
                         Gravity = (float)ud.Attribute("Gravity")
                     }).ToDictionary(t => t.Key);

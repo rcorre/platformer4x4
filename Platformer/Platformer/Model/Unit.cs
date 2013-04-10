@@ -11,6 +11,8 @@ namespace Platformer.Model
     class Unit
     {
         #region const
+        const float DIE_TIME = 2;
+        const float AIR_RESIST_FACTOR = 1.003f;
         #endregion
 
         #region classes
@@ -56,6 +58,7 @@ namespace Platformer.Model
         Rectangle _hitRect; //for hit detection. Likely smaller than sprite
         Sprite _sprite;     //contains drawing information to be passed to SpriteView in Level.cs
         UnitState _state;   //current state of unit
+        TimeSpan _timer;
         #endregion
 
         #region properties
@@ -126,6 +129,8 @@ namespace Platformer.Model
         }
 
         public Vector2 Velocity { get { return _velocity; } }
+
+        public UnitState State { get { return _state; } }
         #endregion
 
         #region constructor
@@ -139,6 +144,7 @@ namespace Platformer.Model
             _horizontalDeceleration = data.HorizontalDeceleration;
             _jumpSpeed = data.JumpSpeed;
             _gravity = data.Gravity;
+            _health = data.Health;
             _hitRect = new Rectangle(
                 (int)(position.X - data.HitRectWidth / 2.0f),
                 (int)(position.Y - data.HitRectHeight / 2.0f),
@@ -151,9 +157,14 @@ namespace Platformer.Model
         #region methods
         public void Walk(Direction direction)
         {
-            if (_state != UnitState.FreeFall && _state != UnitState.Jumping)
+            if (_state != UnitState.FreeFall && _state != UnitState.Jumping && _state != UnitState.Dead)
             {
                 _state = UnitState.Running;
+                //quick turning
+                if (_sprite.FacingRight != (direction == Direction.East))
+                {
+                    _velocity.X /= 2;
+                }
                 _sprite.FacingRight = (direction == Direction.East);
             }
         }
@@ -169,13 +180,17 @@ namespace Platformer.Model
             }
         }
 
-        public void TakeDamage(int amount)
+        public void Damage(int amount)
         {
+            if (_state == UnitState.Dead)
+                return;
+
             _health -= amount;
             if (_health <= 0)
             {
+                _timer = TimeSpan.FromSeconds(DIE_TIME);
                 _state = UnitState.Dead;
-                }
+            }
 
         }
 
@@ -186,6 +201,7 @@ namespace Platformer.Model
                 case Direction.South:
                     _velocity.Y = 0;
                     _state = UnitState.Drifting;
+                    _sprite.ResetAnimation(2);
                     break;
                 case Direction.North:
                     _velocity.Y = 0;
@@ -194,11 +210,11 @@ namespace Platformer.Model
                     break;
                 case Direction.East:
                     //_velocity.X = 0;
-                    _state = UnitState.Standing;
+                    _state = UnitState.Drifting;
                     break;
                 case Direction.West:
                     //_velocity.X = 0;
-                    _state = UnitState.Standing;
+                    _state = UnitState.Drifting;
                     break;
             }
 
@@ -209,9 +225,17 @@ namespace Platformer.Model
             if (!onGround)
             {
                 _velocity.Y += _gravity * (float)gameTime.ElapsedGameTime.TotalSeconds;
+                _velocity.X /= AIR_RESIST_FACTOR;
                 _state = UnitState.FreeFall;
                 _sprite.Animate(1, gameTime, 5.0f, false);  //jumping animation
             }
+
+            if (_state == UnitState.Dead)
+            {
+                _timer -= gameTime.ElapsedGameTime;
+                _sprite.Shade = Color.Lerp(Color.Transparent, Color.White, (float)_timer.TotalSeconds / DIE_TIME);
+            }
+
 
             if (_state == UnitState.Drifting)
             {
@@ -222,11 +246,11 @@ namespace Platformer.Model
                         * ((_velocity.X > 0) ? -1 : 1);     //make sure slowdown is opposite to direction of velocity
                 if (_velocity.X == 0)
                 {
-                    _sprite.ResetAnimation();
+                    _sprite.ResetAnimation(2);
                 }
                 else
                 {
-                    _sprite.Animate(0, gameTime, _velocity.X / _maxSpeed, true);  //running animation
+                    _sprite.Animate(0, gameTime, Math.Abs(_velocity.X) / _maxSpeed, true);  //running animation
                 }
             }
 
@@ -235,7 +259,7 @@ namespace Platformer.Model
                 _velocity.X += _walkAcceleration * (float)gameTime.ElapsedGameTime.TotalSeconds
                     * ((_sprite.FacingRight) ? 1 : -1);     //increase velocity in run direction
                 _state = UnitState.Drifting;
-                _sprite.Animate(0, gameTime, _velocity.X / _maxSpeed, true);  //running animation
+                _sprite.Animate(0, gameTime, Math.Abs(_velocity.X) / _maxSpeed, true);  //running animation
             }
 
 

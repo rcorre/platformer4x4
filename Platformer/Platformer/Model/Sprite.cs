@@ -50,7 +50,11 @@ namespace Platformer.Model
         public float Scale { get { return _scale; } }
         public float Angle { get { return _angle; } }
         public Vector2 Origin { get { return _origin; } }
-        public Color Shade { get { return _shade; } }
+        public Color Shade 
+        { 
+            get { return _shade; }
+            set { _shade = value; }
+        }
         public bool FacingRight 
         { 
             get { return _facingRight; }
@@ -119,6 +123,14 @@ namespace Platformer.Model
             }
         }
 
+
+        public void ResetAnimation(int animNum)
+        {
+            _currentFrame = 0;
+            _currentState = animNum % _numStates;
+            _timeTillNext = _animationInterval;     //reset timer
+        }
+        
         public void ResetAnimation()
         {
             _currentFrame = 0;

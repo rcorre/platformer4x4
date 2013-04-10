@@ -157,7 +157,10 @@ namespace Platformer.Model
         #region methods
         public void Walk(Direction direction)
         {
-            if (_state != UnitState.FreeFall && _state != UnitState.Jumping && _state != UnitState.Dead)
+            if (_state == UnitState.Dead)
+                return;
+
+            if (_state != UnitState.FreeFall && _state != UnitState.Jumping)
             {
                 _state = UnitState.Running;
                 //quick turning
@@ -235,6 +238,8 @@ namespace Platformer.Model
             {
                 _timer -= gameTime.ElapsedGameTime;
                 _sprite.Shade = Color.Lerp(Color.Transparent, Color.White, (float)_timer.TotalSeconds / DIE_TIME);
+                _velocity.X = 0;
+                //TODO: add dying animation
             }
 
 

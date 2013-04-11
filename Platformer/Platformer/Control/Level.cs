@@ -41,7 +41,6 @@ namespace Platformer.Control
         ProgressData _progressData;
         List<Pickup> _pickups;
         List<Enemy> _enemies;
-        Weapon _currentWeapon;
         Point _endPoint;
         #endregion
 
@@ -68,7 +67,7 @@ namespace Platformer.Control
 
             Weapon.Initialize();
 
-            _currentWeapon = new Weapon("Rifle", _gino);
+            _gino.SetWeapon(new Weapon("Revolver", _gino));
 
         }
         #endregion
@@ -165,7 +164,7 @@ namespace Platformer.Control
                 e.Update(gameTime, onGround(e.Bottom, e.Left, e.Right));
                 moveUnit(e, gameTime);
             }
-            _currentWeapon.Update(gameTime);
+            _gino.EquippedWeapon.Update(gameTime);
             Weapon.UpdateProjectiles(gameTime);
             moveProjectiles(gameTime);
             centerCamera(_gino.Center);
@@ -184,7 +183,7 @@ namespace Platformer.Control
             if (input.Jump)
                 _gino.Jump();
             if (input.Fire)
-                _currentWeapon.Fire(_gino.Center, _gino.Sprite.FacingRight ? Vector2.UnitX : -Vector2.UnitX);
+                _gino.EquippedWeapon.Fire(_gino.Center, _gino.Sprite.FacingRight ? Vector2.UnitX : -Vector2.UnitX);
             if (input.Debug1)
                 Platformer.Data.DataLoader.SaveProgress(_progressData);
             if (input.Debug2)

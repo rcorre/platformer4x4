@@ -75,6 +75,7 @@ namespace Platformer.Model
 
         #region properties
         public int Ammo;
+        public string Name { get; private set; }
         #endregion
 
         #region fields
@@ -104,6 +105,7 @@ namespace Platformer.Model
             _projectileSpriteKey = data.ProjectileSpriteKey;
             _ammo = data.Ammo;
             _damage = data.Damage;
+            Name = data.Key;
         }
         #endregion
 
@@ -117,10 +119,8 @@ namespace Platformer.Model
 
         public void Fire(Vector2 fireLocation, Vector2 fireDirection)
         {
-            ;
             if (_tillNextFire > TimeSpan.Zero || _ammo <= 0)
             {
-                
                 return;
             }
 
@@ -135,11 +135,11 @@ namespace Platformer.Model
                     Projectiles[i].ProjectileSprite = new Sprite(_projectileSpriteKey, fireDirection.X > 0);
                     Vector2.Multiply(ref fireDirection, _projectileSpeed, out Projectiles[i].Velocity);
                     Projectiles[i].Position = fireLocation;
-                    _ammo -= 1;
-                    _tillNextFire = _fireTime;
                     break;
                 }
             }
+            _ammo -= 1;
+            _tillNextFire = _fireTime;
         }
         #endregion
 

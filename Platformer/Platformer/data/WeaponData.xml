@@ -1,4 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <WeaponDatas>
-  <WeaponData Key="Rifle" ProjectileSpriteKey="Bullet" ProjectileSpeed="800" FireRate="3" Ammo="10" Damage="10"/>
+  <WeaponData Key="Rifle" ProjectileSpriteKey="Bullet" ProjectileSpeed="800" FireRate="2" Ammo="10" Damage="20"/>
+  <WeaponData Key="Revolver" ProjectileSpriteKey="Bullet" ProjectileSpeed="800" FireRate="3" Ammo="10" Damage="10"/>
+  <WeaponData Key="MachinePistol" ProjectileSpriteKey="Bullet" ProjectileSpeed="800" FireRate="8" Ammo="30" Damage="5"/>
+  <WeaponData Key="Shotgun" ProjectileSpriteKey="Bullet" ProjectileSpeed="800" FireRate="2" Ammo="10" Damage="10" />
 </WeaponDatas>

@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
+using Platformer.Model;
+
 namespace Platformer.Control
 {
     public class ProgressData
@@ -10,5 +12,6 @@ namespace Platformer.Control
         public int NumCoins;
         public int CurrentLevel;
         public bool[] LevelCompleted;
+        Weapon CurrentWeapon;
     }
 }

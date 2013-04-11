@@ -13,6 +13,7 @@ namespace Platformer.Model
         #region const
         const float DIE_TIME = 2;
         const float AIR_RESIST= 30;
+        const float DAMAGE_BOUNCE_FACTOR = 50;
         #endregion
 
         #region classes
@@ -183,18 +184,24 @@ namespace Platformer.Model
             }
         }
 
-        public void Damage(int amount)
+        public void Damage(int amount, Direction direction)
         {
             if (_state == UnitState.Dead)
                 return;
 
             _health -= amount;
+            _sprite.Flash(Color.Red, 2, 0.1f);
+
             if (_health <= 0)
             {
                 _timer = TimeSpan.FromSeconds(DIE_TIME);
                 _state = UnitState.Dead;
             }
-
+            else
+            {
+                _velocity.Y += amount * DAMAGE_BOUNCE_FACTOR;
+                _velocity.X += amount * DAMAGE_BOUNCE_FACTOR * ((direction == Direction.East) ? -1 : 1);
+            }
         }
 
         public virtual void CollideWithObstacle(Direction direction)

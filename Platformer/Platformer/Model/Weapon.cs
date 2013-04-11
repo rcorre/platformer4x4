@@ -29,7 +29,7 @@ namespace Platformer.Model
                 return;
 
             Active = false;
-            unit.Damage(Damage);
+            unit.Damage(Damage, (Velocity.X > 0) ? Direction.West : Direction.East);
         }
     }
 

@@ -36,6 +36,7 @@ namespace Platformer.Control
         Layer _collisionLayer;   //layer of xTile map on which to detect collisions 
         Layer _pickupLayer;      // mark pickups
         Layer _markerLayer;     //mark start, end, and shop locations
+        Layer _enemyLayer;     //mark enemy spawns and boundaries
         Vector2 centerPos = Vector2.Zero;
         Gino _gino = new Gino(Vector2.Zero, true);
         ProgressData _progressData;
@@ -78,7 +79,7 @@ namespace Platformer.Control
             _collisionLayer = _tileMap.GetLayer("Collision");
             _pickupLayer = _tileMap.GetLayer("Pickups");
             _markerLayer = _tileMap.GetLayer("LevelMarkers");
-            Layer enemyLayer = _tileMap.GetLayer("Enemies");
+            _enemyLayer = _tileMap.GetLayer("Enemies");
             Tile tile;
 
             _pickups = new List<Pickup>();
@@ -119,15 +120,16 @@ namespace Platformer.Control
             }
 
             _enemies = new List<Enemy>();
-            for (int row = 0; row < enemyLayer.LayerHeight; row++)
+            for (int row = 0; row < _enemyLayer.LayerHeight; row++)
             {
-                for (int col = 0; col < enemyLayer.LayerWidth; col++)
+                for (int col = 0; col < _enemyLayer.LayerWidth; col++)
                 {
-                    tile = enemyLayer.Tiles[col, row];
-                    if (tile != null)
+                    tile = _enemyLayer.Tiles[col, row];
+                    if (tile != null && tile.TileIndexProperties["Name"].ToString() != "Bound")
                     {
+                        
                         string enemyName = tile.TileIndexProperties["Name"].ToString();
-                        Vector2 enemyLocation = new Vector2(col * enemyLayer.TileWidth, row * enemyLayer.TileHeight);
+                        Vector2 enemyLocation = new Vector2(col * _enemyLayer.TileWidth, row * _enemyLayer.TileHeight);
                         _enemies.Add(new Enemy(enemyName, enemyLocation, false));
                     }
                 }
@@ -135,7 +137,7 @@ namespace Platformer.Control
             //make marker layers invisible
             _pickupLayer.Visible = false;
             _markerLayer.Visible = false;
-            enemyLayer.Visible = false;
+            _enemyLayer.Visible = false;
         }
 
         public override void Update(GameTime gameTime, InputManager input)
@@ -293,6 +295,14 @@ namespace Platformer.Control
                     {
                         getPickup(_pickupLayer.Tiles[col, row].TileIndexProperties["PickupType"], row, col);
                         _pickupLayer.Tiles[col, row] = null;
+                    }
+                    //check boundary collision for enemies
+                    else if (unit != _gino && _enemyLayer.IsValidTileLocation(col, row))
+                    {
+                        if (_enemyLayer.Tiles[col, row] != null && _enemyLayer.Tiles[col, row].TileIndexProperties["Name"] == "Bound")
+                        {
+                            unit.CollideWithObstacle(pxRight > 0 ? Direction.East : Direction.West);
+                        }
                     }
 
                     //within bounds -- check tile collision

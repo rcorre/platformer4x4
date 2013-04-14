@@ -547,8 +547,10 @@ namespace Platformer.Control
 
         private void endLevel(bool success)
         {
+            //record level as completed if successful
             _progressData.LevelCompleted[_progressData.CurrentLevel - 1] = 
                 _progressData.LevelCompleted[_progressData.CurrentLevel - 1] || success;
+            Data.DataLoader.SaveProgress(_progressData);
             NewState = new Overworld(_progressData);
             SoundPlayer.StopSound();
             //trigger the end-level sound

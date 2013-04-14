@@ -253,6 +253,7 @@ namespace Platformer.Model
             {
                 _timer -= gameTime.ElapsedGameTime;
                 _sprite.Shade = Color.Lerp(Color.Transparent, Color.White, (float)_timer.TotalSeconds / DIE_TIME);
+                _sprite.Animate((int)UnitSpriteState.Die, gameTime, 1.0f, false);
                 _velocity.X = 0;
                 //TODO: add dying animation
             }

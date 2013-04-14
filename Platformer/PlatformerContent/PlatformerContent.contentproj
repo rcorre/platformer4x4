@@ -195,13 +195,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="spritesheets\Thug.png">
-      <Name>Thug</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
     <Compile Include="spritesheets\Gino-Revolver.png">
       <Name>Gino-Revolver</Name>
       <Importer>TextureImporter</Importer>
@@ -218,6 +211,13 @@
   <ItemGroup>
     <Compile Include="TileSheets\Enemy.png">
       <Name>Enemy</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="spritesheets\Thug.png">
+      <Name>Thug</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>

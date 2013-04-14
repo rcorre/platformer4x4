@@ -18,8 +18,8 @@ namespace Platformer.Model
         {
             Rifle,
             Shotgun,
-            Pistol,
-            Revolver
+            Revolver,
+            MachinePistol,
         }
         #endregion
 
@@ -42,7 +42,6 @@ namespace Platformer.Model
                 new Sprite("Gino-Revolver", true),
                 new Sprite("Gino-MachinePistol", true)
             };
-            Sprite = _sprites[(int)WeaponType.Rifle];
         }
         #endregion
 
@@ -62,7 +61,7 @@ namespace Platformer.Model
                     Sprite = _sprites[(int)WeaponType.Revolver];
                     break;
                 case "MachinePistol":
-                    Sprite = _sprites[(int)WeaponType.Pistol];
+                    Sprite = _sprites[(int)WeaponType.MachinePistol];
                     break;
             }
         }

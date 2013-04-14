@@ -67,7 +67,7 @@ namespace Platformer.Control
 
             Weapon.Initialize();
 
-            _gino.SetWeapon(new Weapon("Revolver", _gino));
+            _gino.SetWeapon(new Weapon("Rifle", _gino));
 
         }
         #endregion

@@ -45,6 +45,14 @@ namespace Platformer.Model
             Dead,
         }
 
+        enum UnitSpriteState
+        {
+            Run,
+            Shoot,
+            Die,   //not trying to run, but still moving
+            Jump,
+        }
+
         #endregion
 
         #region fields
@@ -211,7 +219,7 @@ namespace Platformer.Model
                 case Direction.South:
                     _velocity.Y = 0;
                     _state = UnitState.Drifting;
-                    _sprite.ResetAnimation(2);
+                    _sprite.ResetAnimation((int)UnitSpriteState.Shoot);
                     break;
                 case Direction.North:
                     _velocity.Y = 0;
@@ -238,7 +246,7 @@ namespace Platformer.Model
                 _velocity.X += (float)gameTime.ElapsedGameTime.TotalSeconds * AIR_RESIST 
                     * ((_velocity.X > 0) ? -1 : 1);
                 _state = UnitState.FreeFall;
-                _sprite.Animate(1, gameTime, 5.0f, false);  //jumping animation
+                _sprite.Animate((int)UnitSpriteState.Jump, gameTime, 5.0f, false);  //jumping animation
             }
 
             if (_state == UnitState.Dead)
@@ -259,11 +267,11 @@ namespace Platformer.Model
                         * ((_velocity.X > 0) ? -1 : 1);     //make sure slowdown is opposite to direction of velocity
                 if (_velocity.X == 0)
                 {
-                    _sprite.ResetAnimation(2);
+                    _sprite.ResetAnimation((int)UnitSpriteState.Shoot);
                 }
                 else
                 {
-                    _sprite.Animate(0, gameTime, Math.Abs(_velocity.X) / _maxSpeed, true);  //running animation
+                    _sprite.Animate((int)UnitSpriteState.Run, gameTime, Math.Abs(_velocity.X) / _maxSpeed, true);  //running animation
                 }
             }
 
@@ -272,7 +280,7 @@ namespace Platformer.Model
                 _velocity.X += _walkAcceleration * (float)gameTime.ElapsedGameTime.TotalSeconds
                     * ((_sprite.FacingRight) ? 1 : -1);     //increase velocity in run direction
                 _state = UnitState.Drifting;
-                _sprite.Animate(0, gameTime, Math.Abs(_velocity.X) / _maxSpeed, true);  //running animation
+                _sprite.Animate((int)UnitSpriteState.Run, gameTime, Math.Abs(_velocity.X) / _maxSpeed, true);  //running animation
             }
 
 

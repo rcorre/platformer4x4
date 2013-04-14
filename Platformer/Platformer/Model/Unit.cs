@@ -228,11 +228,11 @@ namespace Platformer.Model
                     break;
                 case Direction.East:
                     //_velocity.X = 0;
-                    _state = UnitState.Drifting;
+                    //_state = UnitState.Drifting;
                     break;
                 case Direction.West:
                     //_velocity.X = 0;
-                    _state = UnitState.Drifting;
+                    //_state = UnitState.Drifting;
                     break;
             }
 

@@ -32,6 +32,7 @@ namespace Platformer.Model
         public override void CollideWithObstacle(Direction direction)
         {
             base.CollideWithObstacle(direction);
+            _velocity.X = 0;
             switch (direction)
             {
                 case Direction.East:
@@ -45,7 +46,8 @@ namespace Platformer.Model
 
         public override void Update(GameTime gameTime, bool onGround)
         {
-            Walk(Sprite.FacingRight ? Direction.East : Direction.West);
+            if (onGround)
+                Walk(Sprite.FacingRight ? Direction.East : Direction.West);
             base.Update(gameTime, onGround);
         }
         #endregion

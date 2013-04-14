@@ -172,8 +172,15 @@ namespace Platformer.Control
             centerCamera(_gino.Center);
             _gino.Update(gameTime, onGround(_gino.Bottom, _gino.Left, _gino.Right));
             if (_gino.HitRect.Contains(_endPoint))
-                completeLevel();
+            {
+                endLevel(true);
+            }
             moveUnit(_gino, gameTime);
+
+            if (_gino.State == Unit.UnitState.Dead)
+            {
+                endLevel(false);
+            }
         }
 
         private void handleInput(InputManager input)
@@ -256,6 +263,11 @@ namespace Platformer.Control
                 checkHorizontalCollision(unit, pxRight);
             if (pxDown != 0)
                 checkVerticalCollision(unit, pxDown);
+
+            if (unit.Top > _collisionLayer.LayerHeight * _collisionLayer.TileHeight)
+            {
+                unit.Damage(100, Direction.South);
+            }
         }
 
         private void checkHorizontalCollision(Unit unit, int pxRight)
@@ -297,7 +309,7 @@ namespace Platformer.Control
                         _pickupLayer.Tiles[col, row] = null;
                     }
                     //check boundary collision for enemies
-                    else if (unit != _gino && _enemyLayer.IsValidTileLocation(col, row))
+                    else if (_enemyLayer.IsValidTileLocation(col, row))
                     {
                         if (_enemyLayer.Tiles[col, row] != null && _enemyLayer.Tiles[col, row].TileIndexProperties["Name"] == "Bound")
                         {
@@ -506,7 +518,7 @@ namespace Platformer.Control
 
 
             for (int col = (int)MathHelper.Clamp(left / _collisionLayer.TileWidth, 0, _collisionLayer.LayerWidth - 1);
-                    col <= (right - 1) / _collisionLayer.TileWidth;
+                    col <= (right - 5) / _collisionLayer.TileWidth;
                     col++)
             {
                 if (_collisionLayer.IsValidTileLocation(col, rowBelow) &&
@@ -533,9 +545,10 @@ namespace Platformer.Control
                 0, _tileMap.DisplayHeight - _viewport.Height);
         }
 
-        private void completeLevel()
+        private void endLevel(bool success)
         {
-            _progressData.LevelCompleted[_progressData.CurrentLevel - 1] = true;
+            _progressData.LevelCompleted[_progressData.CurrentLevel - 1] = 
+                _progressData.LevelCompleted[_progressData.CurrentLevel - 1] || success;
             NewState = new Overworld(_progressData);
             SoundPlayer.StopSound();
             //trigger the end-level sound

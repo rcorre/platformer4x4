@@ -309,7 +309,7 @@ namespace Platformer.Control
                         _pickupLayer.Tiles[col, row] = null;
                     }
                     //check boundary collision for enemies
-                    else if (_enemyLayer.IsValidTileLocation(col, row))
+                    if (_enemyLayer.IsValidTileLocation(col, row))
                     {
                         if (_enemyLayer.Tiles[col, row] != null && _enemyLayer.Tiles[col, row].TileIndexProperties["Name"] == "Bound")
                         {
@@ -318,7 +318,7 @@ namespace Platformer.Control
                     }
 
                     //within bounds -- check tile collision
-                    else if (_collisionLayer.Tiles[col, row] != null && _collisionLayer.Tiles[col, row].TileIndex != 0)
+                    if (_collisionLayer.Tiles[col, row] != null && _collisionLayer.Tiles[col, row].TileIndex != 0)
                     {
                         if (pxRight > 0)
                         {

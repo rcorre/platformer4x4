@@ -19,6 +19,11 @@ namespace Platformer.Control
 {
     class Level : GameState
     {
+        #region constant
+        //how long to wait after losing level
+        const float TIME_AFTER_LOSS = 2.0f;
+        #endregion
+
         #region static
         /// <summary>
         /// reference to game display device from Game1 - needed to draw xTile maps
@@ -43,6 +48,7 @@ namespace Platformer.Control
         List<Pickup> _pickups;
         List<Enemy> _enemies;
         Point _endPoint;
+        TimeSpan _endTimer;
         #endregion
 
         #region properties
@@ -69,6 +75,8 @@ namespace Platformer.Control
             Weapon.Initialize();
 
             _gino.SetWeapon(new Weapon("Rifle", _gino));
+
+            _endTimer = TimeSpan.FromSeconds(TIME_AFTER_LOSS);
 
         }
         #endregion
@@ -179,7 +187,11 @@ namespace Platformer.Control
 
             if (_gino.State == Unit.UnitState.Dead)
             {
-                endLevel(false);
+                _endTimer -= gameTime.ElapsedGameTime;
+                if (_endTimer < TimeSpan.Zero)
+                {
+                    endLevel(false);
+                }
             }
         }
 
@@ -194,9 +206,7 @@ namespace Platformer.Control
             if (input.Fire)
                 _gino.EquippedWeapon.Fire(_gino.Center, _gino.Sprite.FacingRight ? Vector2.UnitX : -Vector2.UnitX);
             if (input.Debug1)
-                Platformer.Data.DataLoader.SaveProgress(_progressData);
-            if (input.Debug2)
-                _progressData = Platformer.Data.DataLoader.LoadProgress();
+                _gino.Damage(50, Direction.East);
         }
 
         private void getPickup(string name, int row, int col)
@@ -551,10 +561,10 @@ namespace Platformer.Control
             _progressData.LevelCompleted[_progressData.CurrentLevel - 1] = 
                 _progressData.LevelCompleted[_progressData.CurrentLevel - 1] || success;
             Data.DataLoader.SaveProgress(_progressData);
-            NewState = new Overworld(_progressData);
             SoundPlayer.StopSound();
             //trigger the end-level sound
             SoundPlayer.playSoundEffects("Transform");
+            NewState = new Overworld(_progressData);
         }
 
         public override void Draw(SpriteBatch sb)

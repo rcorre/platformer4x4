@@ -77,7 +77,6 @@ namespace Platformer.View
             locationVector.Y = unit.Center.Y - yCameraOffset;
             drawSprite(sb, sprite.TextureKey, locationVector, sprite.TextureSelectRect,
                  sprite.Shade, sprite.Origin, sprite.Angle, sprite.Scale, sprite.FacingRight);
-            XnaHelper.DrawRect(Color.PaleVioletRed, unit.HitRect, sb);
         }
 
         /// <summary>

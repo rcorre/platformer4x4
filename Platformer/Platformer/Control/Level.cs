@@ -172,6 +172,7 @@ namespace Platformer.Control
             foreach (Enemy e in _enemies)
             {
                 e.Update(gameTime, onGround(e.Bottom, e.Left, e.Right));
+                e.CheckAgainstPlayer(_gino);
                 moveUnit(e, gameTime);
             }
             _gino.EquippedWeapon.Update(gameTime);
@@ -235,6 +236,8 @@ namespace Platformer.Control
                         checkHorizontalCollision(p, pxRight);
                     if (pxDown != 0)
                         checkVerticalCollision(p, pxDown);
+
+                    p.DistanceLeft -= pxRight;
 
                     point.X = (int)p.Position.X;
                     point.Y = (int)p.Position.Y;

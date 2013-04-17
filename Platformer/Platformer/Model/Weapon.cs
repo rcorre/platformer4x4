@@ -18,6 +18,7 @@ namespace Platformer.Model
         public Vector2 Position;
         public Vector2 Velocity;
         public int Damage;
+        public int DistanceLeft;
 
         public void CollideWithObstacle(Direction direction)
         {
@@ -41,6 +42,7 @@ namespace Platformer.Model
         public float FireRate;
         public int Ammo;
         public int Damage;
+        public int Range;
     }
 
     class Weapon
@@ -67,6 +69,7 @@ namespace Platformer.Model
             {
                 if (Projectiles[i].Active)
                 {
+                    Projectiles[i].Active = Projectiles[i].DistanceLeft > 0;
                     Projectiles[i].ProjectileSprite.Animate(0, gameTime, 1.0f, true);
                 }
             }
@@ -76,6 +79,7 @@ namespace Platformer.Model
         #region properties
         public int Ammo;
         public string Name { get; private set; }
+        public float Range { get { return _range; } }
         #endregion
 
         #region fields
@@ -88,6 +92,7 @@ namespace Platformer.Model
         bool _hostile;
         Vector2 _fireLocation, _fireDirection;
         string _projectileSpriteKey;
+        int _range;
         #endregion
 
         #region constructor
@@ -100,11 +105,12 @@ namespace Platformer.Model
             _owner = owner;
             _hostile = (owner.GetType() != typeof(Gino));
             _fireTime = TimeSpan.FromSeconds(1.0f / data.FireRate);
-            _tillNextFire = _fireTime;
+            _tillNextFire = TimeSpan.Zero;
             _projectileSpeed = data.ProjectileSpeed;
             _projectileSpriteKey = data.ProjectileSpriteKey;
             _ammo = data.Ammo;
             _damage = data.Damage;
+            _range = data.Range;
             Name = data.Key;
         }
         #endregion
@@ -112,7 +118,6 @@ namespace Platformer.Model
         #region methods
         public void Update(GameTime gameTime)
         {
-            
             if (_tillNextFire > TimeSpan.Zero)
                 _tillNextFire -= gameTime.ElapsedGameTime;
         }
@@ -135,6 +140,7 @@ namespace Platformer.Model
                     Projectiles[i].ProjectileSprite = new Sprite(_projectileSpriteKey, fireDirection.X > 0);
                     Vector2.Multiply(ref fireDirection, _projectileSpeed, out Projectiles[i].Velocity);
                     Projectiles[i].Position = fireLocation;
+                    Projectiles[i].DistanceLeft = _range;
                     break;
                 }
             }

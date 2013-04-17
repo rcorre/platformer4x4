@@ -129,9 +129,10 @@ namespace Platformer.Model
                 return;
             }
 
+            SoundPlayer.playSoundEffects("snare");
+
             for (int i = 0; i < Projectiles.Length; i++)
             {
-                SoundPlayer.playSoundEffects("snare");
                 if (!Projectiles[i].Active)
                 {
                     Projectiles[i].Active = true;

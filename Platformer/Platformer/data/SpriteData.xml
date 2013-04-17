@@ -17,5 +17,5 @@
 <SpriteData Key="Bullet" SpriteWidth="8" SpriteHeight="4"
             NumFrames="1" NumStates="1" SecondsPerFrame="0.15"/>
 <SpriteData Key="MeleeAnimation" SpriteWidth="48" SpriteHeight="48"
-            NumFrames="1" NumStates="1" SecondsPerFrame="0.15"/>
+            NumFrames="1" NumStates="1" SecondsPerFrame="0.45"/>
 </SpriteDatas>

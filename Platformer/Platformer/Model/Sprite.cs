@@ -47,6 +47,8 @@ namespace Platformer.Model
         #endregion
 
         #region properties
+        //hacky last minute solution - not good for long term, hides implementation failures
+        public bool AnimationLock;
         public Rectangle TextureSelectRect
         {
             get { return _spriteSelectRects[_currentState, _currentFrame]; }
@@ -107,7 +109,7 @@ namespace Platformer.Model
         /// <param name="speedFactor">Multiplier for animation speed. 1.0f is normal, 0.0f means freeze animation</param>
         public void Animate(int animationNumber, GameTime gameTime, float speedFactor, bool loop)
         {
-            if (animationNumber != _currentState)
+            if (animationNumber != _currentState && !AnimationLock)
             {   //change state, reset timer and frame
                 _currentState = animationNumber % _numStates;
                 _currentFrame = 0;

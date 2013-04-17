@@ -188,8 +188,8 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="spritesheets\Thug.png">
-      <Name>Thug</Name>
+    <Compile Include="spritesheets\Gunner.png">
+      <Name>Gunner</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
@@ -217,6 +217,13 @@
   <ItemGroup>
     <Compile Include="spritesheets\MeleeAnimation.bmp">
       <Name>MeleeAnimation</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="spritesheets\Thug.png">
+      <Name>Thug</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>

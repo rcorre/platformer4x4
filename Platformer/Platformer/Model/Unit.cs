@@ -45,7 +45,7 @@ namespace Platformer.Model
             Dead,
         }
 
-        enum UnitSpriteState
+        protected enum UnitSpriteState
         {
             Run,
             Shoot,

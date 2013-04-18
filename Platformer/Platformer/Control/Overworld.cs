@@ -39,7 +39,7 @@ namespace Platformer.Control
         #region constructor
         public Overworld(ProgressData progressData)
         {
-           // SoundPlayer.StartSound("rosesdepicardie");
+           
             _progressData = progressData;
         }
         #endregion

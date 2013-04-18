@@ -155,7 +155,7 @@ namespace Platformer.Control
             }
             else if (_progressData.CurrentLevel == 3)
             {
-                SoundPlayer.Update("testsong");
+                SoundPlayer.Update("djangostiger");
             }
             handleInput(input);
             foreach (Pickup p in _pickups)
@@ -509,6 +509,7 @@ namespace Platformer.Control
             SoundPlayer.StopSound();
             //trigger the end-level sound
             SoundPlayer.playSoundEffects("endgamesound");
+            SoundPlayer.StartSound("rosesdepicardie");
         }
 
         public override void Draw(SpriteBatch sb)

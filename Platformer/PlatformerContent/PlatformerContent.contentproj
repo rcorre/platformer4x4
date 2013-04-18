@@ -110,16 +110,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Maps\Level2-old.tide">
-      <Name>Level2-old</Name>
-      <Importer>TideImporter</Importer>
-      <Processor>TideProcessor</Processor>
-    </Compile>
-    <Compile Include="Maps\Level3-old.tide">
-      <Name>Level3-old</Name>
-      <Importer>TideImporter</Importer>
-      <Processor>TideProcessor</Processor>
-    </Compile>
     <Compile Include="Maps\Level1.tide">
       <Name>Level1</Name>
       <Importer>TideImporter</Importer>
@@ -165,13 +155,6 @@
       <Name>Bullet</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="Maps\Level1-old.tide">
-      <Name>Level1-old</Name>
-      <Importer>TideImporter</Importer>
-      <Processor>TideProcessor</Processor>
     </Compile>
   </ItemGroup>
   <ItemGroup>

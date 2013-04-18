@@ -11,7 +11,7 @@
 <SpriteData Key="Gino-MachinePistol" SpriteWidth="96" SpriteHeight="70"
             NumFrames="4" NumStates="3" SecondsPerFrame="0.25"/>
 <SpriteData Key="Thug" SpriteWidth="96" SpriteHeight="64"
-            NumFrames="4" NumStates="3" SecondsPerFrame="0.2"/>
+            NumFrames="4" NumStates="3" SecondsPerFrame="0.4"/>
 <SpriteData Key="Coin" SpriteWidth="32" SpriteHeight="32"
             NumFrames="4" NumStates="1" SecondsPerFrame="0.15"/>
 <SpriteData Key="Bullet" SpriteWidth="8" SpriteHeight="4"

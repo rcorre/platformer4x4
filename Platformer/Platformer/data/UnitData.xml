@@ -3,5 +3,5 @@
   <UnitData Key="Gino" HitRectHeight="50" HitRectWidth="36" WalkAcceleration="700" Health="10"
             MaxSpeed="200" JumpSpeed="300" HorizontalDeceleration="220" Gravity="500"/>
   <UnitData Key="Thug" HitRectHeight="50" HitRectWidth="36" WalkAcceleration="700" Health="20"
-            MaxSpeed="100" JumpSpeed="400" HorizontalDeceleration="220" Gravity="500"/>
+            MaxSpeed="80" JumpSpeed="400" HorizontalDeceleration="220" Gravity="500"/>
 </UnitDatas>

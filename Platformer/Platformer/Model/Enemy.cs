@@ -55,24 +55,25 @@ namespace Platformer.Model
 
         public override void Update(GameTime gameTime, bool onGround)
         {
-            if (_attacking)
-            {
-                Sprite.Animate((int)UnitSpriteState.Shoot, gameTime, 1.0f, true);
-            }
-
-            else if (onGround)
+            if (onGround && !_attacking)
             {
                 Walk(Sprite.FacingRight ? Direction.East : Direction.West);
             }
 
             _weapon.Update(gameTime);
-            Sprite.AnimationLock = _attacking;
             base.Update(gameTime, onGround);
-            Sprite.AnimationLock = false;
+            if (_state == UnitState.Attacking)
+            {
+                _state = UnitState.Drifting;
+                _attacking = false;
+            }
         }
 
         public void CheckAgainstPlayer(Unit player)
         {
+            if (_state == UnitState.Dead)
+                return;
+
             float xDisp = player.Center.X - Center.X;
             float yDisp = player.Center.Y - Center.Y;
             //dont fire if not facing
@@ -84,6 +85,7 @@ namespace Platformer.Model
             //fire if close enough to player
             if (Math.Abs(xDisp) < _weapon.Range && Math.Abs(yDisp) < MAX_Y_ATTACK_OFFSET)
             {
+                _state = UnitState.Attacking;
                 _attacking = true;
                 _weapon.Fire(Center, Vector2.UnitX * ((player.Center.X > Center.X) ? 1 : -1));
             }

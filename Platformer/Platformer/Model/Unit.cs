@@ -43,6 +43,7 @@ namespace Platformer.Model
             Jumping,
             FreeFall,
             Dead,
+            Attacking   //use only for enemies, not gino
         }
 
         protected enum UnitSpriteState
@@ -66,7 +67,7 @@ namespace Platformer.Model
         float _health;      //how much damage unit can take
         Rectangle _hitRect; //for hit detection. Likely smaller than sprite
         Sprite _sprite;     //contains drawing information to be passed to SpriteView in Level.cs
-        UnitState _state;   //current state of unit
+        protected UnitState _state;   //current state of unit
         TimeSpan _timer;
         #endregion
 
@@ -255,7 +256,6 @@ namespace Platformer.Model
                 _sprite.Shade = Color.Lerp(Color.Transparent, Color.White, (float)_timer.TotalSeconds / DIE_TIME);
                 _sprite.Animate((int)UnitSpriteState.Die, gameTime, 1.0f, false);
                 _velocity.X = 0;
-                //TODO: add dying animation
             }
 
 
@@ -282,6 +282,11 @@ namespace Platformer.Model
                     * ((_sprite.FacingRight) ? 1 : -1);     //increase velocity in run direction
                 _state = UnitState.Drifting;
                 _sprite.Animate((int)UnitSpriteState.Run, gameTime, Math.Abs(_velocity.X) / _maxSpeed, true);  //running animation
+            }
+
+            if (_state == UnitState.Attacking)
+            {
+                _sprite.Animate((int)UnitSpriteState.Shoot, gameTime, 3.0f, true);  //attacking animation
             }
 
 

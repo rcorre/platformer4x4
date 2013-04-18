@@ -109,7 +109,10 @@ namespace Platformer.Model
         /// <param name="speedFactor">Multiplier for animation speed. 1.0f is normal, 0.0f means freeze animation</param>
         public void Animate(int animationNumber, GameTime gameTime, float speedFactor, bool loop)
         {
-            if (animationNumber != _currentState && !AnimationLock)
+            if (AnimationLock)
+                return;
+
+            if (animationNumber != _currentState)
             {   //change state, reset timer and frame
                 _currentState = animationNumber % _numStates;
                 _currentFrame = 0;

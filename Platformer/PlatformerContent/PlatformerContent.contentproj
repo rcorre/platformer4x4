@@ -110,6 +110,21 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Maps\Level2-old.tide">
+      <Name>Level2-old</Name>
+      <Importer>TideImporter</Importer>
+      <Processor>TideProcessor</Processor>
+    </Compile>
+    <Compile Include="Maps\Level3-old.tide">
+      <Name>Level3-old</Name>
+      <Importer>TideImporter</Importer>
+      <Processor>TideProcessor</Processor>
+    </Compile>
+    <Compile Include="Maps\Level1.tide">
+      <Name>Level1</Name>
+      <Importer>TideImporter</Importer>
+      <Processor>TideProcessor</Processor>
+    </Compile>
     <Compile Include="Maps\Level2.tide">
       <Name>Level2</Name>
       <Importer>TideImporter</Importer>
@@ -117,6 +132,16 @@
     </Compile>
     <Compile Include="Maps\Level3.tide">
       <Name>Level3</Name>
+      <Importer>TideImporter</Importer>
+      <Processor>TideProcessor</Processor>
+    </Compile>
+    <Compile Include="Maps\Level4.tide">
+      <Name>Level4</Name>
+      <Importer>TideImporter</Importer>
+      <Processor>TideProcessor</Processor>
+    </Compile>
+    <Compile Include="Maps\Level5.tide">
+      <Name>Level5</Name>
       <Importer>TideImporter</Importer>
       <Processor>TideProcessor</Processor>
     </Compile>
@@ -143,8 +168,8 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Maps\Level1.tide">
-      <Name>Level1</Name>
+    <Compile Include="Maps\Level1-old.tide">
+      <Name>Level1-old</Name>
       <Importer>TideImporter</Importer>
       <Processor>TideProcessor</Processor>
     </Compile>
@@ -224,6 +249,13 @@
   <ItemGroup>
     <Compile Include="spritesheets\Thug.png">
       <Name>Thug</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="TileSheets\sprint3TileSheet.png">
+      <Name>sprint3TileSheet</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>

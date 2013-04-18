@@ -6,11 +6,13 @@
             NumFrames="4" NumStates="4" SecondsPerFrame="0.25"/>
 <SpriteData Key="Gino-Revolver" SpriteWidth="96" SpriteHeight="64"
             NumFrames="4" NumStates="4" SecondsPerFrame="0.25"/>
-<SpriteData Key="Gino-Shotgun" SpriteWidth="96" SpriteHeight="70"
+<SpriteData Key="Gino-Shotgun" SpriteWidth="96" SpriteHeight="64"
             NumFrames="4" NumStates="3" SecondsPerFrame="0.25"/>
-<SpriteData Key="Gino-MachinePistol" SpriteWidth="96" SpriteHeight="70"
+<SpriteData Key="Gino-MachinePistol" SpriteWidth="96" SpriteHeight="64"
             NumFrames="4" NumStates="3" SecondsPerFrame="0.25"/>
 <SpriteData Key="Thug" SpriteWidth="96" SpriteHeight="64"
+            NumFrames="4" NumStates="3" SecondsPerFrame="0.4"/>
+<SpriteData Key="Gunner" SpriteWidth="96" SpriteHeight="64"
             NumFrames="4" NumStates="3" SecondsPerFrame="0.4"/>
 <SpriteData Key="Coin" SpriteWidth="32" SpriteHeight="32"
             NumFrames="4" NumStates="1" SecondsPerFrame="0.15"/>

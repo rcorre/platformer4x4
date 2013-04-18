@@ -77,6 +77,9 @@ namespace Platformer.View
         /// </summary>
         public static void StopSound()
         {
+            if (currentSong == null)
+                return;
+
             currentSong.Stop(AudioStopOptions.Immediate);
             currentSong.Dispose();
             currentSong = null;

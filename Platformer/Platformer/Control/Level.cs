@@ -74,7 +74,7 @@ namespace Platformer.Control
 
             Weapon.Initialize();
 
-            _gino.SetWeapon(new Weapon("Rifle", _gino));
+            _gino.SetWeapon(new Weapon("Revolver", _gino));
 
             _endTimer = TimeSpan.FromSeconds(TIME_AFTER_LOSS);
 
@@ -96,7 +96,7 @@ namespace Platformer.Control
                 for (int col = 0; col < _pickupLayer.LayerWidth; col++)
                 {
                     tile = _pickupLayer.Tiles[col, row];
-                    if (tile != null)
+                    if (tile != null && tile.TileIndexProperties.ContainsKey("PickupType"))
                     {
                         _pickups.Add(new Pickup(row, col,
                         new Vector2(col * _pickupLayer.TileWidth, row * _pickupLayer.TileHeight),
@@ -112,16 +112,19 @@ namespace Platformer.Control
                     tile = _markerLayer.Tiles[col, row];
                     if (tile != null)
                     {
-                        switch (tile.TileIndexProperties["MarkerType"].ToString())
+                        if (tile.TileIndexProperties.ContainsKey("MarkerType"))
                         {
-                            case "Start":
-                                _gino.Bottom = (row + 1) * _markerLayer.TileHeight;
-                                _gino.Left = col * _markerLayer.TileWidth;
-                                break;
-                            case "End":
-                                _endPoint.X = (int)((col + 0.5f) * _markerLayer.TileWidth);
-                                _endPoint.Y = (int)((row + 0.5f) * _markerLayer.TileHeight);
-                                break;
+                            switch (tile.TileIndexProperties["MarkerType"].ToString())
+                            {
+                                case "Start":
+                                    _gino.Bottom = (row + 1) * _markerLayer.TileHeight;
+                                    _gino.Left = col * _markerLayer.TileWidth;
+                                    break;
+                                case "End":
+                                    _endPoint.X = (int)((col + 0.5f) * _markerLayer.TileWidth);
+                                    _endPoint.Y = (int)((row + 0.5f) * _markerLayer.TileHeight);
+                                    break;
+                            }
                         }
                     }
                 }
@@ -133,7 +136,8 @@ namespace Platformer.Control
                 for (int col = 0; col < _enemyLayer.LayerWidth; col++)
                 {
                     tile = _enemyLayer.Tiles[col, row];
-                    if (tile != null && tile.TileIndexProperties["Name"].ToString() != "Bound")
+                    if (tile != null && tile.TileIndexProperties.ContainsKey("Name") &&
+                        tile.TileIndexProperties["Name"].ToString() != "Bound")
                     {
                         
                         string enemyName = tile.TileIndexProperties["Name"].ToString();
@@ -318,13 +322,18 @@ namespace Platformer.Control
                     //pickup checks
                     if (unit == _gino && _pickupLayer.Tiles[col, row] != null)
                     {
-                        getPickup(_pickupLayer.Tiles[col, row].TileIndexProperties["PickupType"], row, col);
+                        if (_pickupLayer.Tiles[col, row].TileIndexProperties.ContainsKey("PickupType"))
+                        {
+                            getPickup(_pickupLayer.Tiles[col, row].TileIndexProperties["PickupType"], row, col);
+                        }
                         _pickupLayer.Tiles[col, row] = null;
                     }
                     //check boundary collision for enemies
                     if (_enemyLayer.IsValidTileLocation(col, row))
                     {
-                        if (_enemyLayer.Tiles[col, row] != null && _enemyLayer.Tiles[col, row].TileIndexProperties["Name"] == "Bound")
+                        if (_enemyLayer.Tiles[col, row] != null && 
+                            _enemyLayer.Tiles[col, row].TileIndexProperties.ContainsKey("Name") &&
+                            _enemyLayer.Tiles[col, row].TileIndexProperties["Name"] == "Bound")
                         {
                             unit.CollideWithObstacle(pxRight > 0 ? Direction.East : Direction.West);
                         }
@@ -385,7 +394,10 @@ namespace Platformer.Control
                     //pickup checks
                     if (unit == _gino && _pickupLayer.IsValidTileLocation(col, row) && _pickupLayer.Tiles[col, row] != null)
                     {
-                        getPickup(_pickupLayer.Tiles[col, row].TileIndexProperties["PickupType"], row, col);
+                        if (_pickupLayer.Tiles[col, row].TileIndexProperties.ContainsKey("PickupType"))
+                        {
+                            getPickup(_pickupLayer.Tiles[col, row].TileIndexProperties["PickupType"], row, col);
+                        }
                         _pickupLayer.Tiles[col, row] = null;
                     }
 

@@ -19,6 +19,11 @@ namespace Platformer.Control
 {
     class Level : GameState
     {
+        #region constant
+        //how long to wait after losing level
+        const float TIME_AFTER_LOSS = 2.0f;
+        #endregion
+
         #region static
         /// <summary>
         /// reference to game display device from Game1 - needed to draw xTile maps
@@ -36,13 +41,14 @@ namespace Platformer.Control
         Layer _collisionLayer;   //layer of xTile map on which to detect collisions 
         Layer _pickupLayer;      // mark pickups
         Layer _markerLayer;     //mark start, end, and shop locations
+        Layer _enemyLayer;     //mark enemy spawns and boundaries
         Vector2 centerPos = Vector2.Zero;
         Gino _gino = new Gino(Vector2.Zero, true);
         ProgressData _progressData;
         List<Pickup> _pickups;
         List<Enemy> _enemies;
-        Weapon _currentWeapon;
         Point _endPoint;
+        TimeSpan _endTimer;
         #endregion
 
         #region properties
@@ -68,7 +74,9 @@ namespace Platformer.Control
 
             Weapon.Initialize();
 
-            _currentWeapon = new Weapon("Rifle", _gino);
+            _gino.SetWeapon(new Weapon("Rifle", _gino));
+
+            _endTimer = TimeSpan.FromSeconds(TIME_AFTER_LOSS);
 
         }
         #endregion
@@ -79,7 +87,7 @@ namespace Platformer.Control
             _collisionLayer = _tileMap.GetLayer("Collision");
             _pickupLayer = _tileMap.GetLayer("Pickups");
             _markerLayer = _tileMap.GetLayer("LevelMarkers");
-            Layer enemyLayer = _tileMap.GetLayer("Enemies");
+            _enemyLayer = _tileMap.GetLayer("Enemies");
             Tile tile;
 
             _pickups = new List<Pickup>();
@@ -120,15 +128,16 @@ namespace Platformer.Control
             }
 
             _enemies = new List<Enemy>();
-            for (int row = 0; row < enemyLayer.LayerHeight; row++)
+            for (int row = 0; row < _enemyLayer.LayerHeight; row++)
             {
-                for (int col = 0; col < enemyLayer.LayerWidth; col++)
+                for (int col = 0; col < _enemyLayer.LayerWidth; col++)
                 {
-                    tile = enemyLayer.Tiles[col, row];
-                    if (tile != null)
+                    tile = _enemyLayer.Tiles[col, row];
+                    if (tile != null && tile.TileIndexProperties["Name"].ToString() != "Bound")
                     {
+                        
                         string enemyName = tile.TileIndexProperties["Name"].ToString();
-                        Vector2 enemyLocation = new Vector2(col * enemyLayer.TileWidth, row * enemyLayer.TileHeight);
+                        Vector2 enemyLocation = new Vector2(col * _enemyLayer.TileWidth, row * _enemyLayer.TileHeight);
                         _enemies.Add(new Enemy(enemyName, enemyLocation, false));
                     }
                 }
@@ -136,18 +145,18 @@ namespace Platformer.Control
             //make marker layers invisible
             _pickupLayer.Visible = false;
             _markerLayer.Visible = false;
-            enemyLayer.Visible = false;
+            _enemyLayer.Visible = false;
         }
 
         public override void Update(GameTime gameTime, InputManager input)
         {
             if (_progressData.CurrentLevel == 0)
             {
-                SoundPlayer.Update("rosesdepicardie");
+                SoundPlayer.Update("djangostiger");
             }
             else if (_progressData.CurrentLevel == 1)
             {
-                SoundPlayer.Update("djangostiger");// these are 24-bit .wav PCMs
+                SoundPlayer.Update("minorswing");// these are 24-bit .wav PCMs
             }
             else if (_progressData.CurrentLevel == 2)
             {
@@ -155,7 +164,7 @@ namespace Platformer.Control
             }
             else if (_progressData.CurrentLevel == 3)
             {
-                SoundPlayer.Update("djangostiger");
+                SoundPlayer.Update("rosesdepicardie");
             }
             handleInput(input);
             foreach (Pickup p in _pickups)
@@ -163,16 +172,28 @@ namespace Platformer.Control
             foreach (Enemy e in _enemies)
             {
                 e.Update(gameTime, onGround(e.Bottom, e.Left, e.Right));
+                e.CheckAgainstPlayer(_gino);
                 moveUnit(e, gameTime);
             }
-            _currentWeapon.Update(gameTime);
+            _gino.EquippedWeapon.Update(gameTime);
             Weapon.UpdateProjectiles(gameTime);
             moveProjectiles(gameTime);
             centerCamera(_gino.Center);
             _gino.Update(gameTime, onGround(_gino.Bottom, _gino.Left, _gino.Right));
             if (_gino.HitRect.Contains(_endPoint))
-                completeLevel();
+            {
+                endLevel(true);
+            }
             moveUnit(_gino, gameTime);
+
+            if (_gino.State == Unit.UnitState.Dead)
+            {
+                _endTimer -= gameTime.ElapsedGameTime;
+                if (_endTimer < TimeSpan.Zero)
+                {
+                    endLevel(false);
+                }
+            }
         }
 
         private void handleInput(InputManager input)
@@ -184,11 +205,9 @@ namespace Platformer.Control
             if (input.Jump)
                 _gino.Jump();
             if (input.Fire)
-                _currentWeapon.Fire(_gino.Center, _gino.Sprite.FacingRight ? Vector2.UnitX : -Vector2.UnitX);
+                _gino.EquippedWeapon.Fire(_gino.Center, _gino.Sprite.FacingRight ? Vector2.UnitX : -Vector2.UnitX);
             if (input.Debug1)
-                Platformer.Data.DataLoader.SaveProgress(_progressData);
-            if (input.Debug2)
-                _progressData = Platformer.Data.DataLoader.LoadProgress();
+                _gino.Damage(50, Direction.East);
         }
 
         private void getPickup(string name, int row, int col)
@@ -198,13 +217,14 @@ namespace Platformer.Control
             {
                 case "Coin":
                     _progressData.NumCoins += 1;
-                    SoundPlayer.playSoundEffects("hihatloop");
+                    SoundPlayer.playSoundEffects("hihat");
                     break;
             }
         }
 
         private void moveProjectiles(GameTime gameTime)
         {
+            Point point;
             foreach (Projectile p in Weapon.Projectiles)
             {
                 if (p.Active)
@@ -216,6 +236,29 @@ namespace Platformer.Control
                         checkHorizontalCollision(p, pxRight);
                     if (pxDown != 0)
                         checkVerticalCollision(p, pxDown);
+
+                    p.DistanceLeft -= pxRight;
+
+                    point.X = (int)p.Position.X;
+                    point.Y = (int)p.Position.Y;
+
+                    if (p.Hostile)  //check for collision with player
+                    {
+                        if (_gino.HitRect.Contains(point))
+                        {
+                            p.CollideWithUnit(_gino);
+                        }
+                    }
+                    else           //check for collision with enemies
+                    {
+                        foreach (Unit u in _enemies)
+                        {
+                            if (u.HitRect.Contains(point))
+                            {
+                                p.CollideWithUnit(u);
+                            }
+                        }
+                    }
                 }
             }
         }
@@ -233,6 +276,11 @@ namespace Platformer.Control
                 checkHorizontalCollision(unit, pxRight);
             if (pxDown != 0)
                 checkVerticalCollision(unit, pxDown);
+
+            if (unit.Top > _collisionLayer.LayerHeight * _collisionLayer.TileHeight)
+            {
+                unit.Damage(100, Direction.South);
+            }
         }
 
         private void checkHorizontalCollision(Unit unit, int pxRight)
@@ -273,9 +321,17 @@ namespace Platformer.Control
                         getPickup(_pickupLayer.Tiles[col, row].TileIndexProperties["PickupType"], row, col);
                         _pickupLayer.Tiles[col, row] = null;
                     }
+                    //check boundary collision for enemies
+                    if (_enemyLayer.IsValidTileLocation(col, row))
+                    {
+                        if (_enemyLayer.Tiles[col, row] != null && _enemyLayer.Tiles[col, row].TileIndexProperties["Name"] == "Bound")
+                        {
+                            unit.CollideWithObstacle(pxRight > 0 ? Direction.East : Direction.West);
+                        }
+                    }
 
                     //within bounds -- check tile collision
-                    else if (_collisionLayer.Tiles[col, row] != null && _collisionLayer.Tiles[col, row].TileIndex != 0)
+                    if (_collisionLayer.Tiles[col, row] != null && _collisionLayer.Tiles[col, row].TileIndex != 0)
                     {
                         if (pxRight > 0)
                         {
@@ -475,7 +531,7 @@ namespace Platformer.Control
 
 
             for (int col = (int)MathHelper.Clamp(left / _collisionLayer.TileWidth, 0, _collisionLayer.LayerWidth - 1);
-                    col <= (right - 1) / _collisionLayer.TileWidth;
+                    col <= (right - 5) / _collisionLayer.TileWidth;
                     col++)
             {
                 if (_collisionLayer.IsValidTileLocation(col, rowBelow) &&
@@ -502,14 +558,17 @@ namespace Platformer.Control
                 0, _tileMap.DisplayHeight - _viewport.Height);
         }
 
-        private void completeLevel()
+        private void endLevel(bool success)
         {
-            _progressData.LevelCompleted[_progressData.CurrentLevel - 1] = true;
-            NewState = new Overworld(_progressData);
+            //record level as completed if successful
+            _progressData.LevelCompleted[_progressData.CurrentLevel - 1] = 
+                _progressData.LevelCompleted[_progressData.CurrentLevel - 1] || success;
+            Data.DataLoader.SaveProgress(_progressData);
             SoundPlayer.StopSound();
             //trigger the end-level sound
             SoundPlayer.playSoundEffects("endgamesound");
             SoundPlayer.StartSound("rosesdepicardie");
+            NewState = new Overworld(_progressData);
         }
 
         public override void Draw(SpriteBatch sb)

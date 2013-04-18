@@ -16,12 +16,14 @@
         <Property Key="@TileIndex@0@PickupType" Type="String"><![CDATA[Coin]]></Property>
       </Properties>
     </TileSheet>
-    <TileSheet Id="Enemies">
+    <TileSheet Id="EnemyMarkers">
       <Description><![CDATA[]]></Description>
-      <ImageSource><![CDATA[..\TileSheets\enemie.png]]></ImageSource>
-      <Alignment SheetSize="1 x 1" TileSize="32 x 32" Margin="0 x 0" Spacing="0 x 0" />
+      <ImageSource><![CDATA[..\TileSheets\Enemy.png]]></ImageSource>
+      <Alignment SheetSize="3 x 1" TileSize="32 x 32" Margin="0 x 0" Spacing="0 x 0" />
       <Properties>
         <Property Key="@TileIndex@0@Name" Type="String"><![CDATA[Thug]]></Property>
+        <Property Key="@TileIndex@1@Name" Type="String"><![CDATA[Gunner]]></Property>
+        <Property Key="@TileIndex@2@Name" Type="String"><![CDATA[Bound]]></Property>
       </Properties>
     </TileSheet>
     <TileSheet Id="Level1Sheet">
@@ -9964,10 +9966,20 @@
           <Null Count="100" />
         </Row>
         <Row>
-          <Null Count="30" />
-          <TileSheet Ref="Enemies" />
+          <Null Count="100" />
+        </Row>
+        <Row>
+          <Null Count="100" />
+        </Row>
+        <Row>
+          <Null Count="60" />
+          <TileSheet Ref="EnemyMarkers" />
+          <Static Index="2" BlendMode="Alpha" />
+          <Null Count="1" />
           <Static Index="0" BlendMode="Alpha" />
-          <Null Count="69" />
+          <Null Count="1" />
+          <Static Index="2" BlendMode="Alpha" />
+          <Null Count="35" />
         </Row>
         <Row>
           <Null Count="100" />
@@ -9976,15 +9988,19 @@
           <Null Count="100" />
         </Row>
         <Row>
-          <Null Count="100" />
-        </Row>
-        <Row>
+          <Null Count="10" />
+          <Static Index="2" BlendMode="Alpha" />
+          <Null Count="1" />
+          <Static Index="0" BlendMode="Alpha" />
+          <Null Count="1" />
+          <Static Index="2" BlendMode="Alpha" />
           <Null Count="14" />
+          <Static Index="2" BlendMode="Alpha" />
+          <Null Count="1" />
           <Static Index="0" BlendMode="Alpha" />
-          <Null Count="85" />
-        </Row>
-        <Row>
-          <Null Count="100" />
+          <Null Count="1" />
+          <Static Index="2" BlendMode="Alpha" />
+          <Null Count="66" />
         </Row>
         <Row>
           <Null Count="100" />
@@ -9997,8 +10013,11 @@
         </Row>
         <Row>
           <Null Count="46" />
+          <Static Index="2" BlendMode="Alpha" />
+          <Null Count="2" />
           <Static Index="0" BlendMode="Alpha" />
-          <Null Count="53" />
+          <Static Index="2" BlendMode="Alpha" />
+          <Null Count="49" />
         </Row>
         <Row>
           <Null Count="100" />

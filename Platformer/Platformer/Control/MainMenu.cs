@@ -101,7 +101,7 @@ namespace Platformer.Control
 
         private void fireBullet(Vector2 image)
         {
-            SoundPlayer.playSoundEffects("jumpsnare");
+            SoundPlayer.playSoundEffects("snare");
             bool found = false;
             int i = 0;
             while (!found)

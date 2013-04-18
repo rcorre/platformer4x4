@@ -14,12 +14,12 @@ namespace Platformer.Model
         #endregion
 
         #region static
-        enum Weapon
+        enum WeaponType
         {
             Rifle,
             Shotgun,
-            Pistol,
-            Revolver
+            Revolver,
+            MachinePistol,
         }
         #endregion
 
@@ -28,6 +28,7 @@ namespace Platformer.Model
         #endregion
 
         #region properties
+        public Weapon EquippedWeapon { get; private set;}
         #endregion
 
         #region constructor
@@ -41,11 +42,29 @@ namespace Platformer.Model
                 new Sprite("Gino-Revolver", true),
                 new Sprite("Gino-MachinePistol", true)
             };
-            Sprite = _sprites[(int)Weapon.Rifle];
         }
         #endregion
 
         #region methods
+        public void SetWeapon(Weapon weapon)
+        {
+            EquippedWeapon = weapon;
+            switch (weapon.Name)
+            {
+                case "Rifle":
+                    Sprite = _sprites[(int)WeaponType.Rifle];
+                    break;
+                case "Shotgun":
+                    Sprite = _sprites[(int)WeaponType.Shotgun];
+                    break;
+                case "Revolver":
+                    Sprite = _sprites[(int)WeaponType.Revolver];
+                    break;
+                case "MachinePistol":
+                    Sprite = _sprites[(int)WeaponType.MachinePistol];
+                    break;
+            }
+        }
         #endregion
     }
 }

@@ -12,12 +12,17 @@ namespace Platformer.Model
 {
     class Enemy : Unit
     {
+        #region constant
+        const int MAX_Y_ATTACK_OFFSET = 50;
+        #endregion
+
         #region static
-        static string ENEMY_KEY = "Enemy1";//to test walking function
+        Vector2 tempVec;
         #endregion
 
         #region fields
         Vector2 position;
+        Weapon _weapon;
         #endregion
 
         #region properties
@@ -26,13 +31,16 @@ namespace Platformer.Model
         #region constructor
         public Enemy(string key, Vector2 position, bool facingRight)
             : base(key, position, facingRight)
-        { }
+        {
+            _weapon = (key == "Thug") ? new Weapon("Knuckles", this) : new Weapon("EnemyRifle", this);
+        }
         #endregion
 
         #region methods
         public override void CollideWithObstacle(Direction direction)
         {
             base.CollideWithObstacle(direction);
+            _velocity.X = 0;
             switch (direction)
             {
                 case Direction.East:
@@ -46,8 +54,30 @@ namespace Platformer.Model
 
         public override void Update(GameTime gameTime, bool onGround)
         {
-            Walk(Sprite.FacingRight ? Direction.East : Direction.West);
+            if (onGround)
+            {
+                Walk(Sprite.FacingRight ? Direction.East : Direction.West);
+            }
+
+            _weapon.Update(gameTime);
             base.Update(gameTime, onGround);
+        }
+
+        public void CheckAgainstPlayer(Unit player)
+        {
+            float xDisp = player.Center.X - Center.X;
+            float yDisp = player.Center.Y - Center.Y;
+            //dont fire if not facing
+            if ((xDisp >= 0 && !Sprite.FacingRight) || (xDisp <= 0 && Sprite.FacingRight))
+            {
+                return;
+            }
+
+            //fire if close enough to player
+            if (Math.Abs(xDisp) < _weapon.Range && Math.Abs(yDisp) < MAX_Y_ATTACK_OFFSET)
+            {
+                _weapon.Fire(Center, Vector2.UnitX * ((player.Center.X > Center.X) ? 1 : -1));
+            }
         }
         #endregion
     }

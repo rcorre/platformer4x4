@@ -40,6 +40,10 @@ namespace Platformer.Model
         Vector2 _origin;     //center of texture
         bool _facingRight;  //true if facing right, else facing left
         string _textureKey; //key to access drawing texture
+        //color flash info
+        Color _flashColor;
+        TimeSpan _flashTimer, _flashDuration;   //how long each flash pulse lasts
+        int _numFlashes;        //number of flash pulses left to complete
         #endregion
 
         #region properties
@@ -50,7 +54,11 @@ namespace Platformer.Model
         public float Scale { get { return _scale; } }
         public float Angle { get { return _angle; } }
         public Vector2 Origin { get { return _origin; } }
-        public Color Shade { get { return _shade; } }
+        public Color Shade 
+        { 
+            get { return _shade; }
+            set { _shade = value; }
+        }
         public bool FacingRight 
         { 
             get { return _facingRight; }
@@ -117,8 +125,31 @@ namespace Platformer.Model
                 _currentFrame = (_currentFrame + 1) % _framesPerAnimation;
                 _timeTillNext = _animationInterval;     //reset timer
             }
+
+            //flash handling
+            if (_numFlashes > 0)
+            {
+                _flashTimer -= gameTime.ElapsedGameTime;
+                float flashRatio = (float)(_flashTimer.TotalSeconds / _flashDuration.TotalSeconds);
+                float factor = (flashRatio < 0.5f) ? 2 * flashRatio : 2 * (1 - flashRatio);
+                _shade = Color.Lerp(Color.White, _flashColor, factor);
+
+                if (_flashTimer < TimeSpan.Zero)
+                {
+                    if (--_numFlashes > 0)
+                        _flashTimer = _flashDuration;
+                }
+            }
         }
 
+
+        public void ResetAnimation(int animNum)
+        {
+            _currentFrame = 0;
+            _currentState = animNum % _numStates;
+            _timeTillNext = _animationInterval;     //reset timer
+        }
+        
         public void ResetAnimation()
         {
             _currentFrame = 0;
@@ -134,6 +165,15 @@ namespace Platformer.Model
             _angle = 0.0f;
             _shade = Color.White;
             _facingRight = true;
+        }
+
+        public void Flash(Color color, int numFlashes, float secondsPerFlash)
+        {
+            _shade = Color.White;
+            _flashColor = color;
+            _flashTimer = TimeSpan.FromSeconds(secondsPerFlash);
+            _flashDuration = TimeSpan.FromSeconds(secondsPerFlash);
+            _numFlashes = numFlashes;
         }
 
         #endregion

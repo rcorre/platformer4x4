@@ -12,7 +12,7 @@ namespace Platformer.Model
     {
         #region const
         const float DIE_TIME = 2;
-        const float AIR_RESIST= 30;
+        const float AIR_RESIST= 22;
         const float DAMAGE_BOUNCE_FACTOR = 50;
         #endregion
 
@@ -285,8 +285,8 @@ namespace Platformer.Model
             }
 
             if (_state == UnitState.Attacking)
-            {
-                _sprite.Animate((int)UnitSpriteState.Shoot, gameTime, 3.0f, true);  //attacking animation
+            {   //for enemies only (not gino)
+                _sprite.Animate((int)UnitSpriteState.Shoot, gameTime, 2.0f, true);  //attacking animation
             }
 
 

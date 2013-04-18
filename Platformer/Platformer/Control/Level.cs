@@ -21,7 +21,7 @@ namespace Platformer.Control
     {
         #region constant
         //how long to wait after losing level
-        const float TIME_AFTER_LOSS = 2.0f;
+        const float TIME_AFTER_LOSS = 1.0f;
         #endregion
 
         #region static

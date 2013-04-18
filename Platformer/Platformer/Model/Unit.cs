@@ -12,8 +12,9 @@ namespace Platformer.Model
     {
         #region const
         const float DIE_TIME = 2;
-        const float AIR_RESIST= 22;
+        const float AIR_RESIST= 30;
         const float DAMAGE_BOUNCE_FACTOR = 50;
+        const float AIR_MOVE_FACTOR = 0.5f;
         #endregion
 
         #region classes
@@ -69,6 +70,8 @@ namespace Platformer.Model
         Sprite _sprite;     //contains drawing information to be passed to SpriteView in Level.cs
         protected UnitState _state;   //current state of unit
         TimeSpan _timer;
+        bool _airMove;    //use for moving in air
+        Direction _airMoveDirection;    //use for moving in air
         #endregion
 
         #region properties
@@ -180,6 +183,12 @@ namespace Platformer.Model
                 }
                 _sprite.FacingRight = (direction == Direction.East);
             }
+            else
+            {
+                _airMove = true;
+                _airMoveDirection = direction;
+                _sprite.FacingRight = (direction == Direction.East);
+            }
         }
 
         public void Jump()
@@ -189,7 +198,7 @@ namespace Platformer.Model
                 _velocity.Y = -_jumpSpeed;
                 _state = UnitState.FreeFall;
                 SoundPlayer.playSoundEffects("kick");
-           
+             
             }
         }
 
@@ -241,23 +250,29 @@ namespace Platformer.Model
 
         public virtual void Update(GameTime gameTime, bool onGround)
         {
-            if (!onGround)
-            {
-                _velocity.Y += _gravity * (float)gameTime.ElapsedGameTime.TotalSeconds;
-                _velocity.X += (float)gameTime.ElapsedGameTime.TotalSeconds * AIR_RESIST 
-                    * ((_velocity.X > 0) ? -1 : 1);
-                _state = UnitState.FreeFall;
-                _sprite.Animate((int)UnitSpriteState.Jump, gameTime, 5.0f, false);  //jumping animation
-            }
-
             if (_state == UnitState.Dead)
             {
                 _timer -= gameTime.ElapsedGameTime;
                 _sprite.Shade = Color.Lerp(Color.Transparent, Color.White, (float)_timer.TotalSeconds / DIE_TIME);
                 _sprite.Animate((int)UnitSpriteState.Die, gameTime, 1.0f, false);
                 _velocity.X = 0;
+                return;     //do nothing else
             }
 
+            if (!onGround)
+            {
+                _velocity.Y += _gravity * (float)gameTime.ElapsedGameTime.TotalSeconds;
+                if (_airMove)
+                {
+                    _velocity.X += _walkAcceleration * (float)gameTime.ElapsedGameTime.TotalSeconds *
+                        ((_airMoveDirection == Direction.East) ? 1 : -1) * AIR_MOVE_FACTOR;
+                    _airMove = false;
+                }
+                _velocity.X += (float)gameTime.ElapsedGameTime.TotalSeconds * AIR_RESIST 
+                    * ((_velocity.X > 0) ? -1 : 1);
+                _state = UnitState.FreeFall;
+                _sprite.Animate((int)UnitSpriteState.Jump, gameTime, 5.0f, false);  //jumping animation
+            }
 
             if (_state == UnitState.Drifting)
             {

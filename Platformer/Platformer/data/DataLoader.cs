@@ -40,7 +40,8 @@ namespace Platformer.Data
                         SpriteHeight = (int)sd.Attribute("SpriteHeight"),
                         NumFrames = (int)sd.Attribute("NumFrames"),
                         NumStates = (int)sd.Attribute("NumStates"),
-                        SecondsPerFrame = (float)sd.Attribute("SecondsPerFrame")
+                        SecondsPerFrame = (float)sd.Attribute("SecondsPerFrame"),
+                        Scale = (float)sd.Attribute("Scale")
                     }).ToDictionary(t => t.Key);
         }
 

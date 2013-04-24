@@ -590,6 +590,8 @@ namespace Platformer.Control
                 SpriteView.DrawPickup(sb, p, _viewport.X, _viewport.Y);
             }
 
+            SpriteView.DrawPickup(sb, new Pickup(10,10,new Vector2(600,600), "MachinePistol"), _viewport.X, _viewport.Y);
+
             foreach (Unit u in _enemies)
             {
                 SpriteView.DrawUnit(sb, u, _viewport.X, _viewport.Y);

@@ -53,6 +53,17 @@
         <Property Key="@TileIndex@0@Collision" Type="Boolean"><![CDATA[True]]></Property>
       </Properties>
     </TileSheet>
+    <TileSheet Id="weapons">
+      <Description><![CDATA[]]></Description>
+      <ImageSource><![CDATA[..\TileSheets\weapons.png]]></ImageSource>
+      <Alignment SheetSize="4 x 1" TileSize="32 x 32" Margin="0 x 0" Spacing="0 x 0" />
+      <Properties>
+        <Property Key="@TileIndex@0@PickupType" Type="String"><![CDATA[Revolver]]></Property>
+        <Property Key="@TileIndex@1@PickupType" Type="String"><![CDATA[MachinePistol]]></Property>
+        <Property Key="@TileIndex@2@PickupType" Type="String"><![CDATA[Shotgun]]></Property>
+        <Property Key="@TileIndex@3@PickupType" Type="String"><![CDATA[Rifle]]></Property>
+      </Properties>
+    </TileSheet>
   </TileSheets>
   <Layers>
     <Layer Id="Background" Visible="True">
@@ -15397,7 +15408,9 @@
           <Static Index="0" BlendMode="Alpha" />
           <Static Index="0" BlendMode="Alpha" />
           <Static Index="0" BlendMode="Alpha" />
-          <Static Index="0" BlendMode="Alpha" />
+          <TileSheet Ref="weapons" />
+          <Static Index="3" BlendMode="Alpha" />
+          <TileSheet Ref="Sprint3" />
           <Static Index="0" BlendMode="Alpha" />
           <Static Index="0" BlendMode="Alpha" />
           <Static Index="0" BlendMode="Alpha" />
@@ -15556,7 +15569,9 @@
           <Static Index="0" BlendMode="Alpha" />
           <Static Index="0" BlendMode="Alpha" />
           <Static Index="0" BlendMode="Alpha" />
-          <Static Index="0" BlendMode="Alpha" />
+          <TileSheet Ref="weapons" />
+          <Static Index="1" BlendMode="Alpha" />
+          <TileSheet Ref="Sprint3" />
           <Static Index="0" BlendMode="Alpha" />
           <Static Index="0" BlendMode="Alpha" />
           <Static Index="0" BlendMode="Alpha" />

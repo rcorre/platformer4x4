@@ -217,12 +217,14 @@ namespace Platformer.Control
         private void getPickup(string name, int row, int col)
         {
             _pickups.RemoveAll(t => t.Row == row && t.Col == col);
-            switch (name)
+            if (name == "Coin")
             {
-                case "Coin":
-                    _progressData.NumCoins += 1;
-                    SoundPlayer.playSoundEffects("hihat");
-                    break;
+                _progressData.NumCoins += 1;
+                SoundPlayer.playSoundEffects("hihat");
+            }
+            else
+            {   //must be a weapon
+                _gino.SetWeapon(new Weapon(name, _gino));
             }
         }
 
@@ -589,8 +591,6 @@ namespace Platformer.Control
             {
                 SpriteView.DrawPickup(sb, p, _viewport.X, _viewport.Y);
             }
-
-            SpriteView.DrawPickup(sb, new Pickup(10,10,new Vector2(600,600), "MachinePistol"), _viewport.X, _viewport.Y);
 
             foreach (Unit u in _enemies)
             {

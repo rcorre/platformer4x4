@@ -16,14 +16,6 @@ namespace Platformer.Model
         #endregion
 
         #region static
-        public enum PickupType
-        {
-            Coin,
-            Revolver,
-            MachinePistol,
-            Rifle,
-            Shotgun
-        }
         #endregion
 
         #region properties

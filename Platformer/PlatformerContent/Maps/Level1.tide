@@ -15569,9 +15569,7 @@
           <Static Index="0" BlendMode="Alpha" />
           <Static Index="0" BlendMode="Alpha" />
           <Static Index="0" BlendMode="Alpha" />
-          <TileSheet Ref="weapons" />
-          <Static Index="1" BlendMode="Alpha" />
-          <TileSheet Ref="Sprint3" />
+          <Null Count="1" />
           <Static Index="0" BlendMode="Alpha" />
           <Static Index="0" BlendMode="Alpha" />
           <Static Index="0" BlendMode="Alpha" />
@@ -16679,7 +16677,9 @@
           <Static Index="0" BlendMode="Alpha" />
           <Static Index="0" BlendMode="Alpha" />
           <Static Index="0" BlendMode="Alpha" />
-          <Static Index="0" BlendMode="Alpha" />
+          <TileSheet Ref="weapons" />
+          <Static Index="1" BlendMode="Alpha" />
+          <TileSheet Ref="Sprint3" />
           <Static Index="0" BlendMode="Alpha" />
           <Static Index="0" BlendMode="Alpha" />
           <Static Index="0" BlendMode="Alpha" />

@@ -18,6 +18,10 @@
             NumFrames="4" NumStates="1" SecondsPerFrame="0.15"/>
 <SpriteData Key="Bullet" SpriteWidth="8" SpriteHeight="4" Scale="1"
             NumFrames="1" NumStates="1" SecondsPerFrame="0.15"/>
+<SpriteData Key="Shot" SpriteWidth="16" SpriteHeight="17" Scale="1"
+            NumFrames="1" NumStates="1" SecondsPerFrame="0.15"/>
+<SpriteData Key="shotgun-blast" SpriteWidth="16" SpriteHeight="16" Scale="1"
+            NumFrames="1" NumStates="1" SecondsPerFrame="0.15"/>
 <SpriteData Key="MeleeAnimation" SpriteWidth="48" SpriteHeight="48" Scale="1"
             NumFrames="1" NumStates="1" SecondsPerFrame="0.45"/>
 <SpriteData Key="Revolver" SpriteWidth="196" SpriteHeight="137" Scale="0.2"

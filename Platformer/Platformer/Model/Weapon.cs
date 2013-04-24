@@ -19,6 +19,7 @@ namespace Platformer.Model
         public Vector2 Velocity;
         public int Damage;
         public int DistanceLeft;
+        public bool Piercing;
 
         public void CollideWithObstacle(Direction direction)
         {
@@ -29,7 +30,7 @@ namespace Platformer.Model
             if (unit.State == Unit.UnitState.Dead)
                 return;
 
-            Active = false;
+            Active = Piercing;  //only deactivate if not piercing
             unit.Damage(Damage, (Velocity.X > 0) ? Direction.West : Direction.East);
         }
     }
@@ -43,6 +44,7 @@ namespace Platformer.Model
         public int Ammo;
         public int Damage;
         public int Range;
+        public bool Piercing;
     }
 
     class Weapon
@@ -93,6 +95,7 @@ namespace Platformer.Model
         Vector2 _fireLocation, _fireDirection;
         string _projectileSpriteKey;
         int _range;
+        bool _piercing;
         #endregion
 
         #region constructor
@@ -111,6 +114,7 @@ namespace Platformer.Model
             _ammo = data.Ammo;
             _damage = data.Damage;
             _range = data.Range;
+            _piercing = data.Piercing;
             Name = data.Key;
         }
         #endregion
@@ -142,6 +146,7 @@ namespace Platformer.Model
                     Vector2.Multiply(ref fireDirection, _projectileSpeed, out Projectiles[i].Velocity);
                     Projectiles[i].Position = fireLocation;
                     Projectiles[i].DistanceLeft = _range;
+                    Projectiles[i].Piercing = _piercing;
                     break;
                 }
             }

@@ -17,8 +17,8 @@ namespace Platformer.Model
         public Sprite ProjectileSprite;
         public Vector2 Position;
         public Vector2 Velocity;
-        public int Damage;
-        public int DistanceLeft;
+        public float Damage;
+        public float DamageDrop;  //damage drop per unit moved
         public bool Piercing;
 
         public void CollideWithObstacle(Direction direction)
@@ -31,7 +31,7 @@ namespace Platformer.Model
                 return;
 
             Active = Piercing;  //only deactivate if not piercing
-            unit.Damage(Damage, (Velocity.X > 0) ? Direction.West : Direction.East);
+            unit.Damage((int)Damage, (Velocity.X > 0) ? Direction.West : Direction.East);
         }
     }
 
@@ -71,7 +71,7 @@ namespace Platformer.Model
             {
                 if (Projectiles[i].Active)
                 {
-                    Projectiles[i].Active = Projectiles[i].DistanceLeft > 0;
+                    Projectiles[i].Active = Projectiles[i].Damage > 0;
                     Projectiles[i].ProjectileSprite.Animate(0, gameTime, 1.0f, true);
                 }
             }
@@ -145,7 +145,7 @@ namespace Platformer.Model
                     Projectiles[i].ProjectileSprite = new Sprite(_projectileSpriteKey, fireDirection.X > 0);
                     Vector2.Multiply(ref fireDirection, _projectileSpeed, out Projectiles[i].Velocity);
                     Projectiles[i].Position = fireLocation;
-                    Projectiles[i].DistanceLeft = _range;
+                    Projectiles[i].DamageDrop = Projectiles[i].Damage / (float)_range;
                     Projectiles[i].Piercing = _piercing;
                     break;
                 }

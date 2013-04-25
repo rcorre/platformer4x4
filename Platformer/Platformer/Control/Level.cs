@@ -243,7 +243,7 @@ namespace Platformer.Control
                     if (pxDown != 0)
                         checkVerticalCollision(p, pxDown);
 
-                    p.DistanceLeft -= pxRight;
+                    p.Damage -= pxRight * p.DamageDrop;
 
                     point.X = (int)p.Position.X;
                     point.Y = (int)p.Position.Y;

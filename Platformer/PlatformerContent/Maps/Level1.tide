@@ -15409,7 +15409,7 @@
           <Static Index="0" BlendMode="Alpha" />
           <Static Index="0" BlendMode="Alpha" />
           <TileSheet Ref="weapons" />
-          <Static Index="3" BlendMode="Alpha" />
+          <Static Index="1" BlendMode="Alpha" />
           <TileSheet Ref="Sprint3" />
           <Static Index="0" BlendMode="Alpha" />
           <Static Index="0" BlendMode="Alpha" />
@@ -15590,7 +15590,9 @@
           <Static Index="0" BlendMode="Alpha" />
           <Static Index="0" BlendMode="Alpha" />
           <Static Index="0" BlendMode="Alpha" />
+          <TileSheet Ref="weapons" />
           <Static Index="0" BlendMode="Alpha" />
+          <TileSheet Ref="Sprint3" />
           <Static Index="0" BlendMode="Alpha" />
           <Static Index="0" BlendMode="Alpha" />
           <Static Index="0" BlendMode="Alpha" />
@@ -15740,7 +15742,9 @@
           <Static Index="0" BlendMode="Alpha" />
           <Static Index="0" BlendMode="Alpha" />
           <Static Index="0" BlendMode="Alpha" />
+          <TileSheet Ref="weapons" />
           <Static Index="0" BlendMode="Alpha" />
+          <TileSheet Ref="Sprint3" />
           <Static Index="0" BlendMode="Alpha" />
           <Static Index="0" BlendMode="Alpha" />
           <Static Index="0" BlendMode="Alpha" />
@@ -16678,7 +16682,7 @@
           <Static Index="0" BlendMode="Alpha" />
           <Static Index="0" BlendMode="Alpha" />
           <TileSheet Ref="weapons" />
-          <Static Index="1" BlendMode="Alpha" />
+          <Static Index="2" BlendMode="Alpha" />
           <TileSheet Ref="Sprint3" />
           <Static Index="0" BlendMode="Alpha" />
           <Static Index="0" BlendMode="Alpha" />
@@ -22116,16 +22120,16 @@
           <Static Index="0" BlendMode="Alpha" />
           <Static Index="0" BlendMode="Alpha" />
           <Static Index="0" BlendMode="Alpha" />
-          <Static Index="0" BlendMode="Alpha" />
           <TileSheet Ref="EnemyMarkers" />
           <Static Index="2" BlendMode="Alpha" />
+          <Null Count="1" />
           <TileSheet Ref="Sprint3" />
           <Static Index="0" BlendMode="Alpha" />
           <TileSheet Ref="EnemyMarkers" />
           <Static Index="0" BlendMode="Alpha" />
+          <Null Count="1" />
           <Static Index="2" BlendMode="Alpha" />
           <TileSheet Ref="Sprint3" />
-          <Static Index="0" BlendMode="Alpha" />
           <Static Index="0" BlendMode="Alpha" />
           <Static Index="0" BlendMode="Alpha" />
           <Static Index="0" BlendMode="Alpha" />

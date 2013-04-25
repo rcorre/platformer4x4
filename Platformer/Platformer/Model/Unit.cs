@@ -193,6 +193,9 @@ namespace Platformer.Model
 
         public void Jump()
         {
+            if (_state == UnitState.Dead)
+                return;
+
             if (_state != UnitState.FreeFall)
             {
                 _velocity.Y = -_jumpSpeed;
@@ -224,6 +227,9 @@ namespace Platformer.Model
 
         public virtual void CollideWithObstacle(Direction direction)
         {
+            if (_state == UnitState.Dead)
+                return;
+
             switch (direction)
             {
                 case Direction.South:

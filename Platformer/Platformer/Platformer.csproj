@@ -117,6 +117,7 @@
     <Compile Include="Control\MainMenu.cs" />
     <Compile Include="Control\Overworld.cs" />
     <Compile Include="Control\ProgressData.cs" />
+    <Compile Include="Control\Shop.cs" />
     <Compile Include="Data\DataLoader.cs" />
     <Compile Include="Model\Enemy.cs" />
     <Compile Include="Model\Gino.cs" />
@@ -128,8 +129,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Game1.cs" />
     <Compile Include="View\LevelView.cs" />
+    <Compile Include="View\MainMenuView.cs" />
     <Compile Include="View\MusicPlayer.cs" />
     <Compile Include="View\OverworldView.cs" />
+    <Compile Include="View\ShopView.cs" />
     <Compile Include="View\SoundPlayer.cs" />
     <Compile Include="View\SpriteView.cs" />
     <Compile Include="XnaHelper.cs" />

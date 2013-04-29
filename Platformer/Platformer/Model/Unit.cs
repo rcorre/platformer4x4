@@ -208,7 +208,7 @@ namespace Platformer.Model
             {
                 _velocity.Y = -_jumpSpeed;
                 _state = UnitState.FreeFall;
-                SoundPlayer.playSoundEffects("kick");
+                SoundPlayer.playSoundEffects("bassdrum");
 
             }
         }

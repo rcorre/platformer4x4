@@ -163,7 +163,7 @@ namespace Platformer.Control
                     if (buttonSt[1] == buttonState.down) //******************************************LoadGame********
                     { }
                     if (buttonSt[2] == buttonState.down) //instructions
-                        NewState = new InstructionScreen(graphics);
+                        NewState = new InstructionScreen(graphics, Font1, sprite);
                     if (buttonSt[3] == buttonState.down) //quit
                         _current_state.RequestExit = true;
                 }

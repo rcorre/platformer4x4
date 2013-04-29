@@ -44,7 +44,6 @@ namespace Platformer.Model
         public int Ammo;
         public int Damage;
         public int Range;
-
         public bool Piercing;
     }
 
@@ -96,13 +95,12 @@ namespace Platformer.Model
         Vector2 _fireLocation, _fireDirection;
         string _projectileSpriteKey;
         int _range;
-
         bool _piercing;
         #endregion
 
         #region constructor
         public Weapon(string key, Unit owner)
-            :this(Data[key], owner)
+            : this(Data[key], owner)
         { }
 
         protected Weapon(WeaponData data, Unit owner)
@@ -122,6 +120,16 @@ namespace Platformer.Model
         #endregion
 
         #region methods
+
+        public void addAmmo(int howMuch)
+        {
+            while (howMuch != 0)
+            {
+                _ammo += 8;
+                howMuch--;
+            }
+        }
+
         public void Update(GameTime gameTime)
         {
             if (_tillNextFire > TimeSpan.Zero)
@@ -135,7 +143,7 @@ namespace Platformer.Model
                 return;
             }
 
-            SoundPlayer.playSoundEffects("jumpsnare");
+            SoundPlayer.playSoundEffects("snare");
 
             for (int i = 0; i < Projectiles.Length; i++)
             {
@@ -149,7 +157,6 @@ namespace Platformer.Model
                     Projectiles[i].Position = fireLocation;
                     Projectiles[i].DamageDrop = Projectiles[i].Damage / (float)_range;
                     Projectiles[i].Piercing = _piercing;
-
                     break;
                 }
             }

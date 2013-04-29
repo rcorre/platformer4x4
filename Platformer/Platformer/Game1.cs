@@ -93,19 +93,29 @@ namespace Platformer
             OverworldView.LoadTextures(Content.Load<Texture2D>("Icons/Node"), Content.Load<Texture2D>("Backgrounds/skyline"));
             SpriteView.LoadTextures(Sprite.SpriteDataDict.Keys.ToArray<string>(), Content);
             InstructionScreen.LoadTextures(Content.Load<Texture2D>("Backgrounds/Intructions"));
+
+            MainMenuView.LoadTextures(Content.Load<Texture2D>("Backgrounds/MainMenu"));
+            Texture2D spritem = Content.Load<Texture2D>("spritesheets/MainMenuSprite");
+            //Instructions.LoadTextures(Content.Load<Texture2D>("Backgrounds/Instructions"));
+            Shop.LoadMouse(Content.Load<Texture2D>("Icons/node"));
+            ShopView.LoadFont(Content.Load<SpriteFont>("Fonts/TitleFont"));
+            ShopView.LoadTextures(Content.Load<Texture2D>("Backgrounds/ShopInterface"));
+            ShopView.LoadGuns(Content.Load<Texture2D>("spritesheets/Revolver"),
+                Content.Load<Texture2D>("spritesheets/Rifle"),
+                Content.Load<Texture2D>("spritesheets/Shotgun"),
+                Content.Load<Texture2D>("spritesheets/MachinePistol"));
+            ShopView.LoadGray(Content.Load<Texture2D>("Icons/revolverGray"),
+                Content.Load<Texture2D>("Icons/rifleGray"),
+                Content.Load<Texture2D>("Icons/shotgunGray"),
+                Content.Load<Texture2D>("Icons/uziGray"),
+                Content.Load<Texture2D>("Icons/fedoraGray"));
+            ShopView.LoadArmor(Content.Load<Texture2D>("spritesheets/fedora"));
+            
             //Later: change this in main menu
             //initialize new data if select new game
             //load data if select continue game
 
-            _currentState = new MainMenu(GraphicsDevice, Font1, sprite);
-            //            _currentState = new Overworld(
-            //                new ProgressData()
-            //                {
-            //                    NumCoins = 0,
-            //                    CurrentLevel = 0,
-            //                    LevelCompleted = new bool[Overworld.Nodes.Length]
-            //                }
-            //               );                            ***************************moved to MainMenu
+            _currentState = new MainMenu(GraphicsDevice, Font1, spritem);
         }
 
 

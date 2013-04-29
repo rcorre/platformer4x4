@@ -12,6 +12,9 @@ namespace Platformer.Control
         public int NumCoins;
         public int CurrentLevel;
         public bool[] LevelCompleted;
+        public string shopWeapon;
+        public int addAmmo;
+        public int addHealth;
         Weapon CurrentWeapon;
     }
 }

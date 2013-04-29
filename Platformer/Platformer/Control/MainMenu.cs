@@ -17,11 +17,11 @@ namespace Platformer.Control
     class MainMenu : GameState
     {
         #region static
-        const int numButtons = 3, buttonHeight = 58, buttonWidth = 150, buttonPadding = (Game1.SCREEN_HEIGHT / 10) * 2;
+        const int numButtons = 4, buttonHeight = 58, buttonWidth = 150, buttonPadding = (Game1.SCREEN_HEIGHT / 10);
         enum buttonState { up, down };
-        string[] buttonTxt = { "Start Game", "Instructions", "Quit" };
+        string[] buttonTxt = { "Start Game", "Load Game", "Instructions", "Quit" };
         const int numBullets = 21, bulletHeight = 5, bulletWidth = 10;
-        Rectangle crop = new Rectangle(0, 0, 64, 96);
+        Rectangle crop = new Rectangle(0, 0, 92, 129);
         #endregion
 
         #region fields
@@ -38,7 +38,7 @@ namespace Platformer.Control
         Texture2D[] buttonTexture = new Texture2D[numButtons];
         int buttonXpos = (Game1.SCREEN_WIDTH / 2) - (buttonWidth / 2);
         // buttonYpos might need reworking, its accounting for only 2 buttons
-        int buttonYpos = (Game1.SCREEN_HEIGHT / 2) - (Game1.SCREEN_HEIGHT / 4);
+        int buttonYpos = (Game1.SCREEN_HEIGHT / 2) - (Game1.SCREEN_HEIGHT / 8);
 
         Vector2 stringLength;
         GraphicsDevice graphics;
@@ -152,15 +152,19 @@ namespace Platformer.Control
                             {
                                 NumCoins = 0,
                                 CurrentLevel = 0,
+                                addHealth = 0,
+                                shopWeapon = "Revolver",
+                                addAmmo = 0,
                                 LevelCompleted = new bool[Overworld.Nodes.Length]
                             }
                         );
 
                     }
-                    else if (buttonSt[1] == buttonState.down)
+                    if (buttonSt[1] == buttonState.down) //******************************************LoadGame********
+                    { }
+                    if (buttonSt[2] == buttonState.down) //instructions
                         NewState = new InstructionScreen(graphics);
-
-                    if (buttonSt[2] == buttonState.down) //quit
+                    if (buttonSt[3] == buttonState.down) //quit
                         _current_state.RequestExit = true;
                 }
                 if (inButton(i))
@@ -180,7 +184,7 @@ namespace Platformer.Control
         }
         public override void Draw(SpriteBatch sb)
         {
-            graphics.Clear(Color.Gray);
+            MainMenuView.DrawBackground(sb);
             for (int i = 0; i < numButtons; i++)
             {
                 if (buttonSt[i] == buttonState.down)
@@ -195,11 +199,7 @@ namespace Platformer.Control
                 if (bulletFired[i])
                     sb.Draw(bulletTexture[i], bulletRect[i], bulletColor[i]);
             }
-            string t = "Project Mafia";
-            title.X = Game1.SCREEN_WIDTH / 2 - (Font1.MeasureString(t).X / 2);
-            title.Y = 20;
-            sb.DrawString(Font1, t, title, Color.Red);
-            sb.Draw(sprite, image, crop, Color.White);
+            sb.Draw(sprite, image, crop, Color.White); 
         }
         #endregion
     }

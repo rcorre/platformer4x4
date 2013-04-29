@@ -1,9 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <UnitDatas>
-  <UnitData Key="Gino" HitRectHeight="50" HitRectWidth="36" WalkAcceleration="900" Health="20"
+  <UnitData Key="Gino" HitRectHeight="50" HitRectWidth="36" WalkAcceleration="900" Health="10"
             MaxSpeed="200" JumpSpeed="330" HorizontalDeceleration="220" Gravity="460"/>
-  <UnitData Key="Thug" HitRectHeight="50" HitRectWidth="36" WalkAcceleration="700" Health="20"
+  <UnitData Key="Thug" HitRectHeight="50" HitRectWidth="36" WalkAcceleration="700" Health="10"
             MaxSpeed="80" JumpSpeed="400" HorizontalDeceleration="220" Gravity="500"/>
-  <UnitData Key="Gunner" HitRectHeight="50" HitRectWidth="36" WalkAcceleration="700" Health="20"
+  <UnitData Key="Gunner" HitRectHeight="50" HitRectWidth="36" WalkAcceleration="700" Health="10"
             MaxSpeed="80" JumpSpeed="400" HorizontalDeceleration="220" Gravity="500"/>
 </UnitDatas>

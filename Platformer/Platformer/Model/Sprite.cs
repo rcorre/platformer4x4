@@ -18,6 +18,7 @@ namespace Platformer.Model
             public int SpriteWidth, SpriteHeight;
             public int NumFrames, NumStates;
             public float SecondsPerFrame;
+            public float Scale;
         }
         #endregion
         #region static
@@ -78,7 +79,7 @@ namespace Platformer.Model
             _shade = Color.White;
             _currentFrame = 0;
             _currentState = 0;
-            _scale = 1.0f;
+            _scale = data.Scale;
             _numStates = data.NumStates;
             _framesPerAnimation = data.NumFrames;
 

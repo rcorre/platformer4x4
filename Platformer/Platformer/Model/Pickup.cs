@@ -16,10 +16,6 @@ namespace Platformer.Model
         #endregion
 
         #region static
-        public enum PickupType
-        {
-            Coin
-        }
         #endregion
 
         #region properties

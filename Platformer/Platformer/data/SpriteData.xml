@@ -1,23 +1,35 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <SpriteDatas>
-<SpriteData Key="Gino" SpriteWidth="96" SpriteHeight="96"
+<SpriteData Key="Gino" SpriteWidth="96" SpriteHeight="96" Scale="1"
             NumFrames="3" NumStates="2" SecondsPerFrame="0.3"/>
-<SpriteData Key="Gino-Rifle" SpriteWidth="96" SpriteHeight="64"
+<SpriteData Key="Gino-Rifle" SpriteWidth="96" SpriteHeight="64" Scale="1"
             NumFrames="4" NumStates="4" SecondsPerFrame="0.25"/>
-<SpriteData Key="Gino-Revolver" SpriteWidth="96" SpriteHeight="64"
+<SpriteData Key="Gino-Revolver" SpriteWidth="96" SpriteHeight="64" Scale="1"
             NumFrames="4" NumStates="4" SecondsPerFrame="0.25"/>
-<SpriteData Key="Gino-Shotgun" SpriteWidth="96" SpriteHeight="64"
+<SpriteData Key="Gino-Shotgun" SpriteWidth="96" SpriteHeight="64" Scale="1"
             NumFrames="4" NumStates="3" SecondsPerFrame="0.25"/>
-<SpriteData Key="Gino-MachinePistol" SpriteWidth="96" SpriteHeight="64"
+<SpriteData Key="Gino-MachinePistol" SpriteWidth="96" SpriteHeight="64" Scale="1"
             NumFrames="4" NumStates="3" SecondsPerFrame="0.25"/>
-<SpriteData Key="Thug" SpriteWidth="96" SpriteHeight="64"
+<SpriteData Key="Thug" SpriteWidth="96" SpriteHeight="64" Scale="1"
             NumFrames="4" NumStates="3" SecondsPerFrame="0.4"/>
-<SpriteData Key="Gunner" SpriteWidth="96" SpriteHeight="64"
+<SpriteData Key="Gunner" SpriteWidth="96" SpriteHeight="64" Scale="1"
             NumFrames="4" NumStates="3" SecondsPerFrame="0.4"/>
-<SpriteData Key="Coin" SpriteWidth="32" SpriteHeight="32"
+<SpriteData Key="Coin" SpriteWidth="32" SpriteHeight="32" Scale="1"
             NumFrames="4" NumStates="1" SecondsPerFrame="0.15"/>
-<SpriteData Key="Bullet" SpriteWidth="8" SpriteHeight="4"
+<SpriteData Key="Bullet" SpriteWidth="8" SpriteHeight="4" Scale="1"
             NumFrames="1" NumStates="1" SecondsPerFrame="0.15"/>
-<SpriteData Key="MeleeAnimation" SpriteWidth="48" SpriteHeight="48"
+<SpriteData Key="Shot" SpriteWidth="16" SpriteHeight="17" Scale="1"
+            NumFrames="1" NumStates="1" SecondsPerFrame="0.15"/>
+<SpriteData Key="shotgun-blast" SpriteWidth="16" SpriteHeight="16" Scale="1"
+            NumFrames="1" NumStates="1" SecondsPerFrame="0.15"/>
+<SpriteData Key="MeleeAnimation" SpriteWidth="48" SpriteHeight="48" Scale="1"
+            NumFrames="1" NumStates="1" SecondsPerFrame="0.45"/>
+<SpriteData Key="Revolver" SpriteWidth="196" SpriteHeight="137" Scale="0.2"
+            NumFrames="1" NumStates="1" SecondsPerFrame="0.45"/>
+<SpriteData Key="MachinePistol" SpriteWidth="199" SpriteHeight="211" Scale="0.2"
+            NumFrames="1" NumStates="1" SecondsPerFrame="0.45"/>
+<SpriteData Key="Rifle" SpriteWidth="583" SpriteHeight="181" Scale="0.1"
+            NumFrames="1" NumStates="1" SecondsPerFrame="0.45"/>
+<SpriteData Key="Shotgun" SpriteWidth="583" SpriteHeight="192" Scale="0.1"
             NumFrames="1" NumStates="1" SecondsPerFrame="0.45"/>
 </SpriteDatas>

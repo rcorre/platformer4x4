@@ -145,8 +145,7 @@ namespace Platformer.Control
                     GameState _current_state = this;
 
 
-                    if (buttonSt[0] == buttonState.down)
-                    {//******************************start game
+                    if (buttonSt[0] == buttonState.down) //******************************start game
                         NewState = new Overworld(
                             new ProgressData()
                             {
@@ -156,10 +155,11 @@ namespace Platformer.Control
                             }
                         );
 
-                    }
-                    else if (buttonSt[1] == buttonState.down)
-                        NewState = new InstructionScreen(graphics);
 
+                    if (buttonSt[1] == buttonState.down) //instructions
+                    {
+                        NewState = new InstructionScreen(graphics);
+                    }
                     if (buttonSt[2] == buttonState.down) //quit
                         _current_state.RequestExit = true;
                 }

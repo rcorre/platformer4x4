@@ -68,7 +68,7 @@ namespace Platformer.Control
             _tileMap.LoadTileSheets(MapDisplayDevice);
 
             scanMapLayers();
-            //_instructionScreen = Content.Load
+
             _progressData = progressData;
             _progressData.CurrentLevel = levelNumber;
 
@@ -174,7 +174,7 @@ namespace Platformer.Control
             {
                 SoundPlayer.Update("chinaboy");
             }
-            else if (_progressData.CurrentLevel ==5)
+            else if (_progressData.CurrentLevel == 5)
             {
                 SoundPlayer.Update("younger");
             }
@@ -225,12 +225,14 @@ namespace Platformer.Control
         private void getPickup(string name, int row, int col)
         {
             _pickups.RemoveAll(t => t.Row == row && t.Col == col);
-            switch (name)
+            if (name == "Coin")
             {
-                case "Coin":
-                    _progressData.NumCoins += 1;
-                    SoundPlayer.playSoundEffects("hihatloop");
-                    break;
+                _progressData.NumCoins += 1;
+                SoundPlayer.playSoundEffects("hihatloop");
+            }
+            else
+            {   //must be a weapon
+                _gino.SetWeapon(new Weapon(name, _gino));
             }
         }
 
@@ -249,7 +251,7 @@ namespace Platformer.Control
                     if (pxDown != 0)
                         checkVerticalCollision(p, pxDown);
 
-                    p.DistanceLeft -= pxRight;
+                    p.Damage -= pxRight * p.DamageDrop;
 
                     point.X = (int)p.Position.X;
                     point.Y = (int)p.Position.Y;
@@ -587,7 +589,6 @@ namespace Platformer.Control
             SoundPlayer.StopSound();
             //trigger the end-level sound
             SoundPlayer.playSoundEffects("endgamesound");
-            SoundPlayer.StartSound("rosesdepicardie");
             NewState = new Overworld(_progressData);
         }
 

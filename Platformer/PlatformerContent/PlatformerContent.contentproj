@@ -110,6 +110,11 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Maps\Level1.tide">
+      <Name>Level1</Name>
+      <Importer>TideImporter</Importer>
+      <Processor>TideProcessor</Processor>
+    </Compile>
     <Compile Include="Maps\Level2.tide">
       <Name>Level2</Name>
       <Importer>TideImporter</Importer>
@@ -117,6 +122,16 @@
     </Compile>
     <Compile Include="Maps\Level3.tide">
       <Name>Level3</Name>
+      <Importer>TideImporter</Importer>
+      <Processor>TideProcessor</Processor>
+    </Compile>
+    <Compile Include="Maps\Level4.tide">
+      <Name>Level4</Name>
+      <Importer>TideImporter</Importer>
+      <Processor>TideProcessor</Processor>
+    </Compile>
+    <Compile Include="Maps\Level5.tide">
+      <Name>Level5</Name>
       <Importer>TideImporter</Importer>
       <Processor>TideProcessor</Processor>
     </Compile>
@@ -140,13 +155,6 @@
       <Name>Bullet</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="Maps\Level1.tide">
-      <Name>Level1</Name>
-      <Importer>TideImporter</Importer>
-      <Processor>TideProcessor</Processor>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -181,13 +189,33 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="spritesheets\Gino-Rifle.png">
-      <Name>Gino-Rifle</Name>
+    <Compile Include="TileSheets\Enemy.png">
+      <Name>Enemy</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="spritesheets\Gunner.png">
+      <Name>Gunner</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="spritesheets\Gino-MachinePistol.png">
+      <Name>Gino-MachinePistol</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="spritesheets\Gino-Revolver.png">
+      <Name>Gino-Revolver</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="spritesheets\Gino-Rifle.png">
+      <Name>Gino-Rifle</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
     <Compile Include="spritesheets\Gino-Shotgun.png">
       <Name>Gino-Shotgun</Name>
       <Importer>TextureImporter</Importer>
@@ -195,15 +223,8 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="spritesheets\Gino-Revolver.png">
-      <Name>Gino-Revolver</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="spritesheets\Gino-MachinePistol.png">
-      <Name>Gino-MachinePistol</Name>
+    <Compile Include="spritesheets\MeleeAnimation.bmp">
+      <Name>MeleeAnimation</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
@@ -216,8 +237,15 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="spritesheets\MeleeAnimation.bmp">
-      <Name>MeleeAnimation</Name>
+    <Compile Include="TileSheets\sprint3TileSheet.png">
+      <Name>sprint3TileSheet</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Backgrounds\Intructions.png">
+      <Name>Intructions</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>

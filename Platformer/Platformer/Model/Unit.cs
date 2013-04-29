@@ -14,6 +14,7 @@ namespace Platformer.Model
         const float DIE_TIME = 2;
         const float AIR_RESIST= 30;
         const float DAMAGE_BOUNCE_FACTOR = 50;
+        const float AIR_MOVE_FACTOR = 0.5f;
         #endregion
 
         #region classes
@@ -43,9 +44,10 @@ namespace Platformer.Model
             Jumping,
             FreeFall,
             Dead,
+            Attacking   //use only for enemies, not gino
         }
 
-        enum UnitSpriteState
+        protected enum UnitSpriteState
         {
             Run,
             Shoot,
@@ -66,8 +68,10 @@ namespace Platformer.Model
         float _health;      //how much damage unit can take
         Rectangle _hitRect; //for hit detection. Likely smaller than sprite
         Sprite _sprite;     //contains drawing information to be passed to SpriteView in Level.cs
-        UnitState _state;   //current state of unit
+        protected UnitState _state;   //current state of unit
         TimeSpan _timer;
+        bool _airMove;    //use for moving in air
+        Direction _airMoveDirection;    //use for moving in air
         #endregion
 
         #region properties
@@ -179,6 +183,12 @@ namespace Platformer.Model
                 }
                 _sprite.FacingRight = (direction == Direction.East);
             }
+            else
+            {
+                _airMove = true;
+                _airMoveDirection = direction;
+                _sprite.FacingRight = (direction == Direction.East);
+            }
         }
 
         public void Jump()
@@ -187,8 +197,8 @@ namespace Platformer.Model
             {
                 _velocity.Y = -_jumpSpeed;
                 _state = UnitState.FreeFall;
-                SoundPlayer.playSoundEffects("kick");
-           
+                SoundPlayer.playSoundEffects("bassdrum");
+             
             }
         }
 
@@ -240,24 +250,29 @@ namespace Platformer.Model
 
         public virtual void Update(GameTime gameTime, bool onGround)
         {
-            if (!onGround)
-            {
-                _velocity.Y += _gravity * (float)gameTime.ElapsedGameTime.TotalSeconds;
-                _velocity.X += (float)gameTime.ElapsedGameTime.TotalSeconds * AIR_RESIST 
-                    * ((_velocity.X > 0) ? -1 : 1);
-                _state = UnitState.FreeFall;
-                _sprite.Animate((int)UnitSpriteState.Jump, gameTime, 5.0f, false);  //jumping animation
-            }
-
             if (_state == UnitState.Dead)
             {
                 _timer -= gameTime.ElapsedGameTime;
                 _sprite.Shade = Color.Lerp(Color.Transparent, Color.White, (float)_timer.TotalSeconds / DIE_TIME);
                 _sprite.Animate((int)UnitSpriteState.Die, gameTime, 1.0f, false);
                 _velocity.X = 0;
-                //TODO: add dying animation
+                return;     //do nothing else
             }
 
+            if (!onGround)
+            {
+                _velocity.Y += _gravity * (float)gameTime.ElapsedGameTime.TotalSeconds;
+                if (_airMove)
+                {
+                    _velocity.X += _walkAcceleration * (float)gameTime.ElapsedGameTime.TotalSeconds *
+                        ((_airMoveDirection == Direction.East) ? 1 : -1) * AIR_MOVE_FACTOR;
+                    _airMove = false;
+                }
+                _velocity.X += (float)gameTime.ElapsedGameTime.TotalSeconds * AIR_RESIST 
+                    * ((_velocity.X > 0) ? -1 : 1);
+                _state = UnitState.FreeFall;
+                _sprite.Animate((int)UnitSpriteState.Jump, gameTime, 5.0f, false);  //jumping animation
+            }
 
             if (_state == UnitState.Drifting)
             {
@@ -282,6 +297,11 @@ namespace Platformer.Model
                     * ((_sprite.FacingRight) ? 1 : -1);     //increase velocity in run direction
                 _state = UnitState.Drifting;
                 _sprite.Animate((int)UnitSpriteState.Run, gameTime, Math.Abs(_velocity.X) / _maxSpeed, true);  //running animation
+            }
+
+            if (_state == UnitState.Attacking)
+            {   //for enemies only (not gino)
+                _sprite.Animate((int)UnitSpriteState.Shoot, gameTime, 2.0f, true);  //attacking animation
             }
 
 

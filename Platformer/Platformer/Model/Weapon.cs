@@ -118,23 +118,21 @@ namespace Platformer.Model
         #region methods
         public void Update(GameTime gameTime)
         {
-            
             if (_tillNextFire > TimeSpan.Zero)
                 _tillNextFire -= gameTime.ElapsedGameTime;
         }
 
         public void Fire(Vector2 fireLocation, Vector2 fireDirection)
         {
-            
             if (_tillNextFire > TimeSpan.Zero || _ammo <= 0)
             {
-                
                 return;
             }
 
+            SoundPlayer.playSoundEffects("jumpsnare");
+
             for (int i = 0; i < Projectiles.Length; i++)
             {
-                SoundPlayer.playSoundEffects("snare");
                 if (!Projectiles[i].Active)
                 {
                     Projectiles[i].Active = true;
@@ -144,7 +142,6 @@ namespace Platformer.Model
                     Vector2.Multiply(ref fireDirection, _projectileSpeed, out Projectiles[i].Velocity);
                     Projectiles[i].Position = fireLocation;
                     Projectiles[i].DistanceLeft = _range;
-                    
                     break;
                 }
             }

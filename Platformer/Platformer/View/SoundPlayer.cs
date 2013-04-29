@@ -42,8 +42,6 @@ namespace Platformer.View
             Audio = new AudioEngine("Content//new.xgs");
             Waves = new WaveBank(Audio, "Content//Wave Bank.xwb");
             tracks = new SoundBank(Audio, "Content//Sound Bank.xsb");
-
-
         }
 
         /// <summary>
@@ -71,8 +69,6 @@ namespace Platformer.View
         {
             soundEffect = tracks.GetCue(soundID);
             soundEffect.Play();
-
-
         }
 
 
@@ -81,6 +77,9 @@ namespace Platformer.View
         /// </summary>
         public static void StopSound()
         {
+            if (currentSong == null)
+                return;
+
             currentSong.Stop(AudioStopOptions.Immediate);
             currentSong.Dispose();
             currentSong = null;

@@ -101,7 +101,7 @@ namespace Platformer.Control
 
         private void fireBullet(Vector2 image)
         {
-            SoundPlayer.playSoundEffects("snare");
+            SoundPlayer.playSoundEffects("jumpsnare");
             bool found = false;
             int i = 0;
             while (!found)
@@ -154,10 +154,9 @@ namespace Platformer.Control
                                 LevelCompleted = new bool[Overworld.Nodes.Length]
                             }
                         );
+                    else if(buttonSt[1]==buttonState.down)
+                        NewState = new InstructionScreen(graphics);
 
-
-                    if (buttonSt[1] == buttonState.down) //instructions
-                        ;
                     if (buttonSt[2] == buttonState.down) //quit
                         _current_state.RequestExit = true;
                 }

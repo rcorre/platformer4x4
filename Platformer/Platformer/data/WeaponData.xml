@@ -1,10 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <WeaponDatas>
-<<<<<<< HEAD
   <WeaponData Key="Rifle" ProjectileSpriteKey="Bullet" ProjectileSpeed="800" FireRate="1" Ammo="5" Damage="20" Range="1200"/>
   <WeaponData Key="Revolver" ProjectileSpriteKey="Bullet" ProjectileSpeed="800" FireRate="2" Ammo="6" Damage="12" Range="800" />
-  <WeaponData Key="MachinePistol" ProjectileSpriteKey="Bullet" ProjectileSpeed="800" FireRate="8" Ammo="30" Damage="9" Range="500" />
+  <WeaponData Key="MachinePistol" ProjectileSpriteKey="Bullet" ProjectileSpeed="800" FireRate="8" Ammo="30" Damage="10" Range="500" />
   <WeaponData Key="Shotgun" ProjectileSpriteKey="Shot" ProjectileSpeed="800" FireRate="1.5" Ammo="8" Damage="20" Range="300" Piercing="true" />
-  <WeaponData Key="Knuckles" ProjectileSpriteKey="MeleeAnimation" ProjectileSpeed="1200" FireRate="1" Ammo="40" Damage="3" Range="100"/>
+  <WeaponData Key="Knuckles" ProjectileSpriteKey="MeleeAnimation" ProjectileSpeed="1200" FireRate="1" Ammo="40" Damage="3" Range="30"/>
   <WeaponData Key="EnemyRifle" ProjectileSpriteKey="Bullet" ProjectileSpeed="400" FireRate="1" Ammo="30" Damage="4" Range="800"/>
 </WeaponDatas>

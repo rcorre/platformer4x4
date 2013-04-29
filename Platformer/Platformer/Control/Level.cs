@@ -224,10 +224,12 @@ namespace Platformer.Control
 
         private void getPickup(string name, int row, int col)
         {
+            if (_pickups.Count(t => t.Row == row && t.Col == col) == 0)
+                return;
+
             _pickups.RemoveAll(t => t.Row == row && t.Col == col);
             if (name == "Coin")
             {
-
                 _progressData.NumCoins += 1;
                 SoundPlayer.playSoundEffects("hihatloop");
             }
@@ -336,7 +338,6 @@ namespace Platformer.Control
                         {
                             getPickup(_pickupLayer.Tiles[col, row].TileIndexProperties["PickupType"], row, col);
                         }
-                        _pickupLayer.Tiles[col, row] = null;
                     }
                     //check boundary collision for enemies
                     if (_enemyLayer.IsValidTileLocation(col, row))
@@ -408,7 +409,6 @@ namespace Platformer.Control
                         {
                             getPickup(_pickupLayer.Tiles[col, row].TileIndexProperties["PickupType"], row, col);
                         }
-                        _pickupLayer.Tiles[col, row] = null;
                     }
 
                     if (_collisionLayer.Tiles[col, row] != null && _collisionLayer.Tiles[col, row].TileIndex != 0)
@@ -600,7 +600,10 @@ namespace Platformer.Control
             _tileMap.Draw(MapDisplayDevice, _viewport);
             foreach (Pickup p in _pickups)
             {
-                SpriteView.DrawPickup(sb, p, _viewport.X, _viewport.Y);
+                if (p.Active)
+                {
+                    SpriteView.DrawPickup(sb, p, _viewport.X, _viewport.Y);
+                }
             }
 
             foreach (Unit u in _enemies)
@@ -613,9 +616,6 @@ namespace Platformer.Control
             foreach (Projectile p in Weapon.Projectiles)
                 SpriteView.DrawProjectile(sb, p, _viewport.X, _viewport.Y);
 
-            //debug
-            XnaHelper.DisplayValue(sb, "Velocity", _gino.Velocity.X.ToString(),
-                new Rectangle(500, 100, 100, 20), Color.Black);
             XnaHelper.DisplayValue(sb, "Coins", _progressData.NumCoins.ToString(),
                 new Rectangle(300, 100, 100, 20), Color.Black);
             // SpriteView.DrawUnit(sb, _enemies[0], _viewport.X, _viewport.Y);

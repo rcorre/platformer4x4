@@ -59,6 +59,17 @@
         <Property Key="@TileIndex@2@Name" Type="String"><![CDATA[Bound]]></Property>
       </Properties>
     </TileSheet>
+    <TileSheet Id="weapons">
+      <Description><![CDATA[]]></Description>
+      <ImageSource><![CDATA[..\TileSheets\weapons.png]]></ImageSource>
+      <Alignment SheetSize="4 x 1" TileSize="32 x 32" Margin="0 x 0" Spacing="0 x 0" />
+      <Properties>
+        <Property Key="@TileIndex@0@PickupType" Type="String"><![CDATA[Revolver]]></Property>
+        <Property Key="@TileIndex@1@PickupType" Type="String"><![CDATA[MachinePistol]]></Property>
+        <Property Key="@TileIndex@2@PickupType" Type="String"><![CDATA[Shotgun]]></Property>
+        <Property Key="@TileIndex@3@PickupType" Type="String"><![CDATA[Rifle]]></Property>
+      </Properties>
+    </TileSheet>
   </TileSheets>
   <Layers>
     <Layer Id="Background" Visible="True">
@@ -4673,7 +4684,10 @@
           <Null Count="44" />
           <Static Index="0" BlendMode="Alpha" />
           <Static Index="0" BlendMode="Alpha" />
-          <Null Count="52" />
+          <TileSheet Ref="weapons" />
+          <Static Index="2" BlendMode="Alpha" />
+          <Null Count="51" />
+          <TileSheet Ref="coin" />
           <Static Index="0" BlendMode="Alpha" />
           <Static Index="0" BlendMode="Alpha" />
           <Static Index="0" BlendMode="Alpha" />
@@ -4691,7 +4705,11 @@
           <Static Index="0" BlendMode="Alpha" />
           <Null Count="18" />
           <Static Index="0" BlendMode="Alpha" />
-          <Null Count="51" />
+          <Null Count="22" />
+          <TileSheet Ref="weapons" />
+          <Static Index="3" BlendMode="Alpha" />
+          <Null Count="28" />
+          <TileSheet Ref="coin" />
           <Static Index="0" BlendMode="Alpha" />
           <Null Count="2" />
           <Static Index="0" BlendMode="Alpha" />
@@ -4700,7 +4718,11 @@
           <Null Count="7" />
         </Row>
         <Row>
-          <Null Count="73" />
+          <Null Count="6" />
+          <TileSheet Ref="weapons" />
+          <Static Index="0" BlendMode="Alpha" />
+          <Null Count="66" />
+          <TileSheet Ref="coin" />
           <Static Index="0" BlendMode="Alpha" />
           <Static Index="0" BlendMode="Alpha" />
           <Static Index="0" BlendMode="Alpha" />
@@ -4779,104 +4801,107 @@
           <Null Count="125" />
         </Row>
         <Row>
-          <Null Count="16" />
+          <Null Count="15" />
           <TileSheet Ref="thugmoney" />
           <Static Index="2" BlendMode="Alpha" />
+          <Null Count="1" />
           <Static Index="1" BlendMode="Alpha" />
+          <Null Count="1" />
+          <Static Index="2" BlendMode="Alpha" />
+          <Null Count="12" />
+          <TileSheet Ref="Level1Sheet" />
+          <Static Index="0" BlendMode="Alpha" />
+          <Null Count="92" />
+        </Row>
+        <Row>
+          <Null Count="27" />
+          <TileSheet Ref="thugmoney" />
+          <Static Index="2" BlendMode="Alpha" />
+          <Null Count="2" />
+          <Static Index="1" BlendMode="Alpha" />
+          <Null Count="2" />
+          <Static Index="2" BlendMode="Alpha" />
+          <Null Count="91" />
+        </Row>
+        <Row>
+          <Null Count="14" />
+          <TileSheet Ref="Level1Sheet" />
+          <Static Index="0" BlendMode="Alpha" />
+          <Null Count="19" />
+          <TileSheet Ref="thugmoney" />
+          <Static Index="2" BlendMode="Alpha" />
+          <Null Count="1" />
+          <Static Index="1" BlendMode="Alpha" />
+          <Null Count="1" />
           <Static Index="2" BlendMode="Alpha" />
           <Null Count="13" />
-          <TileSheet Ref="Level1Sheet" />
+          <Static Index="2" BlendMode="Alpha" />
+          <Null Count="2" />
           <Static Index="0" BlendMode="Alpha" />
-          <Null Count="92" />
+          <Null Count="2" />
+          <Static Index="2" BlendMode="Alpha" />
+          <Null Count="66" />
         </Row>
         <Row>
-          <Null Count="28" />
-          <TileSheet Ref="thugmoney" />
+          <Null Count="96" />
           <Static Index="2" BlendMode="Alpha" />
-          <Null Count="1" />
+          <Null Count="2" />
           <Static Index="1" BlendMode="Alpha" />
-          <Null Count="1" />
+          <Null Count="2" />
           <Static Index="2" BlendMode="Alpha" />
-          <Null Count="92" />
-        </Row>
-        <Row>
-          <Null Count="14" />
-          <TileSheet Ref="Level1Sheet" />
-          <Static Index="0" BlendMode="Alpha" />
-          <Null Count="20" />
-          <TileSheet Ref="thugmoney" />
-          <Static Index="2" BlendMode="Alpha" />
-          <Static Index="1" BlendMode="Alpha" />
-          <Static Index="2" BlendMode="Alpha" />
-          <TileSheet Ref="Level1Sheet" />
-          <Static Index="0" BlendMode="Alpha" />
-          <Null Count="14" />
-          <TileSheet Ref="thugmoney" />
-          <Static Index="2" BlendMode="Alpha" />
-          <Null Count="1" />
-          <Static Index="0" BlendMode="Alpha" />
-          <Null Count="1" />
-          <Static Index="2" BlendMode="Alpha" />
-          <Null Count="67" />
-        </Row>
-        <Row>
-          <Null Count="97" />
-          <Static Index="2" BlendMode="Alpha" />
-          <Null Count="1" />
-          <Static Index="1" BlendMode="Alpha" />
-          <Null Count="1" />
-          <Static Index="2" BlendMode="Alpha" />
-          <Null Count="23" />
+          <Null Count="22" />
         </Row>
         <Row>
           <Null Count="10" />
           <TileSheet Ref="Level1Sheet" />
           <Static Index="0" BlendMode="Alpha" />
-          <Null Count="4" />
+          <Null Count="3" />
           <TileSheet Ref="thugmoney" />
           <Static Index="2" BlendMode="Alpha" />
-          <Null Count="1" />
+          <Null Count="2" />
           <Static Index="1" BlendMode="Alpha" />
-          <Static Index="2" BlendMode="Alpha" />
-          <Null Count="90" />
-          <Static Index="2" BlendMode="Alpha" />
           <Null Count="1" />
+          <Static Index="2" BlendMode="Alpha" />
+          <Null Count="88" />
+          <Static Index="2" BlendMode="Alpha" />
+          <Null Count="2" />
           <Static Index="1" BlendMode="Alpha" />
           <Null Count="3" />
           <Static Index="1" BlendMode="Alpha" />
-          <Null Count="2" />
+          <Null Count="3" />
           <Static Index="2" BlendMode="Alpha" />
-          <Null Count="6" />
+          <Null Count="5" />
         </Row>
         <Row>
           <Null Count="62" />
           <TileSheet Ref="Level1Sheet" />
           <Static Index="0" BlendMode="Alpha" />
-          <Null Count="27" />
+          <Null Count="26" />
           <TileSheet Ref="thugmoney" />
+          <Static Index="2" BlendMode="Alpha" />
+          <Null Count="3" />
+          <Static Index="0" BlendMode="Alpha" />
+          <Null Count="1" />
+          <Static Index="2" BlendMode="Alpha" />
+          <Null Count="29" />
+        </Row>
+        <Row>
+          <Null Count="62" />
           <Static Index="2" BlendMode="Alpha" />
           <Null Count="2" />
           <Static Index="0" BlendMode="Alpha" />
+          <Null Count="2" />
           <Static Index="2" BlendMode="Alpha" />
-          <Null Count="30" />
+          <Null Count="56" />
         </Row>
         <Row>
-          <Null Count="63" />
+          <Null Count="67" />
           <Static Index="2" BlendMode="Alpha" />
-          <Null Count="1" />
+          <Null Count="2" />
           <Static Index="0" BlendMode="Alpha" />
-          <Null Count="1" />
+          <Null Count="2" />
           <Static Index="2" BlendMode="Alpha" />
-          <Null Count="57" />
-        </Row>
-        <Row>
-          <Null Count="68" />
-          <Static Index="2" BlendMode="Alpha" />
-          <Null Count="1" />
-          <Static Index="0" BlendMode="Alpha" />
-          <Null Count="1" />
-          <Static Index="2" BlendMode="Alpha" />
-          <Null Count="52" />
+          <Null Count="51" />
         </Row>
         <Row>
           <Null Count="125" />

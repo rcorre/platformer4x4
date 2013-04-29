@@ -59,6 +59,17 @@
         <Property Key="@TileIndex@2@Name" Type="String"><![CDATA[Bound]]></Property>
       </Properties>
     </TileSheet>
+    <TileSheet Id="weapons">
+      <Description><![CDATA[]]></Description>
+      <ImageSource><![CDATA[..\TileSheets\weapons.png]]></ImageSource>
+      <Alignment SheetSize="4 x 1" TileSize="32 x 32" Margin="0 x 0" Spacing="0 x 0" />
+      <Properties>
+        <Property Key="@TileIndex@0@PickupType" Type="String"><![CDATA[Revolver]]></Property>
+        <Property Key="@TileIndex@1@PickupType" Type="String"><![CDATA[MachinePistol]]></Property>
+        <Property Key="@TileIndex@2@PickupType" Type="String"><![CDATA[Shotgun]]></Property>
+        <Property Key="@TileIndex@3@PickupType" Type="String"><![CDATA[Rifle]]></Property>
+      </Properties>
+    </TileSheet>
   </TileSheets>
   <Layers>
     <Layer Id="Background" Visible="True">
@@ -6247,7 +6258,10 @@
           <Static Index="0" BlendMode="Alpha" />
           <Null Count="26" />
           <Static Index="0" BlendMode="Alpha" />
-          <Null Count="27" />
+          <TileSheet Ref="weapons" />
+          <Static Index="3" BlendMode="Alpha" />
+          <Null Count="26" />
+          <TileSheet Ref="coin" />
           <Static Index="0" BlendMode="Alpha" />
           <Null Count="1" />
           <Static Index="0" BlendMode="Alpha" />
@@ -6287,10 +6301,14 @@
           <Static Index="0" BlendMode="Alpha" />
           <Static Index="0" BlendMode="Alpha" />
           <Static Index="0" BlendMode="Alpha" />
-          <Null Count="90" />
+          <Null Count="42" />
+          <TileSheet Ref="weapons" />
+          <Static Index="3" BlendMode="Alpha" />
+          <Null Count="47" />
         </Row>
         <Row>
           <Null Count="12" />
+          <TileSheet Ref="coin" />
           <Static Index="0" BlendMode="Alpha" />
           <Null Count="137" />
         </Row>
@@ -6356,43 +6374,43 @@
           <Null Count="150" />
         </Row>
         <Row>
-          <Null Count="7" />
+          <Null Count="6" />
           <TileSheet Ref="untitled tile sheet" />
           <Static Index="2" BlendMode="Alpha" />
-          <Null Count="2" />
-          <Static Index="0" BlendMode="Alpha" />
-          <Static Index="2" BlendMode="Alpha" />
-          <Null Count="53" />
-          <Static Index="2" BlendMode="Alpha" />
-          <Null Count="4" />
-          <Static Index="1" BlendMode="Alpha" />
           <Null Count="3" />
+          <Static Index="0" BlendMode="Alpha" />
+          <Null Count="1" />
           <Static Index="2" BlendMode="Alpha" />
-          <Null Count="75" />
+          <Null Count="51" />
+          <Static Index="2" BlendMode="Alpha" />
+          <Null Count="5" />
+          <Static Index="1" BlendMode="Alpha" />
+          <Null Count="4" />
+          <Static Index="2" BlendMode="Alpha" />
+          <Null Count="74" />
         </Row>
         <Row>
-          <Null Count="14" />
-          <Static Index="2" BlendMode="Alpha" />
-          <Static Index="1" BlendMode="Alpha" />
-          <Null Count="2" />
-          <Static Index="2" BlendMode="Alpha" />
-          <Null Count="62" />
+          <Null Count="13" />
           <Static Index="2" BlendMode="Alpha" />
           <Null Count="1" />
           <Static Index="1" BlendMode="Alpha" />
-          <Null Count="1" />
+          <Null Count="3" />
+          <Static Index="2" BlendMode="Alpha" />
+          <Null Count="60" />
           <Static Index="2" BlendMode="Alpha" />
           <Null Count="2" />
-          <Static Index="0" BlendMode="Alpha" />
-          <Null Count="1" />
-          <Static Index="2" BlendMode="Alpha" />
-          <Null Count="3" />
-          <Static Index="0" BlendMode="Alpha" />
-          <Null Count="3" />
-          <Static Index="2" BlendMode="Alpha" />
-          <Null Count="19" />
-          <Static Index="2" BlendMode="Alpha" />
+          <Static Index="1" BlendMode="Alpha" />
           <Null Count="4" />
+          <Static Index="0" BlendMode="Alpha" />
+          <Null Count="1" />
+          <Static Index="2" BlendMode="Alpha" />
+          <Null Count="3" />
+          <Static Index="0" BlendMode="Alpha" />
+          <Null Count="4" />
+          <Static Index="2" BlendMode="Alpha" />
+          <Null Count="17" />
+          <Static Index="2" BlendMode="Alpha" />
+          <Null Count="5" />
           <Static Index="1" BlendMode="Alpha" />
           <Null Count="5" />
           <Static Index="0" BlendMode="Alpha" />
@@ -6400,9 +6418,9 @@
           <Static Index="1" BlendMode="Alpha" />
           <Null Count="3" />
           <Static Index="0" BlendMode="Alpha" />
-          <Null Count="2" />
+          <Null Count="8" />
           <Static Index="2" BlendMode="Alpha" />
-          <Null Count="7" />
+          <Null Count="1" />
         </Row>
         <Row>
           <Null Count="150" />

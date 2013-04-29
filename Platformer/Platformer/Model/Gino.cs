@@ -46,6 +46,16 @@ namespace Platformer.Model
         #endregion
 
         #region methods
+        public void addHealth(int health)
+        {
+            base.addHealth(health);
+        }
+
+        public void addAmmo(int howMuch)
+        {
+            EquippedWeapon.addAmmo(howMuch);
+        }
+
         public void SetWeapon(Weapon weapon)
         {
             EquippedWeapon = weapon;

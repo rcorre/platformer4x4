@@ -143,7 +143,7 @@ namespace Platformer.Model
                 return;
             }
 
-            SoundPlayer.playSoundEffects("snare");
+            SoundPlayer.playSoundEffects("jumpsnare");
 
             for (int i = 0; i < Projectiles.Length; i++)
             {

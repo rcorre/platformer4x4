@@ -90,7 +90,7 @@ namespace Platformer
             //initialize weapon data
             Weapon.Data = DataLoader.LoadWeaponData();
             Overworld.Nodes = DataLoader.LoadOverworldData();
-            OverworldView.LoadTextures(Content.Load<Texture2D>("Icons/Node"), Content.Load<Texture2D>("Backgrounds/skyline"));
+            OverworldView.LoadTextures(Content.Load<Texture2D>("Icons/Node"), Content.Load<Texture2D>("Backgrounds/OverworldMap"));
             SpriteView.LoadTextures(Sprite.SpriteDataDict.Keys.ToArray<string>(), Content);
             InstructionScreen.LoadTextures(Content.Load<Texture2D>("Backgrounds/Intructions"));
 

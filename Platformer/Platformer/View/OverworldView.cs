@@ -26,6 +26,8 @@ namespace Platformer.View
             selectedColor = Color.AliceBlue;
         }
         static Vector2 tempVec;
+        static Vector2 pos1 = new Vector2(910, 557);
+        static Vector2 pos2 = new Vector2(1085, 557);
         #endregion
 
         #region fields
@@ -49,6 +51,11 @@ namespace Platformer.View
         public static void DrawBackground(SpriteBatch sb)
         {
             sb.Draw(backgroundTexture, Vector2.Zero, Color.White);
+        }
+        public static void DrawLabels(SpriteBatch sb)
+        {
+            sb.DrawString(XnaHelper.Font, "Shop", pos1, Color.Black);
+            sb.DrawString(XnaHelper.Font, "Exit", pos2, Color.Black);
         }
         #endregion
     }

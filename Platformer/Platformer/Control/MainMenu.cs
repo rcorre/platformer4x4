@@ -58,6 +58,7 @@ namespace Platformer.Control
         public MainMenu(GraphicsDevice g, SpriteFont f, Texture2D s)
         {
             SoundPlayer.Initialize();
+            SoundPlayer.StartSound("rosesdepicardie");
             graphics = g;
             Font1 = f;
             sprite = s;
@@ -100,7 +101,7 @@ namespace Platformer.Control
 
         private void fireBullet(Vector2 image)
         {
-            SoundPlayer.playSoundEffects("snare");
+            SoundPlayer.playSoundEffects("jumpsnare");
             bool found = false;
             int i = 0;
             while (!found)
@@ -144,7 +145,8 @@ namespace Platformer.Control
                     GameState _current_state = this;
 
 
-                    if (buttonSt[0] == buttonState.down) //******************************start game
+                    if (buttonSt[0] == buttonState.down)
+                    {//******************************start game
                         NewState = new Overworld(
                             new ProgressData()
                             {
@@ -154,9 +156,10 @@ namespace Platformer.Control
                             }
                         );
 
+                    }
+                    else if (buttonSt[1] == buttonState.down)
+                        NewState = new InstructionScreen(graphics);
 
-                    if (buttonSt[1] == buttonState.down) //instructions
-                        ;
                     if (buttonSt[2] == buttonState.down) //quit
                         _current_state.RequestExit = true;
                 }

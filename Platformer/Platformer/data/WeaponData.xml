@@ -1,5 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <WeaponDatas>
+<<<<<<< HEAD
   <WeaponData Key="Rifle" ProjectileSpriteKey="Bullet" ProjectileSpeed="800" FireRate="1" Ammo="5" Damage="20" Range="1200"/>
   <WeaponData Key="Revolver" ProjectileSpriteKey="Bullet" ProjectileSpeed="800" FireRate="2" Ammo="6" Damage="12" Range="800" />
   <WeaponData Key="MachinePistol" ProjectileSpriteKey="Bullet" ProjectileSpeed="800" FireRate="8" Ammo="30" Damage="9" Range="500" />

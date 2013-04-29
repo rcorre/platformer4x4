@@ -68,7 +68,7 @@ namespace Platformer.Control
             _tileMap.LoadTileSheets(MapDisplayDevice);
 
             scanMapLayers();
-
+            //_instructionScreen = Content.Load
             _progressData = progressData;
             _progressData.CurrentLevel = levelNumber;
 
@@ -156,19 +156,27 @@ namespace Platformer.Control
         {
             if (_progressData.CurrentLevel == 0)
             {
-                SoundPlayer.Update("testsong");
+                SoundPlayer.Update("howhighthemoon");
             }
             else if (_progressData.CurrentLevel == 1)
             {
-                SoundPlayer.Update("SLOWDRUM");// these are 24-bit .wav PCMs
+                SoundPlayer.Update("djangostiger");// these are 24-bit .wav PCMs
             }
             else if (_progressData.CurrentLevel == 2)
             {
-                SoundPlayer.Update("shuffledrum");
+                SoundPlayer.Update("sweetsue");
             }
             else if (_progressData.CurrentLevel == 3)
             {
-                SoundPlayer.Update("testsong");
+                SoundPlayer.Update("shine");
+            }
+            else if (_progressData.CurrentLevel == 4)
+            {
+                SoundPlayer.Update("chinaboy");
+            }
+            else if (_progressData.CurrentLevel ==5)
+            {
+                SoundPlayer.Update("younger");
             }
             handleInput(input);
             foreach (Pickup p in _pickups)
@@ -219,8 +227,9 @@ namespace Platformer.Control
             _pickups.RemoveAll(t => t.Row == row && t.Col == col);
             if (name == "Coin")
             {
+
                 _progressData.NumCoins += 1;
-                SoundPlayer.playSoundEffects("hihat");
+                SoundPlayer.playSoundEffects("hihatloop");
             }
             else
             {   //must be a weapon
@@ -244,7 +253,6 @@ namespace Platformer.Control
                         checkVerticalCollision(p, pxDown);
 
                     p.Damage -= pxRight * p.DamageDrop;
-
                     point.X = (int)p.Position.X;
                     point.Y = (int)p.Position.Y;
 
@@ -580,7 +588,10 @@ namespace Platformer.Control
             Data.DataLoader.SaveProgress(_progressData);
             SoundPlayer.StopSound();
             //trigger the end-level sound
-            SoundPlayer.playSoundEffects("Transform");
+
+            SoundPlayer.playSoundEffects("endgamesound");
+            SoundPlayer.StartSound("rosesdepicardie");
+
             NewState = new Overworld(_progressData);
         }
 

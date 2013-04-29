@@ -44,6 +44,7 @@ namespace Platformer.Model
         public int Ammo;
         public int Damage;
         public int Range;
+
         public bool Piercing;
     }
 
@@ -95,6 +96,7 @@ namespace Platformer.Model
         Vector2 _fireLocation, _fireDirection;
         string _projectileSpriteKey;
         int _range;
+
         bool _piercing;
         #endregion
 
@@ -133,7 +135,7 @@ namespace Platformer.Model
                 return;
             }
 
-            SoundPlayer.playSoundEffects("snare");
+            SoundPlayer.playSoundEffects("jumpsnare");
 
             for (int i = 0; i < Projectiles.Length; i++)
             {
@@ -147,6 +149,7 @@ namespace Platformer.Model
                     Projectiles[i].Position = fireLocation;
                     Projectiles[i].DamageDrop = Projectiles[i].Damage / (float)_range;
                     Projectiles[i].Piercing = _piercing;
+
                     break;
                 }
             }

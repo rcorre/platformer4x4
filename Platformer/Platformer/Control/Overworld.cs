@@ -39,7 +39,7 @@ namespace Platformer.Control
         #region constructor
         public Overworld(ProgressData progressData)
         {
-            SoundPlayer.StartSound("shuffledrum");
+            //SoundPlayer.StartSound("shuffledrum");
             _progressData = progressData;
         }
         #endregion
@@ -50,11 +50,18 @@ namespace Platformer.Control
             //TODO -- add move animation between levels, checking for whether levels are connected/completed
 
             if (input.SelectLeft && _progressData.CurrentLevel > 0)
+            {
+                SoundPlayer.playSoundEffects("hihatloop");
                 _progressData.CurrentLevel--;
+            }
             else if (input.SelectRight && _progressData.CurrentLevel < Nodes.Length - 1)
+            {
+                SoundPlayer.playSoundEffects("hihatloop");
                 _progressData.CurrentLevel++;
+            }
             else if (input.ConfirmSelection)
             {
+                SoundPlayer.playSoundEffects("bassdrum");
                 SoundPlayer.StopSound();
                 SelectLevel(_progressData.CurrentLevel);
             }

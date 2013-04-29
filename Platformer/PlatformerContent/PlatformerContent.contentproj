@@ -275,6 +275,11 @@
   <ItemGroup>
     <Compile Include="spritesheets\shotgun-blast.png">
       <Name>shotgun-blast</Name>
+	  <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Backgrounds\Intructions.png">
+      <Name>Intructions</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>

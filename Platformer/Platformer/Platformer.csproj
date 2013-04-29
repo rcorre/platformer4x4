@@ -110,6 +110,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Control\InstructionScreen.cs" />
     <Compile Include="Control\GameState.cs" />
     <Compile Include="Control\InputManager.cs" />
     <Compile Include="Control\Level.cs" />

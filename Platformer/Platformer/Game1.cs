@@ -92,7 +92,7 @@ namespace Platformer
             Overworld.Nodes = DataLoader.LoadOverworldData();
             OverworldView.LoadTextures(Content.Load<Texture2D>("Icons/Node"), Content.Load<Texture2D>("Backgrounds/skyline"));
             SpriteView.LoadTextures(Sprite.SpriteDataDict.Keys.ToArray<string>(), Content);
-
+            InstructionScreen.LoadTextures(Content.Load<Texture2D>("Backgrounds/Intructions"));
             //Later: change this in main menu
             //initialize new data if select new game
             //load data if select continue game
@@ -136,6 +136,7 @@ namespace Platformer
                 _currentState = _currentState.NewState;
 
             _currentState.Update(gameTime, _input);
+            //SoundPlayer.Update();
 
             base.Update(gameTime);
         }

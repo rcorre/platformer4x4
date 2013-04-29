@@ -73,6 +73,9 @@ namespace Platformer.Control
             _progressData.CurrentLevel = levelNumber;
 
             Weapon.Initialize();
+            _gino.addHealth(progressData.addHealth);
+            _gino.SetWeapon(new Weapon(progressData.shopWeapon, _gino));
+            _gino.addAmmo(progressData.addAmmo);
 
             _gino.SetWeapon(new Weapon("Revolver", _gino));
 
@@ -592,6 +595,8 @@ namespace Platformer.Control
             SoundPlayer.playSoundEffects("endgamesound");
             SoundPlayer.StartSound("rosesdepicardie");
 
+            _progressData.shopWeapon = "Revolver";
+            _progressData.addAmmo = 0;
             NewState = new Overworld(_progressData);
         }
 

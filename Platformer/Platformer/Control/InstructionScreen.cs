@@ -49,9 +49,7 @@ namespace Platformer.Control
         }
         public override void Draw(SpriteBatch sb)
         {
-           // Don't know how to load the background
-         //   graphics.Clear(Color.Gray);
-  
+ 
             sb.Draw(instructionTexture, Vector2.Zero, Color.White);
           
         }

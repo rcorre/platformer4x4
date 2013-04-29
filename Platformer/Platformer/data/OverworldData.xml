@@ -5,4 +5,6 @@
   <OverworldNode LevelNumber="2" LevelName="Start" X="500" Y="400" ConnectedTo="0,1"/>
   <OverworldNode LevelNumber="3" LevelName="Start" X="700" Y="400" ConnectedTo="0,1"/>
   <OverworldNode LevelNumber="4" LevelName="Start" X="900" Y="400" ConnectedTo="0,1"/>
+  <OverworldNode LevelNumber="5" LevelName="Shop" X="900" Y="540" ConnectedTo="0,1"/>
+  <OverworldNode LevelNumber="6" LevelName="Exit" X="1075" Y="540" ConnectedTo="0,1"/>
 </OverworldNodes>

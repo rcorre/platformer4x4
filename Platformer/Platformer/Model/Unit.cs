@@ -12,7 +12,7 @@ namespace Platformer.Model
     {
         #region const
         const float DIE_TIME = 2;
-        const float AIR_RESIST= 30;
+        const float AIR_RESIST = 30;
         const float DAMAGE_BOUNCE_FACTOR = 50;
         const float AIR_MOVE_FACTOR = 0.5f;
         #endregion
@@ -75,8 +75,8 @@ namespace Platformer.Model
         #endregion
 
         #region properties
-        public int Left 
-        { 
+        public int Left
+        {
             get { return _hitRect.Left; }
             set
             {
@@ -84,13 +84,13 @@ namespace Platformer.Model
                 _hitRect.X = value;
             }
         }
-        public int Right 
-        { 
+        public int Right
+        {
             get { return _hitRect.Right; }
             set { Left = value - _hitRect.Width; }
         }
-        public int Top 
-        { 
+        public int Top
+        {
             get { return _hitRect.Top; }
             set
             {
@@ -98,14 +98,14 @@ namespace Platformer.Model
                 _hitRect.Y = value;
             }
         }
-        public int Bottom 
-        { 
+        public int Bottom
+        {
             get { return _hitRect.Bottom; }
             set { Top = value - _hitRect.Height; }
         }
 
-        public Vector2 Center 
-        { 
+        public Vector2 Center
+        {
             get { return _position; }
         }
 
@@ -135,8 +135,8 @@ namespace Platformer.Model
 
         public bool Collides { get { return _state != UnitState.Dead; } }
 
-        public Sprite Sprite 
-        { 
+        public Sprite Sprite
+        {
             get { return _sprite; }
             protected set { _sprite = value; }
         }
@@ -168,6 +168,14 @@ namespace Platformer.Model
         #endregion
 
         #region methods
+
+        public void addHealth(int num)
+        {
+            for (int i = 0; i < num; i++)
+                _health += 10;
+            return;
+        }
+
         public void Walk(Direction direction)
         {
             if (_state == UnitState.Dead)
@@ -200,9 +208,8 @@ namespace Platformer.Model
             {
                 _velocity.Y = -_jumpSpeed;
                 _state = UnitState.FreeFall;
-
                 SoundPlayer.playSoundEffects("bassdrum");
-             
+
             }
         }
 
@@ -275,7 +282,7 @@ namespace Platformer.Model
                         ((_airMoveDirection == Direction.East) ? 1 : -1) * AIR_MOVE_FACTOR;
                     _airMove = false;
                 }
-                _velocity.X += (float)gameTime.ElapsedGameTime.TotalSeconds * AIR_RESIST 
+                _velocity.X += (float)gameTime.ElapsedGameTime.TotalSeconds * AIR_RESIST
                     * ((_velocity.X > 0) ? -1 : 1);
                 _state = UnitState.FreeFall;
                 _sprite.Animate((int)UnitSpriteState.Jump, gameTime, 5.0f, false);  //jumping animation

@@ -39,6 +39,8 @@ namespace Platformer.Control
         #region constructor
         public Shop(ProgressData pd)
         {
+            SoundPlayer.StopSound();
+            SoundPlayer.StartSound("younger");
             for(int i = 0; i<5; i++)
                 indices[i] = 0;
             for (int j = 0; j < 4; j++)
@@ -111,6 +113,8 @@ namespace Platformer.Control
                             countBought[0]--;
                         }
                     }
+                    SoundPlayer.StopSound();
+                    SoundPlayer.StartSound("rosesdepicardie");
                     NewState = new Overworld(progressData);//return to overworld
                 }
                 else if (mainPic == 6) //attempt to buy

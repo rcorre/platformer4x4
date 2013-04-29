@@ -77,7 +77,7 @@ namespace Platformer.Control
             _gino.SetWeapon(new Weapon(progressData.shopWeapon, _gino));
             _gino.addAmmo(progressData.addAmmo);
 
-            _gino.SetWeapon(new Weapon("Revolver", _gino));
+            //_gino.SetWeapon(new Weapon("Revolver", _gino));
 
             _endTimer = TimeSpan.FromSeconds(TIME_AFTER_LOSS);
 

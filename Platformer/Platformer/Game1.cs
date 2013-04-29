@@ -82,6 +82,7 @@ namespace Platformer
             Level.MapDisplayDevice = new xTile.Display.XnaDisplayDevice(this.Content, this.GraphicsDevice);
             //give Level ref to Content so they can load data
             Level.Content = this.Content;
+            Level.outDoorTexture = Content.Load<Texture2D>("out-door");
 
             //initialize unit data
             Unit.UnitDataDict = DataLoader.LoadUnitData();

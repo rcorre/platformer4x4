@@ -17057,10 +17057,10 @@
           <Null Count="1" />
         </Row>
         <Row>
-          <Null Count="198" />
+          <Null Count="196" />
           <TileSheet Ref="Markers" />
           <Static Index="1" BlendMode="Alpha" />
-          <Null Count="1" />
+          <Null Count="3" />
         </Row>
         <Row>
           <Null Count="200" />
@@ -17076,9 +17076,7 @@
           <Null Count="200" />
         </Row>
         <Row>
-          <Null Count="198" />
-          <Static Index="1" BlendMode="Alpha" />
-          <Null Count="1" />
+          <Null Count="200" />
         </Row>
         <Row>
           <Null Count="200" />

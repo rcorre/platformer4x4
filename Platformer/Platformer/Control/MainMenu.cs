@@ -161,7 +161,9 @@ namespace Platformer.Control
 
                     }
                     if (buttonSt[1] == buttonState.down) //******************************************LoadGame********
-                    { }
+                    {
+                        NewState = new Overworld(Data.DataLoader.LoadProgress());
+                    }
                     if (buttonSt[2] == buttonState.down) //instructions
                         NewState = new InstructionScreen(graphics, Font1, sprite);
                     if (buttonSt[3] == buttonState.down) //quit

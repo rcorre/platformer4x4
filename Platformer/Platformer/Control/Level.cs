@@ -25,6 +25,7 @@ namespace Platformer.Control
         #endregion
 
         #region static
+        public static Texture2D outDoorTexture;
         /// <summary>
         /// reference to game display device from Game1 - needed to draw xTile maps
         /// </summary>
@@ -288,6 +289,10 @@ namespace Platformer.Control
         /// <param name="unit">the unit to move</param>
         private void moveUnit(Unit unit, GameTime gameTime)
         {
+            if (unit.State == Unit.UnitState.Dead)
+            {
+                return; //do not move 
+            }
             int pxRight = (int)(unit.Velocity.X * (float)gameTime.ElapsedGameTime.TotalSeconds);
             int pxDown = (int)(unit.Velocity.Y * (float)gameTime.ElapsedGameTime.TotalSeconds);
 
@@ -623,7 +628,8 @@ namespace Platformer.Control
 
             XnaHelper.DisplayValue(sb, "Coins", _progressData.NumCoins.ToString(),
                 new Rectangle(300, 100, 100, 20), Color.Black);
-            // SpriteView.DrawUnit(sb, _enemies[0], _viewport.X, _viewport.Y);
+            //out door --- last minute fix. obviously bad code
+            sb.Draw(outDoorTexture, new Rectangle(_endPoint.X - 16 - _viewport.X, _endPoint.Y - 64 - _viewport.Y, 32, 80), Color.White);
         }
         #endregion
     }
